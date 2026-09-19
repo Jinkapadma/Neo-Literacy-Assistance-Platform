@@ -34,7 +34,7 @@ export const CurriculumList = () => {
       if (searchQuery) params.search = searchQuery;
 
       const res = await curriculumApi.getAllCurricula(params);
-      setCurricula(res.data?.curricula || []);
+      setCurricula(res.data?.curricula || res.curricula || (Array.isArray(res.data) ? res.data : []));
     } catch {
       setCurricula([]);
     } finally {

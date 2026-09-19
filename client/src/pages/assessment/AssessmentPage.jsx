@@ -63,7 +63,7 @@ export const AssessmentPage = () => {
 
       assessmentApi
         .getAllAssessments(params)
-        .then(res => setAssessmentsList(res.data?.assessments || []))
+        .then(res => setAssessmentsList(res.data?.assessments || res.assessments || (Array.isArray(res.data) ? res.data : [])))
         .catch(() => setAssessmentsList([]))
         .finally(() => setLoading(false));
     }

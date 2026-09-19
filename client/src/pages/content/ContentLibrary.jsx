@@ -53,7 +53,7 @@ export const ContentLibrary = () => {
       if (searchQuery) params.search = searchQuery;
 
       const res = await contentApi.getAllContent(params);
-      setContentList(res.data?.items || []);
+      setContentList(res.data?.items || res.items || (Array.isArray(res.data) ? res.data : []));
 
       // If direct ID passed in URL, open it
       if (directId) {

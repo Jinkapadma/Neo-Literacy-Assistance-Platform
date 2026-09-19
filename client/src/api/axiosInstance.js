@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-const rawBaseURL = import.meta.env.VITE_API_BASE_URL || '/api';
+const rawBaseURL =
+  import.meta.env.VITE_API_BASE_URL ||
+  (import.meta.env.DEV ? '/api' : 'https://neo-literacy-assistance-platform.onrender.com/api');
 const baseURL = rawBaseURL.replace(/\/+$/, '');
 
 export const axiosInstance = axios.create({
