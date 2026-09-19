@@ -31,6 +31,7 @@ app.use(
 // CORS Configuration
 const allowedOrigins = [
   env.CLIENT_URL ? env.CLIENT_URL.replace(/\/+$/, '') : null,
+  'https://neo-literacy.vercel.app',
   'https://neo-literacy-assistance-platform.vercel.app',
   'http://localhost:5173',
   'http://localhost:3000',
