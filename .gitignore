@@ -23,6 +23,7 @@ lerna-debug.log*
 dist
 dist-ssr
 build
+.vite
 *.local
 
 # IDE & OS
