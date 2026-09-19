@@ -29,19 +29,37 @@ app.use(
 );
 
 // CORS Configuration
-const allowedOrigins = [env.CLIENT_URL, 'http://localhost:5173', 'http://127.0.0.1:5173'];
+const allowedOrigins = [
+  env.CLIENT_URL ? env.CLIENT_URL.replace(/\/+$/, '') : null,
+  'https://neo-literacy-assistance-platform.vercel.app',
+  'http://localhost:5173',
+  'http://localhost:3000',
+  'http://127.0.0.1:5173',
+].filter(Boolean);
+
 app.use(
   cors({
     origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
+      // Allow requests with no origin (like mobile apps, curl, Postman, health probes)
+      if (!origin) return callback(null, true);
+
+      const normalizedOrigin = origin.replace(/\/+$/, '');
+      const isAllowed =
+        allowedOrigins.includes(normalizedOrigin) ||
+        /^https:\/\/neo-literacy-assistance-platform.*\.vercel\.app$/.test(normalizedOrigin) ||
+        /^https:\/\/.*\.vercel\.app$/.test(normalizedOrigin);
+
+      if (isAllowed) {
         callback(null, true);
       } else {
+        logger.warn(`CORS blocked for origin: ${origin}`);
         callback(new Error(`CORS origin not allowed: ${origin}`));
       }
     },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
+    exposedHeaders: ['Set-Cookie'],
   })
 );
 
