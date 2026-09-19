@@ -1,0 +1,44 @@
+{
+  "name": "literacy-platform-server",
+  "version": "1.0.0",
+  "description": "Backend API for AI-Based Intelligent Literacy Assistance Platform for Neo-Learners",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "seed": "node src/scripts/seed.js",
+    "test": "node src/scripts/testEndpoints.js",
+    "lint": "eslint src/**/*.js",
+    "format": "prettier --write \"src/**/*.js\""
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-mongo-sanitize": "^2.2.0",
+    "express-rate-limit": "^7.5.0",
+    "helmet": "^8.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.9.5",
+    "morgan": "^1.10.0",
+    "winston": "^3.17.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "eslint": "^9.18.0",
+    "nodemon": "^3.1.9",
+    "prettier": "^3.4.2"
+  },
+  "keywords": [
+    "literacy",
+    "express",
+    "mongodb",
+    "jwt",
+    "education"
+  ],
+  "author": "Intelligent Literacy Team",
+  "license": "MIT"
+}

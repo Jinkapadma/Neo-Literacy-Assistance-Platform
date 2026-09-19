@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --text-scale: 1rem;
+  }
+
+  body {
+    font-size: var(--text-scale);
+    line-height: 1.6;
+    letter-spacing: 0.01em;
+  }
+}
+
+/* Accessibility Modes */
+body.font-dyslexic {
+  font-family: 'Lexend', 'Comic Sans MS', sans-serif !important;
+  letter-spacing: 0.035em !important;
+  word-spacing: 0.1em !important;
+  line-height: 1.8 !important;
+}
+
+body.high-contrast {
+  --tw-bg-opacity: 1;
+  background-color: #050811 !important;
+  color: #ffffff !important;
+}
+
+body.high-contrast .bg-white {
+  background-color: #0f172a !important;
+  border-color: #334155 !important;
+  color: #f8fafc !important;
+}
+
+body.high-contrast .bg-slate-50 {
+  background-color: #020617 !important;
+}
+
+body.high-contrast .text-slate-600,
+body.high-contrast .text-slate-500,
+body.high-contrast .text-slate-700 {
+  color: #cbd5e1 !important;
+}
+
+body.high-contrast .border-slate-200,
+body.high-contrast .border-slate-100 {
+  border-color: #334155 !important;
+}
+
+/* Custom Micro-animations & utilities */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.dark .glass-effect {
+  background: rgba(15, 23, 42, 0.85);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #db2777 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-border {
+  border-image: linear-gradient(to right, #6366f1, #a855f7) 1;
+}
+
+/* Custom accessible focus styles */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 3px solid #6366f1;
+  outline-offset: 2px;
+}

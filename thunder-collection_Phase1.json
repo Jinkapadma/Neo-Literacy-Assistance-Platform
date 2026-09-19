@@ -1,0 +1,105 @@
+{
+  "clientName": "Thunder Client",
+  "collectionName": "Literacy Assistance Platform API - Phase 1",
+  "collectionId": "4815a1f2-1250-4df7-8027-phase1collection",
+  "dateExported": "2026-09-19T00:00:00.000Z",
+  "version": "1.1",
+  "folders": [
+    {
+      "_id": "auth-folder",
+      "name": "Auth",
+      "containerId": "",
+      "created": "2026-09-19T00:00:00.000Z"
+    },
+    {
+      "_id": "users-folder",
+      "name": "Users",
+      "containerId": "",
+      "created": "2026-09-19T00:00:00.000Z"
+    },
+    {
+      "_id": "curriculum-folder",
+      "name": "Curriculum",
+      "containerId": "",
+      "created": "2026-09-19T00:00:00.000Z"
+    },
+    {
+      "_id": "content-folder",
+      "name": "Content",
+      "containerId": "",
+      "created": "2026-09-19T00:00:00.000Z"
+    },
+    {
+      "_id": "assessment-folder",
+      "name": "Assessments",
+      "containerId": "",
+      "created": "2026-09-19T00:00:00.000Z"
+    }
+  ],
+  "requests": [
+    {
+      "_id": "req-health",
+      "colId": "4815a1f2-1250-4df7-8027-phase1collection",
+      "containerId": "",
+      "name": "API Health Check",
+      "url": "http://localhost:5000/api/health",
+      "method": "GET"
+    },
+    {
+      "_id": "req-register",
+      "colId": "4815a1f2-1250-4df7-8027-phase1collection",
+      "containerId": "auth-folder",
+      "name": "Register Learner",
+      "url": "http://localhost:5000/api/auth/register",
+      "method": "POST",
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"name\": \"Aarav Learner\",\n  \"email\": \"test.learner@literacy.org\",\n  \"password\": \"Password123!\",\n  \"preferredLanguage\": \"hi\",\n  \"role\": \"learner\",\n  \"targetSkills\": [\"reading\", \"vocabulary\", \"comprehension\"]\n}"
+      }
+    },
+    {
+      "_id": "req-login",
+      "colId": "4815a1f2-1250-4df7-8027-phase1collection",
+      "containerId": "auth-folder",
+      "name": "Login",
+      "url": "http://localhost:5000/api/auth/login",
+      "method": "POST",
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"email\": \"learner@literacy.org\",\n  \"password\": \"Password123!\"\n}"
+      }
+    },
+    {
+      "_id": "req-profile",
+      "colId": "4815a1f2-1250-4df7-8027-phase1collection",
+      "containerId": "users-folder",
+      "name": "Get Profile",
+      "url": "http://localhost:5000/api/users/profile",
+      "method": "GET"
+    },
+    {
+      "_id": "req-curricula",
+      "colId": "4815a1f2-1250-4df7-8027-phase1collection",
+      "containerId": "curriculum-folder",
+      "name": "List Curricula",
+      "url": "http://localhost:5000/api/curriculum",
+      "method": "GET"
+    },
+    {
+      "_id": "req-content",
+      "colId": "4815a1f2-1250-4df7-8027-phase1collection",
+      "containerId": "content-folder",
+      "name": "List Content (Hindi)",
+      "url": "http://localhost:5000/api/content?language=hi",
+      "method": "GET"
+    },
+    {
+      "_id": "req-assessments",
+      "colId": "4815a1f2-1250-4df7-8027-phase1collection",
+      "containerId": "assessment-folder",
+      "name": "List Assessments",
+      "url": "http://localhost:5000/api/assessments",
+      "method": "GET"
+    }
+  ]
+}

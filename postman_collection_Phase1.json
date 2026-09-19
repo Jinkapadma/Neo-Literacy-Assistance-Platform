@@ -1,0 +1,291 @@
+{
+  "info": {
+    "name": "Literacy Assistance Platform API - Phase 1",
+    "_postman_id": "literacy-phase1-collection",
+    "description": "Comprehensive API collection for Phase 1 (Learning Content Management & Assessment Framework)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000/api",
+      "type": "string"
+    },
+    {
+      "key": "accessToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "learnerUserId",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/health",
+          "host": ["{{baseUrl}}"],
+          "path": ["health"]
+        }
+      }
+    },
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "1. Register Learner",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Aarav Learner\",\n  \"email\": \"test.learner@literacy.org\",\n  \"password\": \"Password123!\",\n  \"preferredLanguage\": \"hi\",\n  \"role\": \"learner\",\n  \"targetSkills\": [\"reading\", \"vocabulary\", \"comprehension\"]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "register"]
+            }
+          }
+        },
+        {
+          "name": "2. Login Learner",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"learner@literacy.org\",\n  \"password\": \"Password123!\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "3. Refresh Token",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/auth/refresh",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "refresh"]
+            }
+          }
+        },
+        {
+          "name": "4. Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/logout",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "logout"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "User Profile",
+      "item": [
+        {
+          "name": "Get Learner Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/users/profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "profile"]
+            }
+          }
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Aarav Patel (Updated)\",\n  \"preferredLanguage\": \"hi\",\n  \"targetSkills\": [\"reading\", \"writing\", \"comprehension\"]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "profile"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Curriculum",
+      "item": [
+        {
+          "name": "List Curricula",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/curriculum?language=en&targetLevel=beginner",
+              "host": ["{{baseUrl}}"],
+              "path": ["curriculum"],
+              "query": [
+                { "key": "language", "value": "en" },
+                { "key": "targetLevel", "value": "beginner" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Curriculum by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/curriculum/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["curriculum", ":id"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Multilingual Content",
+      "item": [
+        {
+          "name": "List Multilingual Content (Hindi)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/content?language=hi",
+              "host": ["{{baseUrl}}"],
+              "path": ["content"],
+              "query": [
+                { "key": "language", "value": "hi" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Multilingual Content (English)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/content?language=en",
+              "host": ["{{baseUrl}}"],
+              "path": ["content"],
+              "query": [
+                { "key": "language", "value": "en" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Content by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/content/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["content", ":id"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Assessments & Benchmarks",
+      "item": [
+        {
+          "name": "List Assessments",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/assessments?language=en",
+              "host": ["{{baseUrl}}"],
+              "path": ["assessments"],
+              "query": [
+                { "key": "language", "value": "en" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Assessment Questions by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/assessments/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["assessments", ":id"]
+            }
+          }
+        },
+        {
+          "name": "Submit Assessment Answers",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"assessmentId\": \"<ASSESSMENT_ID>\",\n  \"timeSpentSeconds\": 120,\n  \"answers\": [\n    { \"questionId\": \"Q-ENG-1\", \"selectedAnswer\": \"Bat\" },\n    { \"questionId\": \"Q-ENG-2\", \"selectedAnswer\": \"Umbrella\" },\n    { \"questionId\": \"Q-ENG-3\", \"selectedAnswer\": \"name\" },\n    { \"questionId\": \"Q-ENG-4\", \"selectedAnswer\": \"The sun rises in the morning\" },\n    { \"questionId\": \"Q-ENG-5\", \"selectedAnswer\": \"In Waiting Room A\" }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/assessments/submit",
+              "host": ["{{baseUrl}}"],
+              "path": ["assessments", "submit"]
+            }
+          }
+        },
+        {
+          "name": "Get User Benchmark Scorecard",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/assessments/benchmark/{{learnerUserId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["assessments", "benchmark", "{{learnerUserId}}"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
