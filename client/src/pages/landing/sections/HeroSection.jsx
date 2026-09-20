@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
 import { ArrowRight, ChevronDown, Sparkles, Volume2, Globe2, CheckCircle2 } from 'lucide-react';
+import { SparkleButton } from '../../../components/common/SparkleButton.jsx';
 import { BRAND } from '../../../utils/branding.js';
 import { VantaBirdsBackground } from '../../../components/landing/VantaBirdsBackground.jsx';
 
@@ -61,19 +62,15 @@ export const HeroSection = () => {
         </p>
 
         {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
-          <Link
-            to="/register"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-2xl bg-gradient-to-r from-brand-500 via-indigo-600 to-sky-500 hover:from-brand-400 hover:to-sky-400 text-white font-bold text-base shadow-xl shadow-brand-500/25 transition-all transform hover:-translate-y-0.5 active:translate-y-0 min-h-[48px]"
-          >
-            <span>Get Started Free</span>
-            <ArrowRight className="w-5 h-5" />
-          </Link>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-5 pt-2">
+          <SparkleButton to="/register">
+            Get Started Free
+          </SparkleButton>
 
           <a
             href="#how-it-works"
             onClick={handleScrollToHowItWorks}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-4 rounded-2xl bg-white/10 hover:bg-white/15 text-slate-200 border border-white/15 font-semibold text-base backdrop-blur-md transition-all min-h-[48px]"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-white/10 hover:bg-white/15 text-slate-200 border border-white/15 font-semibold text-base backdrop-blur-md transition-all min-h-[48px]"
           >
             <span>See How It Works</span>
           </a>

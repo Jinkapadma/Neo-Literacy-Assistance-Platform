@@ -27,18 +27,14 @@ export const CTASection = () => {
             </p>
           </div>
 
-          <div className="relative z-10 flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
-            <Link
-              to="/register"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-9 py-4 rounded-2xl bg-white text-slate-950 hover:bg-slate-100 font-black text-base shadow-2xl transition-all transform hover:scale-105 active:scale-95"
-            >
-              <span>Get Started Free</span>
-              <ArrowRight className="w-5 h-5 text-brand-600" />
-            </Link>
+          <div className="relative z-10 flex flex-col sm:flex-row items-center justify-center gap-5 pt-2">
+            <SparkleButton to="/register">
+              Get Started Free
+            </SparkleButton>
 
             <Link
               to="/login"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl bg-white/10 hover:bg-white/15 text-white border border-white/20 font-bold text-base backdrop-blur-md transition-all"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-white/10 hover:bg-white/15 text-white border border-white/20 font-bold text-base backdrop-blur-md transition-all"
             >
               <span>Sign In to Account</span>
             </Link>
