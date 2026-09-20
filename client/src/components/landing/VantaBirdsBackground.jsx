@@ -1,6 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
-import * as THREE from 'three';
-import BIRDS from 'vanta/dist/vanta.birds.min';
+import React, { useEffect, useRef } from 'react';
 
 export const VantaBirdsBackground = ({
   backgroundColor = 0x407c93,
@@ -16,15 +14,58 @@ export const VantaBirdsBackground = ({
   className = '',
 }) => {
   const vantaRef = useRef(null);
-  const [vantaEffect, setVantaEffect] = useState(null);
+  const effectRef = useRef(null);
 
   useEffect(() => {
-    let effect = null;
-    if (vantaRef.current) {
+    let isMounted = true;
+
+    const loadScript = src => {
+      return new Promise((resolve, reject) => {
+        const existing = document.querySelector(`script[src="${src}"]`);
+        if (existing) {
+          if (existing.getAttribute('data-loaded') === 'true' || (window.VANTA && window.VANTA.BIRDS)) {
+            resolve();
+          } else {
+            existing.addEventListener('load', () => resolve());
+            existing.addEventListener('error', e => reject(e));
+          }
+          return;
+        }
+
+        const script = document.createElement('script');
+        script.src = src;
+        script.async = true;
+        script.onload = () => {
+          script.setAttribute('data-loaded', 'true');
+          resolve();
+        };
+        script.onerror = e => reject(e);
+        document.head.appendChild(script);
+      });
+    };
+
+    const initVanta = async () => {
       try {
-        effect = BIRDS({
+        // 1. Ensure Three.js r134 is loaded for Vanta.js compatibility
+        if (!window.THREE || typeof window.THREE.WebGLRenderer === 'undefined') {
+          await loadScript('https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js');
+        }
+
+        // 2. Ensure Vanta Birds script is loaded
+        if (!window.VANTA || !window.VANTA.BIRDS) {
+          await loadScript('https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.birds.min.js');
+        }
+
+        if (!isMounted || !vantaRef.current || !window.VANTA || !window.VANTA.BIRDS) return;
+
+        // Cleanup existing effect if any
+        if (effectRef.current) {
+          effectRef.current.destroy();
+        }
+
+        // 3. Initialize VANTA.BIRDS
+        effectRef.current = window.VANTA.BIRDS({
           el: vantaRef.current,
-          THREE: THREE,
           mouseControls: true,
           touchControls: true,
           gyroControls: false,
@@ -43,16 +84,19 @@ export const VantaBirdsBackground = ({
           alignment: alignment,
           cohesion: cohesion,
         });
-        setVantaEffect(effect);
       } catch (err) {
-        console.warn('Vanta.BIRDS initialization error:', err);
+        console.warn('Vanta Birds init warning:', err);
       }
-    }
+    };
+
+    initVanta();
 
     return () => {
-      if (effect) {
+      isMounted = false;
+      if (effectRef.current) {
         try {
-          effect.destroy();
+          effectRef.current.destroy();
+          effectRef.current = null;
         } catch (e) {
           // ignore cleanup errors
         }
@@ -75,6 +119,7 @@ export const VantaBirdsBackground = ({
     <div
       ref={vantaRef}
       className={`absolute inset-0 w-full h-full pointer-events-auto ${className}`}
+      style={{ width: '100%', height: '100%', minHeight: '100%' }}
     />
   );
 };
