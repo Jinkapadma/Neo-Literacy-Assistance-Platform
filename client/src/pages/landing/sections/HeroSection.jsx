@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
 import { ArrowRight, ChevronDown, Sparkles, Volume2, Globe2, CheckCircle2 } from 'lucide-react';
 import { BRAND } from '../../../utils/branding.js';
-import { VantaNetBackground } from '../../../components/landing/VantaNetBackground.jsx';
+import { VantaBirdsBackground } from '../../../components/landing/VantaBirdsBackground.jsx';
 
 export const HeroSection = () => {
   const { ref, inView } = useInView({
@@ -21,25 +21,30 @@ export const HeroSection = () => {
   return (
     <section
       ref={ref}
-      className="relative min-h-screen flex flex-col justify-between pt-24 sm:pt-28 pb-12 px-4 sm:px-6 lg:px-8 overflow-hidden bg-[#14051a] text-white"
+      className="relative min-h-screen flex flex-col justify-between pt-24 sm:pt-28 pb-12 px-4 sm:px-6 lg:px-8 overflow-hidden bg-[#407c93] text-white"
     >
-      {/* Vanta.NET 3D Simplified Yellow Connected Lines Animation */}
-      <VantaNetBackground
-        color={0xffe600}
-        backgroundColor={0x14051a}
-        points={6.0}
-        maxDistance={18.0}
-        spacing={22.0}
+      {/* Vanta.BIRDS 3D Interactive Animation */}
+      <VantaBirdsBackground
+        backgroundColor={0x407c93}
+        color1={0x001da2}
+        color2={0xf7ad00}
+        quantity={4.0}
+        birdSize={1.2}
+        wingSpan={24.0}
+        speedLimit={5.0}
+        separation={40.0}
+        alignment={40.0}
+        cohesion={40.0}
         className="opacity-95"
       />
 
       {/* Main Foreground Overlaid Content */}
       <div className="relative z-10 max-w-5xl mx-auto text-center my-auto space-y-6 sm:space-y-8">
         {/* Feature Pill */}
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 backdrop-blur-md shadow-inner text-xs sm:text-sm font-bold text-slate-100">
-          <Sparkles className="w-4 h-4 text-[#ffef3f] animate-spin" />
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900/30 border border-white/20 backdrop-blur-md shadow-inner text-xs sm:text-sm font-bold text-white">
+          <Sparkles className="w-4 h-4 text-amber-300 animate-spin" />
           <span>Intelligent Multi-Lingual Literacy for Neo-Learners</span>
-          <span className="w-2 h-2 rounded-full bg-[#ffef3f] animate-ping" />
+          <span className="w-2 h-2 rounded-full bg-amber-300 animate-ping" />
         </div>
 
         {/* Primary Headline */}
