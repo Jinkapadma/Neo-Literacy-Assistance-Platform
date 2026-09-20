@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import { Layout } from '../components/layout/Layout.jsx';
 import { ProtectedRoute } from '../components/layout/ProtectedRoute.jsx';
 
-import { Home } from '../pages/Home.jsx';
+import { LandingPage } from '../pages/landing/LandingPage.jsx';
 import { Login } from '../pages/auth/Login.jsx';
 import { Register } from '../pages/auth/Register.jsx';
 import { LearnerProfile } from '../pages/profile/LearnerProfile.jsx';
@@ -17,9 +17,11 @@ import { NotFound } from '../pages/NotFound.jsx';
 export const AppRoutes = () => {
   return (
     <Routes>
+      {/* Public Marketing Landing Page */}
+      <Route path="/" element={<LandingPage />} />
+
+      {/* Internal Application Routes with Layout */}
       <Route element={<Layout />}>
-        {/* Public Routes */}
-        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/curriculum" element={<CurriculumList />} />
@@ -29,6 +31,14 @@ export const AppRoutes = () => {
         <Route path="/assessment/:id" element={<AssessmentPage />} />
 
         {/* Protected Learner Routes */}
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <LearnerProfile />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/profile"
           element={

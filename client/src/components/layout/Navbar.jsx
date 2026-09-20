@@ -92,11 +92,10 @@ export const Navbar = ({ onToggleSidebar }) => {
             <div className="relative">
               <button
                 onClick={() => setIsAccessMenuOpen(!isAccessMenuOpen)}
-                className={`p-2 sm:px-3 sm:py-2 rounded-xl border flex items-center gap-1.5 text-xs font-bold transition-colors ${
-                  isDyslexicFont || isHighContrast || textScale !== 'normal'
+                className={`p-2 sm:px-3 sm:py-2 rounded-xl border flex items-center gap-1.5 text-xs font-bold transition-colors ${isDyslexicFont || isHighContrast || textScale !== 'normal'
                     ? 'bg-brand-50 border-brand-300 text-brand-700'
                     : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
-                }`}
+                  }`}
                 title="Accessibility Preferences"
               >
                 <Eye className="w-4 h-4 text-brand-600" />
