@@ -21,13 +21,16 @@ export const HeroSection = () => {
   return (
     <section
       ref={ref}
-      className="relative min-h-screen flex flex-col justify-between pt-24 sm:pt-28 pb-12 px-4 sm:px-6 lg:px-8 overflow-hidden bg-[#34153c] text-white"
+      className="relative min-h-screen flex flex-col justify-between pt-24 sm:pt-28 pb-12 px-4 sm:px-6 lg:px-8 overflow-hidden bg-[#14051a] text-white"
     >
-      {/* Vanta.NET 3D Interactive Connected Lines & Waves Animation */}
+      {/* Vanta.NET 3D Simplified Yellow Connected Lines Animation */}
       <VantaNetBackground
-        color={0xffef3f}
-        backgroundColor={0x34153c}
-        className="opacity-90"
+        color={0xffe600}
+        backgroundColor={0x14051a}
+        points={6.0}
+        maxDistance={18.0}
+        spacing={22.0}
+        className="opacity-95"
       />
 
       {/* Main Foreground Overlaid Content */}

@@ -3,11 +3,11 @@ import * as THREE from 'three';
 import NET from 'vanta/dist/vanta.net.min';
 
 export const VantaNetBackground = ({
-  color = 0xffef3f,
-  backgroundColor = 0x34153c,
-  points = 12.0,
-  maxDistance = 22.0,
-  spacing = 16.0,
+  color = 0xffe600, // Vibrant clean yellow lines
+  backgroundColor = 0x14051a, // Deep minimal backdrop
+  points = 6.0, // Reduced from 12 to 6 for a much lighter, simpler network
+  maxDistance = 18.0, // Crisp connections without clutter
+  spacing = 22.0, // Spacious node distribution
   className = '',
 }) => {
   const vantaRef = useRef(null);
