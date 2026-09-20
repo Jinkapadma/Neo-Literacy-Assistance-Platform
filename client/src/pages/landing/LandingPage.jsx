@@ -3,6 +3,7 @@ import { Navigate, Link } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth.js';
 import { BookOpen, Menu, X, ArrowRight, Sparkles } from 'lucide-react';
 import { BRAND } from '../../utils/branding.js';
+import { SparkleButton } from '../../components/common/SparkleButton.jsx';
 
 import { HeroSection } from './sections/HeroSection.jsx';
 import { FeaturesSection } from './sections/FeaturesSection.jsx';
@@ -108,13 +109,9 @@ export const LandingPage = () => {
             >
               Log In
             </Link>
-            <Link
-              to="/register"
-              className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-bold text-white bg-gradient-to-r from-brand-500 via-indigo-600 to-sky-500 hover:from-brand-400 hover:to-sky-400 rounded-xl shadow-lg shadow-brand-500/25 transition-all transform hover:scale-105 active:scale-95"
-            >
-              <span>Get Started</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
+            <SparkleButton to="/register">
+              Get Started
+            </SparkleButton>
           </div>
 
           {/* Mobile Hamburger Button */}
@@ -162,13 +159,9 @@ export const LandingPage = () => {
               >
                 Log In
               </Link>
-              <Link
-                to="/register"
-                onClick={() => setMobileMenuOpen(false)}
-                className="w-full text-center py-3 text-sm font-bold text-white bg-brand-600 rounded-xl shadow-lg shadow-brand-600/30"
-              >
+              <SparkleButton to="/register" className="w-full justify-center">
                 Get Started Free
-              </Link>
+              </SparkleButton>
             </div>
           </div>
         )}

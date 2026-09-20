@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Sparkles, CheckCircle2 } from 'lucide-react';
+import { SparkleButton } from '../../../components/common/SparkleButton.jsx';
 import { ScrollRevealWrapper } from '../../../components/landing/ScrollRevealWrapper.jsx';
 
 export const CTASection = () => {

@@ -7,9 +7,8 @@ export const SparkleButton = ({
   href,
   onClick,
   className = '',
-  size = 'md', // 'sm', 'md', 'lg'
 }) => {
-  const content = (
+  const buttonMarkup = (
     <div className={`sp ${className}`}>
       <span className="sparkle-button">
         <span className="spark" />
@@ -33,7 +32,7 @@ export const SparkleButton = ({
             fill="currentColor"
           />
         </svg>
-        <span className="btn-text">{children}</span>
+        <span className="text btn-text">{children}</span>
       </span>
 
       {/* Floating Particles Pen */}
@@ -86,23 +85,23 @@ export const SparkleButton = ({
 
   if (to) {
     return (
-      <Link to={to} className="inline-block text-decoration-none">
-        {content}
+      <Link to={to} className="inline-flex text-decoration-none">
+        {buttonMarkup}
       </Link>
     );
   }
 
   if (href) {
     return (
-      <a href={href} className="inline-block text-decoration-none">
-        {content}
+      <a href={href} className="inline-flex text-decoration-none">
+        {buttonMarkup}
       </a>
     );
   }
 
   return (
-    <button type="button" onClick={onClick} className="inline-block bg-transparent border-0 p-0">
-      {content}
+    <button type="button" onClick={onClick} className="inline-flex bg-transparent border-0 p-0 cursor-pointer">
+      {buttonMarkup}
     </button>
   );
 };

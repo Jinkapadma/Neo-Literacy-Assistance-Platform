@@ -176,11 +176,11 @@ select:focus-visible {
   translate: -50% -15%;
   rotate: 0;
   transform: rotate(-90deg);
-  opacity: calc((var(--active)) + 0.4);
+  opacity: calc(var(--active) * 0.5 + 0.5);
   background: conic-gradient(
     from 0deg,
     transparent 0 340deg,
-    white 360deg
+    #ffffff 360deg
   );
   transition: opacity var(--transition);
   animation: rotate var(--spark) linear infinite both;
