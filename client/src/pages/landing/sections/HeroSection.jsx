@@ -1,24 +1,9 @@
-import React, { lazy, Suspense } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
 import { ArrowRight, ChevronDown, Sparkles, Volume2, Globe2, CheckCircle2 } from 'lucide-react';
 import { BRAND } from '../../../utils/branding.js';
 import { VantaNetBackground } from '../../../components/landing/VantaNetBackground.jsx';
-
-// Pure lazy dynamic import for 3D chunk isolation
-const Hero3DScene = lazy(() => import('../../../components/landing/Hero3DScene.jsx'));
-
-// Lightweight 2D Fallback rendered instantly while 3D bundle loads
-const Static2DHeroFallback = () => (
-  <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
-    <div className="relative w-72 h-72 sm:w-96 sm:h-96 rounded-full bg-gradient-to-tr from-brand-600/25 via-purple-600/20 to-sky-500/15 blur-3xl" />
-    <div className="absolute w-44 h-44 sm:w-56 sm:h-56 rounded-3xl border border-brand-500/30 bg-slate-900/60 backdrop-blur-xl flex items-center justify-center shadow-2xl">
-      <span className="text-7xl sm:text-8xl font-black bg-gradient-to-tr from-brand-400 via-indigo-200 to-sky-300 bg-clip-text text-transparent">
-        N
-      </span>
-    </div>
-  </div>
-);
 
 export const HeroSection = () => {
   const { ref, inView } = useInView({
@@ -38,28 +23,20 @@ export const HeroSection = () => {
       ref={ref}
       className="relative min-h-screen flex flex-col justify-between pt-24 sm:pt-28 pb-12 px-4 sm:px-6 lg:px-8 overflow-hidden bg-[#34153c] text-white"
     >
-      {/* Vanta.NET 3D Interactive Connected Lines Animation */}
+      {/* Vanta.NET 3D Interactive Connected Lines & Waves Animation */}
       <VantaNetBackground
         color={0xffef3f}
         backgroundColor={0x34153c}
-        className="opacity-80"
+        className="opacity-90"
       />
-
-      {/* 3D Focal Model Overlay (Suspense + Fallback) */}
-      <Suspense fallback={<Static2DHeroFallback />}>
-        <Hero3DScene isVisible={inView} />
-      </Suspense>
-
-      {/* Subtle Background Glow Gradients */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-gradient-to-tr from-brand-600/20 via-purple-600/15 to-sky-500/10 rounded-full blur-3xl pointer-events-none" />
 
       {/* Main Foreground Overlaid Content */}
       <div className="relative z-10 max-w-5xl mx-auto text-center my-auto space-y-6 sm:space-y-8">
         {/* Feature Pill */}
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md shadow-inner text-xs sm:text-sm font-bold text-slate-200">
-          <Sparkles className="w-4 h-4 text-amber-400 animate-spin" />
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 backdrop-blur-md shadow-inner text-xs sm:text-sm font-bold text-slate-100">
+          <Sparkles className="w-4 h-4 text-[#ffef3f] animate-spin" />
           <span>Intelligent Multi-Lingual Literacy for Neo-Learners</span>
-          <span className="w-2 h-2 rounded-full bg-brand-400 animate-ping" />
+          <span className="w-2 h-2 rounded-full bg-[#ffef3f] animate-ping" />
         </div>
 
         {/* Primary Headline */}
