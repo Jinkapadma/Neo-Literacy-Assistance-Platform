@@ -45,17 +45,10 @@ export const CTASection = () => {
               </p>
             </div>
 
-            <div className="relative z-10 flex flex-col sm:flex-row items-center justify-center gap-5 pt-2">
+            <div className="relative z-10 flex items-center justify-center pt-2">
               <SparkleButton to="/login">
                 Get Started
               </SparkleButton>
-
-              <Link
-                to="/login"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-white/10 hover:bg-white/15 text-white border border-white/20 font-bold text-base backdrop-blur-md transition-all shadow-lg"
-              >
-                <span>Sign In to Account</span>
-              </Link>
             </div>
 
             <div className="relative z-10 flex flex-wrap items-center justify-center gap-6 pt-4 text-xs text-slate-200 font-medium">
