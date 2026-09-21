@@ -30,7 +30,7 @@ export const CTASection = () => {
 
           <div className="relative z-10 flex flex-col sm:flex-row items-center justify-center gap-5 pt-2">
             <SparkleButton to="/register">
-              Get Started Free
+              Get Started
             </SparkleButton>
 
             <Link

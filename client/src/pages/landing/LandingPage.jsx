@@ -103,14 +103,8 @@ export const LandingPage = () => {
 
           {/* Auth Action Buttons */}
           <div className="hidden md:flex items-center gap-3">
-            <Link
-              to="/login"
-              className="px-4 py-2 text-sm font-bold text-slate-300 hover:text-white hover:bg-white/5 rounded-xl transition-colors"
-            >
+            <SparkleButton to="/login">
               Log In
-            </Link>
-            <SparkleButton to="/register">
-              Get Started
             </SparkleButton>
           </div>
 
@@ -152,15 +146,8 @@ export const LandingPage = () => {
             </nav>
 
             <div className="pt-4 border-t border-slate-800/80 flex flex-col gap-3">
-              <Link
-                to="/login"
-                onClick={() => setMobileMenuOpen(false)}
-                className="w-full text-center py-3 text-sm font-bold text-slate-200 rounded-xl bg-white/5 border border-white/10"
-              >
+              <SparkleButton to="/login" className="w-full justify-center">
                 Log In
-              </Link>
-              <SparkleButton to="/register" className="w-full justify-center">
-                Get Started Free
               </SparkleButton>
             </div>
           </div>

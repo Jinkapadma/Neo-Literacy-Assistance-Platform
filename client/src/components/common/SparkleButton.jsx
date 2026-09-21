@@ -2,38 +2,36 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 export const SparkleButton = ({
-  children = 'Get Started Free',
+  children = 'Get Started',
   to,
   href,
   onClick,
   className = '',
 }) => {
-  const buttonMarkup = (
-    <div className={`sp ${className}`}>
-      <span className="sparkle-button">
-        <span className="spark" />
-        <span className="backdrop" />
-        <svg
-          className="sparkle"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"
-            fill="currentColor"
-          />
-          <path
-            d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"
-            fill="currentColor"
-          />
-          <path
-            d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"
-            fill="currentColor"
-          />
-        </svg>
-        <span className="text btn-text">{children}</span>
-      </span>
+  const content = (
+    <>
+      <span className="spark" />
+      <span className="backdrop" />
+      <svg
+        className="sparkle"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"
+          fill="currentColor"
+        />
+        <path
+          d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"
+          fill="currentColor"
+        />
+        <path
+          d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"
+          fill="currentColor"
+        />
+      </svg>
+      <span className="text btn-text">{children}</span>
 
       {/* Floating Particles Pen */}
       <div className="particle-pen">
@@ -80,28 +78,28 @@ export const SparkleButton = ({
           <path d="M7.5 0L9 6L15 7.5L9 9L7.5 15L6 9L0 7.5L6 6L7.5 0Z" />
         </svg>
       </div>
-    </div>
+    </>
   );
 
   if (to) {
     return (
-      <Link to={to} className="inline-flex text-decoration-none">
-        {buttonMarkup}
+      <Link to={to} className={`sparkle-button ${className}`}>
+        {content}
       </Link>
     );
   }
 
   if (href) {
     return (
-      <a href={href} className="inline-flex text-decoration-none">
-        {buttonMarkup}
+      <a href={href} className={`sparkle-button ${className}`}>
+        {content}
       </a>
     );
   }
 
   return (
-    <button type="button" onClick={onClick} className="inline-flex bg-transparent border-0 p-0 cursor-pointer">
-      {buttonMarkup}
+    <button type="button" onClick={onClick} className={`sparkle-button ${className}`}>
+      {content}
     </button>
   );
 };
