@@ -20,10 +20,12 @@ export const AppRoutes = () => {
       {/* Public Marketing Landing Page */}
       <Route path="/" element={<LandingPage />} />
 
+      {/* Standalone Auth Pages (Clean form without left sidebar or top navbar) */}
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+
       {/* Internal Application Routes with Layout */}
       <Route element={<Layout />}>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
         <Route path="/curriculum" element={<CurriculumList />} />
         <Route path="/curriculum/:id" element={<CurriculumDetail />} />
         <Route path="/content" element={<ContentLibrary />} />
