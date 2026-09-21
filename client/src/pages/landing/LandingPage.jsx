@@ -49,12 +49,12 @@ export const LandingPage = () => {
   };
 
   return (
-    <div className="relative min-h-screen bg-slate-950 text-slate-100 selection:bg-brand-500 selection:text-white font-sans antialiased overflow-x-hidden">
+    <div className="relative min-h-screen bg-[#407c93] text-slate-100 selection:bg-brand-500 selection:text-white font-sans antialiased overflow-x-hidden">
       {/* 1. STICKY DYNAMIC NAVBAR */}
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
-            ? 'bg-slate-950/90 backdrop-blur-xl border-b border-slate-800/80 shadow-2xl py-3.5'
+            ? 'bg-[#407c93]/90 backdrop-blur-xl border-b border-white/20 shadow-2xl py-3.5'
             : 'bg-transparent py-5'
         }`}
       >
@@ -67,8 +67,8 @@ export const LandingPage = () => {
             <div>
               <span className="text-xl font-black text-white tracking-tight flex items-center gap-1.5">
                 {BRAND.name.split(' ')[0]}
-                <span className="text-brand-400">Read</span>
-                <span className="hidden sm:inline-flex px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-brand-500/20 text-brand-300 border border-brand-500/30 rounded-full">
+                <span className="text-brand-300">Read</span>
+                <span className="hidden sm:inline-flex px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-white/10 text-slate-200 border border-white/20 rounded-full">
                   AI
                 </span>
               </span>
@@ -76,14 +76,14 @@ export const LandingPage = () => {
           </Link>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-300">
+          <nav className="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-200">
             {navLinks.map(link =>
               link.href ? (
                 <a
                   key={link.label}
                   href={link.href}
                   onClick={e => handleScrollToSection(e, link.href)}
-                  className="hover:text-white hover:text-brand-300 transition-colors"
+                  className="hover:text-white hover:text-brand-200 transition-colors"
                 >
                   {link.label}
                 </a>
@@ -91,7 +91,7 @@ export const LandingPage = () => {
                 <Link
                   key={link.label}
                   to={link.to}
-                  className="hover:text-white hover:text-brand-300 transition-colors"
+                  className="hover:text-white hover:text-brand-200 transition-colors"
                 >
                   {link.label}
                 </Link>
@@ -109,7 +109,7 @@ export const LandingPage = () => {
           {/* Mobile Hamburger Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/10 md:hidden focus:outline-none"
+            className="p-2 rounded-xl text-slate-200 hover:text-white hover:bg-white/10 md:hidden focus:outline-none"
             aria-label="Toggle Navigation Menu"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -118,15 +118,15 @@ export const LandingPage = () => {
 
         {/* Mobile Slide-in Drawer */}
         {mobileMenuOpen && (
-          <div className="md:hidden bg-slate-950/95 border-b border-slate-800 px-6 py-6 space-y-4 animate-fadeIn backdrop-blur-2xl">
-            <nav className="flex flex-col space-y-3 text-base font-semibold text-slate-200">
+          <div className="md:hidden bg-[#407c93]/95 border-b border-white/20 px-6 py-6 space-y-4 animate-fadeIn backdrop-blur-2xl">
+            <nav className="flex flex-col space-y-3 text-base font-semibold text-slate-100">
               {navLinks.map(link =>
                 link.href ? (
                   <a
                     key={link.label}
                     href={link.href}
                     onClick={e => handleScrollToSection(e, link.href)}
-                    className="py-2 hover:text-brand-400 transition-colors"
+                    className="py-2 hover:text-brand-300 transition-colors"
                   >
                     {link.label}
                   </a>
@@ -135,7 +135,7 @@ export const LandingPage = () => {
                     key={link.label}
                     to={link.to}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="py-2 hover:text-brand-400 transition-colors"
+                    className="py-2 hover:text-brand-300 transition-colors"
                   >
                     {link.label}
                   </Link>
