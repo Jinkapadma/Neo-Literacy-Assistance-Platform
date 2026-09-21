@@ -63,7 +63,7 @@ export const HeroSection = () => {
 
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-5 pt-2">
-          <SparkleButton to="/register">
+          <SparkleButton to="/login">
             Get Started
           </SparkleButton>
 

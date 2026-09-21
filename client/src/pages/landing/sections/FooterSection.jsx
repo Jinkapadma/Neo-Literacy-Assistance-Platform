@@ -35,24 +35,19 @@ export const FooterSection = () => {
             </h4>
             <ul className="space-y-2 text-xs">
               <li>
-                <Link to="/curriculum" className="hover:text-white transition-colors">
-                  Phonics & Curriculums
-                </Link>
-              </li>
-              <li>
-                <Link to="/content" className="hover:text-white transition-colors">
-                  Multilingual Story Library
-                </Link>
-              </li>
-              <li>
-                <Link to="/assessment" className="hover:text-white transition-colors">
-                  Benchmark Assessments
-                </Link>
+                <a href="#features" className="hover:text-white transition-colors">
+                  Core Features
+                </a>
               </li>
               <li>
                 <a href="#how-it-works" className="hover:text-white transition-colors">
                   How Learning Works
                 </a>
+              </li>
+              <li>
+                <Link to="/login" className="hover:text-white transition-colors">
+                  Learner Portal Login
+                </Link>
               </li>
             </ul>
           </div>

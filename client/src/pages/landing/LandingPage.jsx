@@ -36,8 +36,6 @@ export const LandingPage = () => {
   const navLinks = [
     { label: 'Features', href: '#features' },
     { label: 'How It Works', href: '#how-it-works' },
-    { label: 'Curriculums', to: '/curriculum' },
-    { label: 'Story Library', to: '/content' },
   ];
 
   const handleScrollToSection = (e, href) => {
