@@ -272,6 +272,28 @@ export const AssessmentPage = () => {
         </div>
       </div>
 
+      {/* Featured Adaptive Initial Diagnostic Launcher */}
+      <div className="p-6 sm:p-7 rounded-3xl bg-gradient-to-r from-brand-600 via-indigo-600 to-purple-700 text-white flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-xl">
+        <div className="space-y-1.5">
+          <span className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-white/20 text-amber-300 text-xs font-black uppercase tracking-wider">
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>AI Diagnostic Engine</span>
+          </span>
+          <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight">
+            Take Your Personalized Literacy Benchmark
+          </h2>
+          <p className="text-xs sm:text-sm text-slate-200 max-w-xl leading-relaxed">
+            Adaptive test dynamically calibrated for your language and age cohort to generate a personalized learning roadmap.
+          </p>
+        </div>
+
+        <Link to="/initial-assessment" className="shrink-0 w-full sm:w-auto">
+          <Button variant="primary" size="lg" className="w-full sm:w-auto bg-amber-400 hover:bg-amber-500 text-slate-950 font-black shadow-lg shadow-amber-400/30" icon={ArrowRight} iconPosition="right">
+            Start Diagnostic Test
+          </Button>
+        </Link>
+      </div>
+
       {/* Filter Bar */}
       <div className="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-card flex flex-wrap gap-4 items-center justify-between">
         <div className="flex flex-wrap items-center gap-3">

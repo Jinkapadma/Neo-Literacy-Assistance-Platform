@@ -100,10 +100,29 @@ export const InitialAssessment = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Determine user language and age
-  const preferredLanguage =
-    location.state?.preferredLanguage || user?.preferredLanguage || 'te';
-  const age = location.state?.age || user?.age || 22;
+  // Retrieve saved choices from survey or user profile
+  const onboardingData = (() => {
+    try {
+      const saved = localStorage.getItem('neoread_onboarding_data');
+      return saved ? JSON.parse(saved) : null;
+    } catch {
+      return null;
+    }
+  })();
+
+  const initialLang =
+    location.state?.preferredLanguage ||
+    user?.preferredLanguage ||
+    onboardingData?.language?.code ||
+    'te';
+
+  const initialAge =
+    location.state?.age ||
+    user?.age ||
+    22;
+
+  const [currentLang, setCurrentLang] = useState(initialLang);
+  const [currentAge, setCurrentAge] = useState(initialAge);
 
   const [assessment, setAssessment] = useState(null);
   const [currentIdx, setCurrentIdx] = useState(0);
@@ -117,14 +136,14 @@ export const InitialAssessment = () => {
   const [showPlanModal, setShowPlanModal] = useState(false);
 
   const langInfo =
-    SUPPORTED_LANGUAGES.find(l => l.code === preferredLanguage) || SUPPORTED_LANGUAGES[0];
-  const ageCohort = age < 12 ? 'kids' : age < 18 ? 'teens' : 'adults';
+    SUPPORTED_LANGUAGES.find(l => l.code === currentLang) || SUPPORTED_LANGUAGES[0];
+  const ageCohort = currentAge < 12 ? 'kids' : currentAge < 18 ? 'teens' : 'adults';
 
   // Load adaptive diagnostic assessment
   useEffect(() => {
     setLoading(true);
     assessmentApi
-      .getInitialDiagnostic({ language: preferredLanguage, age })
+      .getInitialDiagnostic({ language: currentLang, age: currentAge })
       .then(res => {
         setAssessment(res.data);
         setCurrentIdx(0);
@@ -134,7 +153,7 @@ export const InitialAssessment = () => {
         toast.error(err.response?.data?.message || 'Failed to load initial assessment');
       })
       .finally(() => setLoading(false));
-  }, [preferredLanguage, age]);
+  }, [currentLang, currentAge]);
 
   // Active Timer
   useEffect(() => {
@@ -310,13 +329,25 @@ export const InitialAssessment = () => {
             {langInfo.flag}
           </div>
           <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 mb-0.5">
+            <div className="flex items-center justify-between gap-2 mb-0.5 flex-wrap">
               <span className="text-[10px] sm:text-xs font-black uppercase tracking-wider text-amber-300">
-                Initial Literacy Diagnostic &bull; {langInfo.nativeName} ({langInfo.name})
+                Initial Diagnostic &bull; {langInfo.nativeName} ({langInfo.name})
               </span>
+              <select
+                value={currentLang}
+                onChange={e => setCurrentLang(e.target.value)}
+                className="bg-slate-800 text-white text-[11px] font-bold rounded-lg px-2 py-1 border border-white/20 focus:outline-none cursor-pointer"
+                title="Change Assessment Language"
+              >
+                {SUPPORTED_LANGUAGES.map(l => (
+                  <option key={l.code} value={l.code}>
+                    {l.flag} {l.nativeName} ({l.name})
+                  </option>
+                ))}
+              </select>
             </div>
             <p className="text-xs sm:text-sm font-semibold text-white leading-snug">
-              Listen carefully to the voice, answer each question, and we'll unlock your personalized curriculum!
+              Listen to the voice, answer the questions, and unlock your personalized curriculum!
             </p>
           </div>
         </div>
@@ -332,7 +363,7 @@ export const InitialAssessment = () => {
 
               <button
                 type="button"
-                onClick={() => speakText(currentQ.passage ? `${currentQ.passage}. ${currentQ.prompt}` : currentQ.prompt, preferredLanguage)}
+                onClick={() => speakText(currentQ.passage ? `${currentQ.passage}. ${currentQ.prompt}` : currentQ.prompt, currentLang)}
                 className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-white/10 hover:bg-white/20 text-amber-300 hover:text-white border border-white/15 text-xs font-bold transition-all cursor-pointer shadow-sm"
                 title="Listen to question audio"
               >
@@ -385,7 +416,7 @@ export const InitialAssessment = () => {
                         type="button"
                         onClick={e => {
                           e.stopPropagation();
-                          speakText(opt, preferredLanguage);
+                          speakText(opt, currentLang);
                         }}
                         className="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white transition-colors cursor-pointer"
                         title="Pronounce option"
