@@ -16,6 +16,9 @@ import userRoutes from './routes/user.routes.js';
 import curriculumRoutes from './routes/curriculum.routes.js';
 import contentRoutes from './routes/content.routes.js';
 import assessmentRoutes from './routes/assessment.routes.js';
+import aiRoutes from './routes/ai.routes.js';
+import voiceRoutes from './routes/voice.routes.js';
+import analyticsRoutes from './routes/analytics.routes.js';
 import { ApiResponse } from './utils/apiResponse.js';
 
 const app = express();
@@ -118,35 +121,10 @@ app.use('/api/curriculum', curriculumRoutes);
 app.use('/api/content', contentRoutes);
 app.use('/api/assessments', assessmentRoutes);
 
-// =========================================================================
-// PHASE 2 & 3 STUBBED ENDPOINTS (Deferred to subsequent development phases)
-// =========================================================================
-app.all('/api/ai/*', (req, res) => {
-  // TODO: Phase 2 - Implement AI-powered Personalized Learning Path & Recommendation Engine
-  return ApiResponse.success(
-    res,
-    { status: 'STUB_PHASE_2', message: 'AI Personalization Engine will be implemented in Phase 2.' },
-    'AI Personalization Engine (Phase 2 Roadmap)'
-  );
-});
-
-app.all('/api/voice/*', (req, res) => {
-  // TODO: Phase 3 - Implement Speech-to-Text & Real-Time Pronunciation Assessment Engine
-  return ApiResponse.success(
-    res,
-    { status: 'STUB_PHASE_3', message: 'Voice Recognition & Pronunciation Evaluator will be implemented in Phase 3.' },
-    'Voice & Pronunciation Assessment Engine (Phase 3 Roadmap)'
-  );
-});
-
-app.all('/api/analytics/*', (req, res) => {
-  // TODO: Phase 4 - Implement Educator Real-Time Dashboards & Longitudinal Literacy Analytics
-  return ApiResponse.success(
-    res,
-    { status: 'STUB_PHASE_4', message: 'Advanced Analytics and Educator Dashboards will be implemented in Phase 4.' },
-    'Analytics & Dashboards (Phase 4 Roadmap)'
-  );
-});
+// Phase 2, 3 & 4 Feature Routes
+app.use('/api/ai', aiRoutes);
+app.use('/api/voice', voiceRoutes);
+app.use('/api/analytics', analyticsRoutes);
 
 // 404 Handler & Centralized Error Handler
 app.use(notFoundHandler);

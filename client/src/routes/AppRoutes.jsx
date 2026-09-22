@@ -15,6 +15,10 @@ import { CurriculumDetail } from '../pages/curriculum/CurriculumDetail.jsx';
 import { ContentLibrary } from '../pages/content/ContentLibrary.jsx';
 import { AssessmentPage } from '../pages/assessment/AssessmentPage.jsx';
 import { AssessmentResult } from '../pages/assessment/AssessmentResult.jsx';
+import { AdaptiveLearningPath } from '../pages/ai/AdaptiveLearningPath.jsx';
+import { SpacedRepetitionLab } from '../pages/ai/SpacedRepetitionLab.jsx';
+import { VoicePracticeLab } from '../pages/voice/VoicePracticeLab.jsx';
+import { EducatorAnalyticsDashboard } from '../pages/educator/EducatorAnalyticsDashboard.jsx';
 import { NotFound } from '../pages/NotFound.jsx';
 
 export const AppRoutes = () => {
@@ -51,6 +55,16 @@ export const AppRoutes = () => {
         <Route path="/content" element={<ContentLibrary />} />
         <Route path="/assessment" element={<AssessmentPage />} />
         <Route path="/assessment/:id" element={<AssessmentPage />} />
+
+        {/* Phase 2: AI Personalization & Adaptive Engine */}
+        <Route path="/ai-path" element={<AdaptiveLearningPath />} />
+        <Route path="/spaced-repetition" element={<SpacedRepetitionLab />} />
+
+        {/* Phase 3: Voice Recognition & Phonetic Pronunciation Engine */}
+        <Route path="/voice-practice" element={<VoicePracticeLab />} />
+
+        {/* Phase 4: Educator & Longitudinal Analytics Dashboard */}
+        <Route path="/analytics" element={<EducatorAnalyticsDashboard />} />
 
         {/* Protected Learner Profile */}
         <Route

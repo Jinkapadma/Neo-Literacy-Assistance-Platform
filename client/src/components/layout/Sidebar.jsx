@@ -10,6 +10,9 @@ import {
   Sparkles,
   Volume2,
   BarChart3,
+  Layers,
+  Zap,
+  CheckCircle2,
   X,
 } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth.js';
@@ -17,7 +20,7 @@ import { useAuth } from '../../hooks/useAuth.js';
 export const Sidebar = ({ isOpen, onClose }) => {
   const { user, isAuthenticated } = useAuth();
 
-  const navItems = [
+  const coreNavItems = [
     ...(isAuthenticated
       ? [
           {
@@ -53,22 +56,37 @@ export const Sidebar = ({ isOpen, onClose }) => {
       icon: Award,
       color: 'text-amber-600',
     },
-    ...(isAuthenticated
-      ? [
-          {
-            to: '/profile',
-            label: 'Learner Profile & Scores',
-            icon: User,
-            color: 'text-sky-600',
-          },
-        ]
-      : []),
   ];
 
-  const roadmapItems = [
-    { label: 'AI Adaptive Engine', phase: 'Phase 2', icon: Sparkles },
-    { label: 'Voice & Pronunciation', phase: 'Phase 3', icon: Volume2 },
-    { label: 'Educator Analytics', phase: 'Phase 4', icon: BarChart3 },
+  const advancedEngines = [
+    {
+      to: '/ai-path',
+      label: 'AI Adaptive Path',
+      icon: Sparkles,
+      color: 'text-brand-600',
+      tag: 'P2',
+    },
+    {
+      to: '/spaced-repetition',
+      label: 'Spaced Repetition Lab',
+      icon: Layers,
+      color: 'text-indigo-600',
+      tag: 'P2',
+    },
+    {
+      to: '/voice-practice',
+      label: 'Voice & Pronunciation',
+      icon: Volume2,
+      color: 'text-teal-600',
+      tag: 'P3',
+    },
+    {
+      to: '/analytics',
+      label: 'Educator Analytics',
+      icon: BarChart3,
+      color: 'text-rose-600',
+      tag: 'P4',
+    },
   ];
 
   return (
@@ -82,7 +100,7 @@ export const Sidebar = ({ isOpen, onClose }) => {
       )}
 
       <aside
-        className={`fixed top-0 bottom-0 left-0 z-50 w-72 bg-white border-r border-slate-200 p-6 flex flex-col justify-between transition-transform duration-300 ease-in-out lg:static lg:translate-x-0 ${
+        className={`fixed top-0 bottom-0 left-0 z-50 w-72 bg-white border-r border-slate-200 p-6 flex flex-col justify-between overflow-y-auto transition-transform duration-300 ease-in-out lg:static lg:translate-x-0 ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
@@ -98,12 +116,12 @@ export const Sidebar = ({ isOpen, onClose }) => {
             </button>
           </div>
 
-          {/* Navigation Links */}
+          {/* Core Navigation Links */}
           <nav className="space-y-1.5">
             <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400 px-3 pb-2">
-              Learning Portal
+              Core Platform
             </p>
-            {navItems.map(item => {
+            {coreNavItems.map(item => {
               const Icon = item.icon;
               return (
                 <NavLink
@@ -112,7 +130,7 @@ export const Sidebar = ({ isOpen, onClose }) => {
                   end={item.to === '/'}
                   onClick={onClose}
                   className={({ isActive }) =>
-                    `flex items-center gap-3.5 px-3.5 py-3 rounded-2xl font-semibold text-sm transition-all duration-200 ${
+                    `flex items-center gap-3.5 px-3.5 py-2.5 rounded-2xl font-semibold text-sm transition-all duration-200 ${
                       isActive
                         ? 'bg-brand-50 text-brand-700 shadow-sm border border-brand-200'
                         : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
@@ -120,44 +138,88 @@ export const Sidebar = ({ isOpen, onClose }) => {
                   }
                 >
                   <div className={`p-1.5 rounded-xl bg-slate-50 group-hover:bg-white shadow-xs`}>
-                    <Icon className={`w-5 h-5 ${item.color}`} />
+                    <Icon className={`w-4 h-4 ${item.color}`} />
                   </div>
                   <span>{item.label}</span>
                 </NavLink>
               );
             })}
           </nav>
-        </div>
 
-        {/* Future Roadmap / Phase indicators */}
-        <div className="pt-6 border-t border-slate-100 space-y-3">
-          <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400 px-1">
-            Platform Roadmap
-          </p>
-          <div className="space-y-2">
-            {roadmapItems.map(item => {
+          {/* Intelligent Engines (Phase 2, 3, 4) */}
+          <nav className="space-y-1.5 pt-2 border-t border-slate-100">
+            <div className="flex items-center justify-between px-3 pb-2">
+              <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                AI & Intelligence Labs
+              </p>
+              <span className="text-[9px] font-bold uppercase bg-brand-100 text-brand-700 px-1.5 py-0.5 rounded">
+                Active
+              </span>
+            </div>
+            {advancedEngines.map(item => {
               const Icon = item.icon;
               return (
-                <div
-                  key={item.label}
-                  className="flex items-center justify-between p-2.5 rounded-xl bg-slate-50/80 border border-slate-100 text-xs font-medium text-slate-400 cursor-not-allowed opacity-75"
-                  title="Coming in later development phases"
+                <NavLink
+                  key={item.to}
+                  to={item.to}
+                  onClick={onClose}
+                  className={({ isActive }) =>
+                    `flex items-center justify-between px-3.5 py-2.5 rounded-2xl font-semibold text-sm transition-all duration-200 ${
+                      isActive
+                        ? 'bg-brand-50 text-brand-700 shadow-sm border border-brand-200'
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                    }`
+                  }
                 >
-                  <div className="flex items-center gap-2">
-                    <Icon className="w-4 h-4 text-slate-400" />
+                  <div className="flex items-center gap-3">
+                    <div className={`p-1.5 rounded-xl bg-slate-50 group-hover:bg-white shadow-xs`}>
+                      <Icon className={`w-4 h-4 ${item.color}`} />
+                    </div>
                     <span>{item.label}</span>
                   </div>
-                  <span className="text-[10px] font-bold px-2 py-0.5 bg-slate-200 text-slate-600 rounded-md">
-                    {item.phase}
+                  <span className="text-[10px] font-bold px-1.5 py-0.5 bg-slate-100 text-slate-600 rounded">
+                    {item.tag}
                   </span>
-                </div>
+                </NavLink>
               );
             })}
-          </div>
+          </nav>
+        </div>
 
-          <div className="p-3 bg-gradient-to-r from-brand-50 to-indigo-50 border border-brand-100 rounded-2xl text-center">
-            <p className="text-xs font-bold text-brand-900">Phase 1 Active</p>
-            <p className="text-[11px] text-brand-600 mt-0.5">Content & Assessment Engine</p>
+        {/* User Profile / Status Footer */}
+        <div className="pt-6 border-t border-slate-100 space-y-3">
+          {isAuthenticated && (
+            <NavLink
+              to="/profile"
+              onClick={onClose}
+              className={({ isActive }) =>
+                `flex items-center gap-3 px-3 py-2.5 rounded-2xl font-semibold text-sm transition-colors ${
+                  isActive ? 'bg-slate-100 text-slate-900' : 'text-slate-600 hover:bg-slate-50'
+                }`
+              }
+            >
+              <div className="w-8 h-8 rounded-full bg-brand-100 text-brand-700 flex items-center justify-center font-bold text-xs">
+                {user?.fullName?.charAt(0) || 'U'}
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-xs font-bold text-slate-900 truncate">
+                  {user?.fullName || 'Learner Account'}
+                </p>
+                <p className="text-[10px] text-slate-400 capitalize">
+                  {user?.role || 'Learner'} • {user?.nativeLanguage?.toUpperCase() || 'TE'}
+                </p>
+              </div>
+            </NavLink>
+          )}
+
+          <div className="p-3 bg-gradient-to-r from-emerald-50 via-teal-50 to-indigo-50 border border-emerald-200/60 rounded-2xl">
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+              <p className="text-xs font-bold text-slate-900">Phases 1, 2, 3 & 4 Active</p>
+            </div>
+            <p className="text-[10px] text-slate-600 mt-1 leading-snug">
+              Adaptive AI, SM-2 Flashcards, Voice Eval & Educator Analytics operational.
+            </p>
           </div>
         </div>
       </aside>
