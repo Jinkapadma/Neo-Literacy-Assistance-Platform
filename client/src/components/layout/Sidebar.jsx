@@ -6,6 +6,7 @@ import {
   GraduationCap,
   BookOpen,
   Award,
+  Gamepad2,
   User,
   Sparkles,
   Volume2,
