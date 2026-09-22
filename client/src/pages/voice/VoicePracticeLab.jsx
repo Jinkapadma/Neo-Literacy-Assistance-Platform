@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { voiceApi } from '../../api/voiceApi.js';
 import { useAuth } from '../../hooks/useAuth.js';
+import { useProgress } from '../../context/ProgressContext.jsx';
 import { Card } from '../../components/common/Card.jsx';
 import { Badge } from '../../components/common/Badge.jsx';
 import { Button } from '../../components/common/Button.jsx';
@@ -26,6 +27,7 @@ import { Loader } from '../../components/common/Loader.jsx';
 
 export const VoicePracticeLab = () => {
   const { user } = useAuth();
+  const { recordSpacedReview } = useProgress();
   const [language, setLanguage] = useState(user?.nativeLanguage || 'te');
   const [difficulty, setDifficulty] = useState('beginner');
   const [phrases, setPhrases] = useState([]);
@@ -188,6 +190,7 @@ export const VoicePracticeLab = () => {
 
     // Submit evaluation to backend
     setEvaluating(true);
+    recordSpacedReview(1);
     try {
       const res = await voiceApi.evaluatePronunciation({
         targetText: selectedPhrase?.text || 'శుభోదయం',

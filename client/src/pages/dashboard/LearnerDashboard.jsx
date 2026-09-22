@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth.js';
+import { useProgress } from '../../context/ProgressContext.jsx';
 import { assessmentApi } from '../../api/assessmentApi.js';
 import { Card } from '../../components/common/Card.jsx';
 import { Button } from '../../components/common/Button.jsx';
@@ -26,6 +27,7 @@ import {
 
 export const LearnerDashboard = () => {
   const { user } = useAuth();
+  const { progress, curriculumPercentage } = useProgress();
   const navigate = useNavigate();
   const [benchmarkData, setBenchmarkData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -125,7 +127,7 @@ export const LearnerDashboard = () => {
             </div>
             <div>
               <div className="flex items-center gap-1 font-black text-white text-base">
-                <span>1 Day Streak</span>
+                <span>{progress.streakDays} Day Streak</span>
               </div>
               <span className="text-[11px] text-amber-200 font-semibold flex items-center gap-1">
                 <Clock className="w-3 h-3" /> Daily Target: 15 mins
@@ -203,12 +205,14 @@ export const LearnerDashboard = () => {
           <div className="space-y-2">
             <div className="flex items-center justify-between text-xs font-bold text-slate-600">
               <span>Curriculum Progress</span>
-              <span className="text-brand-600 font-black">2 of 5 Lessons Completed (40%)</span>
+              <span className="text-brand-600 font-black">
+                {progress.completedLessonsCount} of {progress.totalLessonsCount || 20} Lessons Completed ({curriculumPercentage}%)
+              </span>
             </div>
             <div className="w-full bg-slate-100 rounded-full h-3 overflow-hidden p-0.5 border border-slate-200/60">
               <div
                 className="h-full rounded-full bg-gradient-to-r from-brand-500 to-indigo-600 transition-all duration-500"
-                style={{ width: '40%' }}
+                style={{ width: `${curriculumPercentage}%` }}
               />
             </div>
           </div>
@@ -218,7 +222,7 @@ export const LearnerDashboard = () => {
             <div className="space-y-1">
               <span className="text-[10px] font-black uppercase tracking-wider text-indigo-600 flex items-center gap-1">
                 <Zap className="w-3.5 h-3.5 text-amber-500 fill-amber-400" />
-                <span>Next Up &bull; Lesson 3</span>
+                <span>Next Up &bull; Lesson {progress.completedLessonsCount + 1}</span>
               </span>
               <h4 className="text-sm sm:text-base font-bold text-slate-900">
                 {langInfo.name} Two-Letter Acoustic Blends & Sight Words
@@ -230,7 +234,7 @@ export const LearnerDashboard = () => {
 
             <Link to="/curriculum" className="shrink-0 w-full sm:w-auto">
               <Button variant="primary" size="md" className="w-full sm:w-auto" icon={ArrowRight} iconPosition="right">
-                Start Lesson 3
+                Start Lesson {progress.completedLessonsCount + 1}
               </Button>
             </Link>
           </div>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { assessmentApi } from '../../api/assessmentApi.js';
 import { useAuth } from '../../hooks/useAuth.js';
+import { useProgress } from '../../context/ProgressContext.jsx';
 import { SUPPORTED_LANGUAGES, PROFICIENCY_LEVELS } from '../../utils/constants.js';
 import { getClientDiagnosticQuestions } from '../../services/diagnosticQuestions.js';
 import { PersonalizedPlanModal } from '../../components/assessment/PersonalizedPlanModal.jsx';
@@ -99,6 +100,7 @@ const speakText = (text, langCode) => {
 
 export const InitialAssessment = () => {
   const { user, isAuthenticated } = useAuth();
+  const { recordAssessmentComplete } = useProgress();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -312,6 +314,7 @@ export const InitialAssessment = () => {
       const plan = submissionData?.personalizedPlan || fallbackPlan;
       localStorage.setItem('neoread_personalized_plan', JSON.stringify(plan));
       localStorage.setItem('neoread_onboarding_plan', JSON.stringify(plan));
+      recordAssessmentComplete(plan.overallScore || computedScore);
       setPlanResult(plan);
       setShowPlanModal(true);
       toast.success('Initial Assessment Complete! Your Personalized Plan is ready.');
@@ -319,6 +322,7 @@ export const InitialAssessment = () => {
       console.warn('API sync completed with local fallback plan:', err);
       localStorage.setItem('neoread_personalized_plan', JSON.stringify(fallbackPlan));
       localStorage.setItem('neoread_onboarding_plan', JSON.stringify(fallbackPlan));
+      recordAssessmentComplete(computedScore);
       setPlanResult(fallbackPlan);
       setShowPlanModal(true);
       toast.success('Initial Assessment Complete! Your Personalized Plan is ready.');

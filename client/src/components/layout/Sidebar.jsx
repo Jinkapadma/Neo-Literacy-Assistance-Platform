@@ -56,6 +56,12 @@ export const Sidebar = ({ isOpen, onClose }) => {
       icon: Award,
       color: 'text-amber-600',
     },
+    {
+      to: '/games',
+      label: 'Games & Puzzles',
+      icon: Gamepad2,
+      color: 'text-violet-600',
+    },
   ];
 
   const advancedEngines = [

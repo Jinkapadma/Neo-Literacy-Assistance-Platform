@@ -19,6 +19,8 @@ import assessmentRoutes from './routes/assessment.routes.js';
 import aiRoutes from './routes/ai.routes.js';
 import voiceRoutes from './routes/voice.routes.js';
 import analyticsRoutes from './routes/analytics.routes.js';
+import gamesRoutes from './routes/games.routes.js';
+import bhashiniRoutes from './routes/bhashini.routes.js';
 import { ApiResponse } from './utils/apiResponse.js';
 
 const app = express();
@@ -125,6 +127,8 @@ app.use('/api/assessments', assessmentRoutes);
 app.use('/api/ai', aiRoutes);
 app.use('/api/voice', voiceRoutes);
 app.use('/api/analytics', analyticsRoutes);
+app.use('/api/games', gamesRoutes);
+app.use('/api/bhashini', bhashiniRoutes);
 
 // 404 Handler & Centralized Error Handler
 app.use(notFoundHandler);

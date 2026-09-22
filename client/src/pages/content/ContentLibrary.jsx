@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { contentApi } from '../../api/contentApi.js';
+import { bhashiniApi } from '../../api/bhashiniApi.js';
+import { useProgress } from '../../context/ProgressContext.jsx';
 import { Card } from '../../components/common/Card.jsx';
 import { Button } from '../../components/common/Button.jsx';
 import { Modal } from '../../components/common/Modal.jsx';
@@ -21,11 +23,14 @@ import {
   ArrowRight,
   BookMarked,
   Languages,
+  Zap,
 } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 export const ContentLibrary = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { selectedLanguage, setSelectedLanguage, speakText, stopSpeaking } = useAccessibility();
+  const { recordSpacedReview } = useProgress();
 
   const [contentList, setContentList] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -36,8 +41,11 @@ export const ContentLibrary = () => {
   // Active reading modal
   const [activeContent, setActiveContent] = useState(null);
   const [activeTranslationLang, setActiveTranslationLang] = useState(null);
+  const [dynamicTranslation, setDynamicTranslation] = useState(null);
+  const [translating, setTranslating] = useState(false);
   const [quizAnswers, setQuizAnswers] = useState({});
   const [quizFeedback, setQuizFeedback] = useState({});
+  const [hasCompletedCurrentReading, setHasCompletedCurrentReading] = useState(false);
 
   const languageFilter = searchParams.get('lang') || selectedLanguage || 'en';
   const directId = searchParams.get('id');
@@ -80,39 +88,92 @@ export const ContentLibrary = () => {
   const openReader = item => {
     setActiveContent(item);
     setActiveTranslationLang(null);
+    setDynamicTranslation(null);
     setQuizAnswers({});
     setQuizFeedback({});
+    setHasCompletedCurrentReading(false);
   };
 
   const closeReader = () => {
     stopSpeaking();
     setActiveContent(null);
     setActiveTranslationLang(null);
+    setDynamicTranslation(null);
+  };
+
+  const handleTranslationChange = async targetLang => {
+    if (!targetLang || targetLang === activeContent?.language) {
+      setActiveTranslationLang(null);
+      setDynamicTranslation(null);
+      return;
+    }
+
+    setActiveTranslationLang(targetLang);
+
+    // Check pre-computed translation first
+    const preExisting = activeContent.translations?.find(t => t.language === targetLang);
+    if (preExisting) {
+      setDynamicTranslation({
+        title: preExisting.translatedTitle,
+        text: preExisting.translatedText,
+      });
+      return;
+    }
+
+    // Otherwise call Bhashini NMT API for real-time translation
+    try {
+      setTranslating(true);
+      const [titleRes, textRes] = await Promise.all([
+        bhashiniApi.translateText(activeContent.title, activeContent.language, targetLang),
+        bhashiniApi.translateText(activeContent.textContent, activeContent.language, targetLang),
+      ]);
+
+      setDynamicTranslation({
+        title: titleRes.translatedText || activeContent.title,
+        text: textRes.translatedText || activeContent.textContent,
+      });
+      toast.success(`Translated via Bhashini AI into ${targetLang.toUpperCase()}!`);
+    } catch {
+      toast.error('Bhashini translation fallback active');
+    } finally {
+      setTranslating(false);
+    }
   };
 
   const handleQuizOption = (qIdx, selectedOpt, correctOpt) => {
     setQuizAnswers(prev => ({ ...prev, [qIdx]: selectedOpt }));
+    const isCorrect = selectedOpt === correctOpt;
     setQuizFeedback(prev => ({
       ...prev,
-      [qIdx]: selectedOpt === correctOpt,
+      [qIdx]: isCorrect,
     }));
+
+    if (isCorrect && !hasCompletedCurrentReading) {
+      recordSpacedReview(1);
+      setHasCompletedCurrentReading(true);
+      toast.success('Correct answer! +10 XP added to your progress');
+    }
+  };
+
+  const handleMarkReadingComplete = () => {
+    if (!hasCompletedCurrentReading) {
+      recordSpacedReview(1);
+      setHasCompletedCurrentReading(true);
+      toast.success('Reading completed! +15 XP added to your progress');
+    } else {
+      toast('Reading already recorded!', { icon: '✨' });
+    }
   };
 
   const getDisplayText = () => {
     if (!activeContent) return '';
-    if (activeTranslationLang) {
-      const trans = activeContent.translations?.find(t => t.language === activeTranslationLang);
-      return trans ? trans.translatedText : activeContent.textContent;
-    }
+    if (dynamicTranslation) return dynamicTranslation.text;
     return activeContent.textContent;
   };
 
   const getDisplayTitle = () => {
     if (!activeContent) return '';
-    if (activeTranslationLang) {
-      const trans = activeContent.translations?.find(t => t.language === activeTranslationLang);
-      return trans ? trans.translatedTitle : activeContent.title;
-    }
+    if (dynamicTranslation) return dynamicTranslation.title;
     return activeContent.title;
   };
 
@@ -288,7 +349,7 @@ export const ContentLibrary = () => {
       >
         {activeContent && (
           <div className="space-y-6 max-h-[75vh] overflow-y-auto pr-1">
-            {/* Audio narration & Translation switcher controls */}
+            {/* Audio narration & Bhashini Translation switcher controls */}
             <div className="flex items-center justify-between flex-wrap gap-3 p-4 rounded-2xl bg-slate-50 border border-slate-200">
               <button
                 onClick={() =>
@@ -303,25 +364,25 @@ export const ContentLibrary = () => {
                 <span>Listen Aloud (Audio Aid)</span>
               </button>
 
-              {/* Translation switcher if translations exist */}
-              {activeContent.translations?.length > 0 && (
-                <div className="flex items-center gap-2">
-                  <Languages className="w-4 h-4 text-slate-500" />
-                  <span className="text-xs font-bold text-slate-600">Translate:</span>
-                  <select
-                    value={activeTranslationLang || ''}
-                    onChange={e => setActiveTranslationLang(e.target.value || null)}
-                    className="text-xs font-bold p-1.5 bg-white border border-slate-300 rounded-lg focus:outline-none"
-                  >
-                    <option value="">Original ({activeContent.language.toUpperCase()})</option>
-                    {activeContent.translations.map(tr => (
-                      <option key={tr.language} value={tr.language}>
-                        {tr.language.toUpperCase()} Translation
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              )}
+              {/* Bhashini Dynamic Translation Switcher */}
+              <div className="flex items-center gap-2">
+                <Languages className="w-4 h-4 text-emerald-600" />
+                <span className="text-xs font-bold text-slate-700">Bhashini AI:</span>
+                <select
+                  value={activeTranslationLang || ''}
+                  onChange={e => handleTranslationChange(e.target.value)}
+                  disabled={translating}
+                  className="text-xs font-bold p-2 bg-white border border-slate-300 rounded-xl focus:border-emerald-500 focus:outline-none cursor-pointer"
+                >
+                  <option value="">Original ({activeContent.language?.toUpperCase()})</option>
+                  {SUPPORTED_LANGUAGES.map(lang => (
+                    <option key={lang.code} value={lang.code}>
+                      {lang.flag} {lang.nativeName} ({lang.code.toUpperCase()})
+                    </option>
+                  ))}
+                </select>
+                {translating && <span className="text-xs text-brand-600 font-bold animate-pulse">Translating...</span>}
+              </div>
             </div>
 
             {/* Phonetic Pronunciation Guide */}
@@ -428,6 +489,18 @@ export const ContentLibrary = () => {
                 </div>
               </div>
             )}
+
+            {/* Reading Complete & Progress Action */}
+            <div className="pt-4 border-t border-slate-200 flex items-center justify-between gap-4">
+              <Button
+                variant={hasCompletedCurrentReading ? 'secondary' : 'primary'}
+                className="w-full bg-emerald-600 hover:bg-emerald-700 shadow-emerald-500/20"
+                onClick={handleMarkReadingComplete}
+                icon={hasCompletedCurrentReading ? CheckCircle2 : Zap}
+              >
+                {hasCompletedCurrentReading ? 'Lesson Completed (+15 XP)' : 'Mark Reading Complete & Collect XP'}
+              </Button>
+            </div>
           </div>
         )}
       </Modal>

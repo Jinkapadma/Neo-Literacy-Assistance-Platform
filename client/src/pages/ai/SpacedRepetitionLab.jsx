@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { aiApi } from '../../api/aiApi.js';
 import { useAuth } from '../../hooks/useAuth.js';
+import { useProgress } from '../../context/ProgressContext.jsx';
 import { Card } from '../../components/common/Card.jsx';
 import { Badge } from '../../components/common/Badge.jsx';
 import { Button } from '../../components/common/Button.jsx';
@@ -23,6 +24,7 @@ import { Loader } from '../../components/common/Loader.jsx';
 
 export const SpacedRepetitionLab = () => {
   const { user } = useAuth();
+  const { recordSpacedReview } = useProgress();
   const [cards, setCards] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
@@ -145,6 +147,7 @@ export const SpacedRepetitionLab = () => {
     } finally {
       setSubmitting(false);
       setCompletedCount(prev => prev + 1);
+      recordSpacedReview(1);
 
       if (currentIndex + 1 < cards.length) {
         setCurrentIndex(currentIndex + 1);

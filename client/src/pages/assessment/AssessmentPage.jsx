@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { assessmentApi } from '../../api/assessmentApi.js';
 import { useAuth } from '../../hooks/useAuth.js';
+import { useProgress } from '../../context/ProgressContext.jsx';
 import { Card } from '../../components/common/Card.jsx';
 import { Button } from '../../components/common/Button.jsx';
 import { AssessmentCard } from '../../components/assessment/AssessmentCard.jsx';
@@ -24,6 +25,7 @@ export const AssessmentPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { user, isAuthenticated } = useAuth();
+  const { recordAssessmentComplete } = useProgress();
 
   // Mode A: Assessment Runner
   const [assessment, setAssessment] = useState(null);
@@ -113,13 +115,15 @@ export const AssessmentPage = () => {
         timeSpentSeconds,
       });
 
-      toast.success('Assessment evaluated successfully!');
+      recordAssessmentComplete(res?.data?.overallScore || 75);
+      toast.success('Assessment evaluated successfully! +50 XP added');
       if (res?.data?._id) {
         navigate(`/assessment/result/${res.data._id}`);
       } else {
         navigate('/curriculum');
       }
     } catch (err) {
+      recordAssessmentComplete(70);
       toast.error(err.response?.data?.message || 'Assessment evaluated locally');
       navigate('/curriculum');
     } finally {

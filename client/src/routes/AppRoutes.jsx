@@ -19,6 +19,7 @@ import { AdaptiveLearningPath } from '../pages/ai/AdaptiveLearningPath.jsx';
 import { SpacedRepetitionLab } from '../pages/ai/SpacedRepetitionLab.jsx';
 import { VoicePracticeLab } from '../pages/voice/VoicePracticeLab.jsx';
 import { EducatorAnalyticsDashboard } from '../pages/educator/EducatorAnalyticsDashboard.jsx';
+import { GamesHub } from '../pages/games/GamesHub.jsx';
 import { NotFound } from '../pages/NotFound.jsx';
 
 export const AppRoutes = () => {
@@ -59,6 +60,9 @@ export const AppRoutes = () => {
         {/* Phase 2: AI Personalization & Adaptive Engine */}
         <Route path="/ai-path" element={<AdaptiveLearningPath />} />
         <Route path="/spaced-repetition" element={<SpacedRepetitionLab />} />
+
+        {/* Multilingual Games, Quizzes & Puzzles */}
+        <Route path="/games" element={<GamesHub />} />
 
         {/* Phase 3: Voice Recognition & Phonetic Pronunciation Engine */}
         <Route path="/voice-practice" element={<VoicePracticeLab />} />

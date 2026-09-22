@@ -3,6 +3,10 @@ import React, { createContext, useState, useEffect } from 'react';
 export const AccessibilityContext = createContext(null);
 
 export const AccessibilityProvider = ({ children }) => {
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    return localStorage.getItem('neo_dark_mode') === 'true';
+  });
+
   const [isDyslexicFont, setIsDyslexicFont] = useState(() => {
     return localStorage.getItem('neo_dyslexic') === 'true';
   });
@@ -18,6 +22,18 @@ export const AccessibilityProvider = ({ children }) => {
   const [selectedLanguage, setSelectedLanguage] = useState(() => {
     return localStorage.getItem('neo_lang') || 'en';
   });
+
+  // Apply dark mode class
+  useEffect(() => {
+    localStorage.setItem('neo_dark_mode', isDarkMode);
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+      document.body.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      document.body.classList.remove('dark');
+    }
+  }, [isDarkMode]);
 
   // Apply body classes
   useEffect(() => {
@@ -67,6 +83,8 @@ export const AccessibilityProvider = ({ children }) => {
       bn: 'bn-IN',
       te: 'te-IN',
       ta: 'ta-IN',
+      kn: 'kn-IN',
+      ml: 'ml-IN',
       mr: 'mr-IN',
     };
 
@@ -81,6 +99,8 @@ export const AccessibilityProvider = ({ children }) => {
   };
 
   const value = {
+    isDarkMode,
+    setIsDarkMode,
     isDyslexicFont,
     setIsDyslexicFont,
     isHighContrast,

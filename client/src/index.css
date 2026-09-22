@@ -22,6 +22,53 @@ body.font-dyslexic {
   line-height: 1.8 !important;
 }
 
+/* Dark Mode & High Contrast Themes */
+body.dark {
+  background-color: #0b0f19;
+  color: #f1f5f9;
+}
+
+body.dark .bg-white {
+  background-color: #131b2e !important;
+  border-color: #1e293b !important;
+  color: #f1f5f9 !important;
+}
+
+body.dark .bg-slate-50 {
+  background-color: #0f172a !important;
+}
+
+body.dark .bg-slate-100 {
+  background-color: #1e293b !important;
+}
+
+body.dark .text-slate-900 {
+  color: #f8fafc !important;
+}
+
+body.dark .text-slate-800,
+body.dark .text-slate-700 {
+  color: #e2e8f0 !important;
+}
+
+body.dark .text-slate-600,
+body.dark .text-slate-500 {
+  color: #94a3b8 !important;
+}
+
+body.dark .border-slate-200,
+body.dark .border-slate-100 {
+  border-color: #1e293b !important;
+}
+
+body.dark input,
+body.dark select,
+body.dark textarea {
+  background-color: #1e293b !important;
+  color: #f8fafc !important;
+  border-color: #334155 !important;
+}
+
 body.high-contrast {
   --tw-bg-opacity: 1;
   background-color: #050811 !important;
@@ -38,9 +85,14 @@ body.high-contrast .bg-slate-50 {
   background-color: #020617 !important;
 }
 
-body.high-contrast .text-slate-600,
-body.high-contrast .text-slate-500,
+body.high-contrast .text-slate-900,
+body.high-contrast .text-slate-800,
 body.high-contrast .text-slate-700 {
+  color: #ffffff !important;
+}
+
+body.high-contrast .text-slate-600,
+body.high-contrast .text-slate-500 {
   color: #cbd5e1 !important;
 }
 
