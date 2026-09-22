@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-const languageEnum = z.enum(['en', 'hi', 'es', 'fr', 'bn', 'te', 'ta', 'mr']);
+const languageEnum = z.enum(['en', 'hi', 'es', 'fr', 'bn', 'te', 'ta', 'kn', 'ml', 'mr']);
 const roleEnum = z.enum(['learner', 'educator', 'admin']);
 const proficiencyEnum = z.enum(['unassessed', 'beginner', 'elementary', 'intermediate', 'advanced']);
 
@@ -9,6 +9,7 @@ export const registerSchema = z.object({
     name: z.string().min(2, 'Name must be at least 2 characters').max(100, 'Name must be at most 100 characters'),
     email: z.string().email('Please provide a valid email address'),
     password: z.string().min(6, 'Password must be at least 6 characters'),
+    age: z.coerce.number().min(3, 'Age must be at least 3').max(120, 'Please enter a valid age').optional(),
     preferredLanguage: languageEnum.default('en'),
     role: roleEnum.default('learner'),
     targetSkills: z.array(z.string()).optional(),

@@ -4,6 +4,7 @@ import { Layout } from '../components/layout/Layout.jsx';
 import { ProtectedRoute } from '../components/layout/ProtectedRoute.jsx';
 
 import { LandingPage } from '../pages/landing/LandingPage.jsx';
+import { OnboardingFlow } from '../pages/onboarding/OnboardingFlow.jsx';
 import { Login } from '../pages/auth/Login.jsx';
 import { Register } from '../pages/auth/Register.jsx';
 import { LearnerProfile } from '../pages/profile/LearnerProfile.jsx';
@@ -19,6 +20,10 @@ export const AppRoutes = () => {
     <Routes>
       {/* Public Marketing Landing Page */}
       <Route path="/" element={<LandingPage />} />
+
+      {/* Interactive Duolingo-style Onboarding Questionnaire */}
+      <Route path="/onboarding" element={<OnboardingFlow />} />
+      <Route path="/get-started" element={<OnboardingFlow />} />
 
       {/* Standalone Auth Pages (Clean form without left sidebar or top navbar) */}
       <Route path="/login" element={<Login />} />

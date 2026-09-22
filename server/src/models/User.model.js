@@ -69,9 +69,14 @@ const userSchema = new mongoose.Schema(
     },
     preferredLanguage: {
       type: String,
-      enum: ['en', 'hi', 'es', 'fr', 'bn', 'te', 'ta', 'mr'],
+      enum: ['en', 'hi', 'es', 'fr', 'bn', 'te', 'ta', 'kn', 'ml', 'mr'],
       default: 'en',
       index: true,
+    },
+    age: {
+      type: Number,
+      min: 3,
+      max: 120,
     },
     role: {
       type: String,

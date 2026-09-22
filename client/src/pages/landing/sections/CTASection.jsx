@@ -46,7 +46,7 @@ export const CTASection = () => {
             </div>
 
             <div className="relative z-10 flex items-center justify-center pt-2">
-              <SparkleButton to="/login">
+              <SparkleButton to="/onboarding">
                 Get Started
               </SparkleButton>
             </div>

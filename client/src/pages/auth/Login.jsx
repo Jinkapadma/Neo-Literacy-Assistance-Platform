@@ -18,6 +18,16 @@ export const Login = () => {
 
   const [isLoading, setIsLoading] = useState(false);
 
+  // Check for saved onboarding preferences
+  const [onboardingData, setOnboardingData] = useState(() => {
+    try {
+      const saved = localStorage.getItem('neoread_onboarding_data');
+      return saved ? JSON.parse(saved) : null;
+    } catch {
+      return null;
+    }
+  });
+
   const {
     register,
     handleSubmit,
@@ -66,8 +76,8 @@ export const Login = () => {
       />
 
       <div className="relative z-10 w-full max-w-md my-8">
-        {/* Back to Home Link */}
-        <div className="mb-4">
+        {/* Back to Home & Retake Survey Links */}
+        <div className="mb-4 flex items-center justify-between">
           <Link
             to="/"
             className="inline-flex items-center gap-2 text-xs font-bold text-slate-200 hover:text-white px-3.5 py-2 rounded-xl bg-slate-900/40 border border-white/20 backdrop-blur-md transition-colors"
@@ -75,10 +85,18 @@ export const Login = () => {
             <ArrowLeft className="w-4 h-4" />
             <span>Back to Home</span>
           </Link>
+
+          <Link
+            to="/onboarding"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-amber-300 hover:text-amber-200 px-3.5 py-2 rounded-xl bg-slate-900/40 border border-amber-400/30 backdrop-blur-md transition-colors"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-amber-300 animate-spin" />
+            <span>Custom Survey</span>
+          </Link>
         </div>
 
         <div className="p-8 sm:p-10 rounded-3xl bg-slate-900/70 border border-white/20 backdrop-blur-2xl shadow-2xl space-y-6">
-          <div className="text-center space-y-2 mb-6">
+          <div className="text-center space-y-2 mb-4">
             <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-brand-600 via-indigo-600 to-sky-400 text-white flex items-center justify-center mx-auto shadow-lg shadow-brand-500/30">
               <BookOpen className="w-7 h-7" />
             </div>
@@ -89,6 +107,29 @@ export const Login = () => {
               Access your personalized multilingual learning portal
             </p>
           </div>
+
+          {/* Duolingo Onboarding Progress Badge if completed */}
+          {onboardingData?.language && (
+            <div className="p-3 rounded-2xl bg-gradient-to-r from-brand-600/40 to-purple-600/40 border border-brand-400/30 backdrop-blur-md text-xs flex items-center justify-between animate-fadeIn">
+              <div className="flex items-center gap-2">
+                <span className="text-lg">{onboardingData.language.flag}</span>
+                <div>
+                  <div className="font-bold text-white">
+                    {onboardingData.language.nativeName} ({onboardingData.language.name})
+                  </div>
+                  <span className="text-[11px] text-amber-300 font-medium">
+                    🎯 {onboardingData.dailyGoal?.hoursDisplay || '15 mins / day'} Goal Saved
+                  </span>
+                </div>
+              </div>
+              <Link
+                to="/onboarding"
+                className="text-[10px] font-extrabold uppercase tracking-wider text-brand-200 hover:text-white bg-white/10 px-2 py-1 rounded-lg border border-white/20"
+              >
+                Change
+              </Link>
+            </div>
+          )}
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <Input

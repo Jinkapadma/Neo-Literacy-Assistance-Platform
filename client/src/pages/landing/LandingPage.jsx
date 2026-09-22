@@ -101,7 +101,7 @@ export const LandingPage = () => {
 
           {/* Auth Action Buttons */}
           <div className="hidden md:flex items-center gap-3">
-            <SparkleButton to="/login">
+            <SparkleButton to="/onboarding">
               Log In
             </SparkleButton>
           </div>
@@ -144,7 +144,7 @@ export const LandingPage = () => {
             </nav>
 
             <div className="pt-4 border-t border-slate-800/80 flex flex-col gap-3">
-              <SparkleButton to="/login" className="w-full justify-center">
+              <SparkleButton to="/onboarding" className="w-full justify-center">
                 Log In
               </SparkleButton>
             </div>
