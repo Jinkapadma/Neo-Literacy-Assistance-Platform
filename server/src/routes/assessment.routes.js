@@ -27,7 +27,7 @@ router.get('/', validate(getAssessmentsQuerySchema), getAllAssessments);
 router.get('/benchmark/:userId', verifyJWT, getUserBenchmark);
 
 // Assessment submission endpoint (Requirement: POST /api/assessments/submit)
-router.post('/submit', verifyJWT, validate(submitAssessmentSchema), submitAssessment);
+router.post('/submit', optionalAuth, validate(submitAssessmentSchema), submitAssessment);
 
 router.get('/submissions/:submissionId', verifyJWT, getSubmissionById);
 

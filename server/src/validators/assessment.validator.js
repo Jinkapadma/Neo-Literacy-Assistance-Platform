@@ -21,10 +21,11 @@ export const submitAssessmentSchema = z.object({
       .array(
         z.object({
           questionId: z.string().min(1, 'Question ID is required'),
-          selectedAnswer: z.string().min(1, 'Selected answer cannot be empty'),
+          selectedAnswer: z.string().optional().default(''),
         })
       )
-      .min(1, 'At least one answer must be submitted'),
+      .optional()
+      .default([]),
   }),
 });
 

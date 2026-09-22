@@ -208,31 +208,26 @@ export const InitialAssessment = () => {
   };
 
   const handleSubmit = async () => {
+    if (submitting) return;
+    setSubmitting(true);
+    playSound('finish');
+
     const formattedAnswers = questions.map(q => ({
       questionId: q.questionId,
       selectedAnswer: answers[q.questionId] || '',
     }));
 
-    const unanswered = formattedAnswers.filter(a => !a.selectedAnswer).length;
-    if (unanswered > 0) {
-      const confirm = window.confirm(
-        `You have ${unanswered} unanswered question(s). Would you like to submit anyway?`
-      );
-      if (!confirm) return;
-    }
-
-    setSubmitting(true);
-    playSound('finish');
-
-    // Local evaluation computation for guaranteed reliability
+    // Local evaluation computation for guaranteed instant reliability
     let localCorrectCount = 0;
-    const localGraded = formattedAnswers.map(ans => {
+    formattedAnswers.forEach(ans => {
       const q = questions.find(item => item.questionId === ans.questionId);
-      const isCorrect = q?.correctAnswer
-        ? ans.selectedAnswer.trim().toLowerCase() === q.correctAnswer.trim().toLowerCase()
-        : true;
+      const isCorrect =
+        q?.correctAnswer && ans.selectedAnswer
+          ? ans.selectedAnswer.trim().toLowerCase() === q.correctAnswer.trim().toLowerCase()
+          : ans.selectedAnswer
+          ? true
+          : false;
       if (isCorrect) localCorrectCount += 1;
-      return { ...ans, isCorrect, pointsEarned: isCorrect ? q?.points || 20 : 0 };
     });
 
     const computedScore =
@@ -241,10 +236,10 @@ export const InitialAssessment = () => {
       computedScore >= 85
         ? 'advanced'
         : computedScore >= 70
-          ? 'intermediate'
-          : computedScore >= 45
-            ? 'elementary'
-            : 'beginner';
+        ? 'intermediate'
+        : computedScore >= 45
+        ? 'elementary'
+        : 'beginner';
 
     const fallbackPlan = {
       assignedLevel: benchmarkLevel,
@@ -261,35 +256,35 @@ export const InitialAssessment = () => {
               unlockedLessonsCount: 8,
             }
           : benchmarkLevel === 'intermediate'
-            ? {
-                moduleId: 'mod_3_sentences',
-                title: 'Module 3: Sentence Reading & Short Stories',
-                subtitle: 'Sentence structure, punctuation, dialogue reading, and story comprehension',
-                icon: '⚡',
-                unlockedLessonsCount: 6,
-              }
-            : benchmarkLevel === 'elementary'
-              ? {
-                  moduleId: 'mod_2_words',
-                  title: 'Module 2: Word Construction & Everyday Objects',
-                  subtitle: 'Two-letter blending, high-frequency sight vocabulary, and picture matching',
-                  icon: '🌿',
-                  unlockedLessonsCount: 5,
-                }
-              : {
-                  moduleId: 'mod_1_foundations',
-                  title: 'Module 1: Script & Phonics Foundations',
-                  subtitle: 'Alphabet recognition, letter acoustic sounds, and foundational sight words',
-                  icon: '🔤',
-                  unlockedLessonsCount: 4,
-                },
+          ? {
+              moduleId: 'mod_3_sentences',
+              title: 'Module 3: Sentence Reading & Short Stories',
+              subtitle: 'Sentence structure, punctuation, dialogue reading, and story comprehension',
+              icon: '⚡',
+              unlockedLessonsCount: 6,
+            }
+          : benchmarkLevel === 'elementary'
+          ? {
+              moduleId: 'mod_2_words',
+              title: 'Module 2: Word Construction & Everyday Objects',
+              subtitle: 'Two-letter blending, high-frequency sight vocabulary, and picture matching',
+              icon: '🌿',
+              unlockedLessonsCount: 5,
+            }
+          : {
+              moduleId: 'mod_1_foundations',
+              title: 'Module 1: Script & Phonics Foundations',
+              subtitle: 'Alphabet recognition, letter acoustic sounds, and foundational sight words',
+              icon: '🔤',
+              unlockedLessonsCount: 4,
+            },
       recommendedDailyMinutes: computedScore < 50 ? 20 : 15,
       milestone14Days:
         benchmarkLevel === 'beginner'
           ? 'Read basic 3-letter words and common public signs independently'
           : benchmarkLevel === 'elementary'
-            ? 'Read complete sentences and short illustrated paragraphs with confidence'
-            : 'Read everyday notices, newspapers, and stories with high fluency',
+          ? 'Read complete sentences and short illustrated paragraphs with confidence'
+          : 'Read everyday notices, newspapers, and stories with high fluency',
       strengths:
         computedScore >= 60
           ? ['Reading Fluency & Passage Comprehension', 'Phonetic Sound & Letter Matching']
@@ -301,27 +296,29 @@ export const InitialAssessment = () => {
     };
 
     try {
-      if (isAuthenticated) {
-        const response = await assessmentApi.submitAssessment({
-          assessmentId: assessment._id || assessment.code,
-          answers: formattedAnswers,
-          timeSpentSeconds: timeSpent,
-        });
+      // Sync with backend API
+      const validAnswers = formattedAnswers.map(a => ({
+        questionId: a.questionId,
+        selectedAnswer: a.selectedAnswer || '(skipped)',
+      }));
 
-        const submissionData = response?.data || response;
-        const plan = submissionData?.personalizedPlan || fallbackPlan;
-        localStorage.setItem('neoread_personalized_plan', JSON.stringify(plan));
-        setPlanResult(plan);
-      } else {
-        localStorage.setItem('neoread_personalized_plan', JSON.stringify(fallbackPlan));
-        setPlanResult(fallbackPlan);
-      }
+      const response = await assessmentApi.submitAssessment({
+        assessmentId: assessment?._id || assessment?.code || 'initial_diag',
+        answers: validAnswers,
+        timeSpentSeconds: timeSpent,
+      }).catch(() => null);
 
+      const submissionData = response?.data || response;
+      const plan = submissionData?.personalizedPlan || fallbackPlan;
+      localStorage.setItem('neoread_personalized_plan', JSON.stringify(plan));
+      localStorage.setItem('neoread_onboarding_plan', JSON.stringify(plan));
+      setPlanResult(plan);
       setShowPlanModal(true);
       toast.success('Initial Assessment Complete! Your Personalized Plan is ready.');
-    } catch {
-      // Graceful fallback to client plan
+    } catch (err) {
+      console.warn('API sync completed with local fallback plan:', err);
       localStorage.setItem('neoread_personalized_plan', JSON.stringify(fallbackPlan));
+      localStorage.setItem('neoread_onboarding_plan', JSON.stringify(fallbackPlan));
       setPlanResult(fallbackPlan);
       setShowPlanModal(true);
       toast.success('Initial Assessment Complete! Your Personalized Plan is ready.');
@@ -385,10 +382,23 @@ export const InitialAssessment = () => {
             </div>
           </div>
 
-          {/* Timer Display */}
-          <div className="flex items-center gap-1 text-[11px] sm:text-xs font-bold text-slate-200 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-xl bg-slate-900/40 border border-white/20 backdrop-blur-md shrink-0">
-            <Clock className="w-3.5 h-3.5 text-amber-300" />
-            <span>{formatTime(timeSpent)}</span>
+          {/* Timer & Quick Submit Display */}
+          <div className="flex items-center gap-2 shrink-0">
+            <div className="flex items-center gap-1 text-[11px] sm:text-xs font-bold text-slate-200 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-xl bg-slate-900/40 border border-white/20 backdrop-blur-md">
+              <Clock className="w-3.5 h-3.5 text-amber-300" />
+              <span>{formatTime(timeSpent)}</span>
+            </div>
+
+            <button
+              type="button"
+              onClick={handleSubmit}
+              disabled={submitting}
+              className="py-1.5 sm:py-2 px-3 sm:px-4 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-extrabold text-[11px] sm:text-xs shadow-lg shadow-emerald-500/30 transition-all flex items-center gap-1 active:scale-95 cursor-pointer"
+              title="Submit assessment and generate your personalized learning plan"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+              <span>{submitting ? 'Evaluating...' : 'Submit'}</span>
+            </button>
           </div>
         </div>
       </header>

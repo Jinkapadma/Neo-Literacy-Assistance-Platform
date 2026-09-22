@@ -11,21 +11,46 @@ import {
   TrendingUp,
   LayoutDashboard,
   ShieldCheck,
+  UserPlus,
+  X,
 } from 'lucide-react';
+import { useAuth } from '../../hooks/useAuth.js';
 import { SUPPORTED_LANGUAGES, PROFICIENCY_LEVELS } from '../../utils/constants.js';
 
 export const PersonalizedPlanModal = ({ isOpen, plan, submissionId, onClose }) => {
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
 
   if (!isOpen || !plan) return null;
 
   const langInfo =
-    SUPPORTED_LANGUAGES.find(l => l.code === plan.language) || SUPPORTED_LANGUAGES[0];
-  const levelInfo = PROFICIENCY_LEVELS[plan.assignedLevel] || PROFICIENCY_LEVELS.beginner;
+    SUPPORTED_LANGUAGES.find(l => l.code === plan.language) ||
+    SUPPORTED_LANGUAGES[0] || {
+      code: 'te',
+      name: 'Telugu',
+      nativeName: 'తెలుగు',
+      flag: '🇮🇳',
+    };
+
+  const levelKey = plan.assignedLevel || 'beginner';
+  const levelInfo =
+    PROFICIENCY_LEVELS[levelKey] ||
+    PROFICIENCY_LEVELS.beginner || {
+      label: 'Level 1: Novice Reader',
+    };
 
   const handleGoToDashboard = () => {
     if (onClose) onClose();
-    navigate('/dashboard');
+    if (isAuthenticated) {
+      navigate('/dashboard');
+    } else {
+      navigate('/login', { state: { planCreated: true } });
+    }
+  };
+
+  const handleRegisterAndSave = () => {
+    if (onClose) onClose();
+    navigate('/register', { state: { planCreated: true } });
   };
 
   const handleGoToCurriculum = () => {
@@ -34,8 +59,18 @@ export const PersonalizedPlanModal = ({ isOpen, plan, submissionId, onClose }) =
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-950/80 backdrop-blur-md overflow-y-auto animate-fadeIn">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-950/85 backdrop-blur-md overflow-y-auto animate-fadeIn">
       <div className="relative w-full max-w-2xl bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 border border-white/20 rounded-3xl p-5 sm:p-8 text-white shadow-2xl space-y-6 my-auto">
+        {/* Close Button */}
+        {onClose && (
+          <button
+            onClick={onClose}
+            className="absolute top-4 right-4 p-2 rounded-full bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white transition-colors cursor-pointer"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        )}
+
         {/* Celebration Header */}
         <div className="text-center space-y-3">
           <div className="relative inline-block mx-auto">
@@ -67,7 +102,7 @@ export const PersonalizedPlanModal = ({ isOpen, plan, submissionId, onClose }) =
               Score
             </span>
             <div className="text-lg sm:text-xl font-black text-amber-300">
-              {plan.overallScore}%
+              {plan.overallScore ?? 80}%
             </div>
           </div>
 
@@ -76,7 +111,7 @@ export const PersonalizedPlanModal = ({ isOpen, plan, submissionId, onClose }) =
               Level Assigned
             </span>
             <div className="text-xs sm:text-sm font-black text-emerald-400 uppercase truncate">
-              {levelInfo.label || plan.assignedLevel}
+              {levelInfo.label || plan.assignedLevel || 'Level 1: Novice'}
             </div>
           </div>
 
@@ -176,15 +211,27 @@ export const PersonalizedPlanModal = ({ isOpen, plan, submissionId, onClose }) =
 
         {/* Action Buttons */}
         <div className="pt-2 flex flex-col sm:flex-row items-center gap-3">
-          <button
-            type="button"
-            onClick={handleGoToDashboard}
-            className="w-full sm:flex-1 py-3.5 px-6 rounded-2xl bg-gradient-to-r from-emerald-500 via-teal-500 to-indigo-600 hover:from-emerald-600 hover:to-indigo-700 text-white font-extrabold text-sm sm:text-base shadow-xl shadow-emerald-500/30 hover:shadow-emerald-500/50 transition-all flex items-center justify-center gap-2 transform active:scale-98 cursor-pointer"
-          >
-            <LayoutDashboard className="w-4 h-4 sm:w-5 sm:h-5" />
-            <span>Enter My Dashboard</span>
-            <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
-          </button>
+          {isAuthenticated ? (
+            <button
+              type="button"
+              onClick={handleGoToDashboard}
+              className="w-full sm:flex-1 py-3.5 px-6 rounded-2xl bg-gradient-to-r from-emerald-500 via-teal-500 to-indigo-600 hover:from-emerald-600 hover:to-indigo-700 text-white font-extrabold text-sm sm:text-base shadow-xl shadow-emerald-500/30 hover:shadow-emerald-500/50 transition-all flex items-center justify-center gap-2 transform active:scale-98 cursor-pointer"
+            >
+              <LayoutDashboard className="w-4 h-4 sm:w-5 sm:h-5" />
+              <span>Enter My Dashboard</span>
+              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={handleRegisterAndSave}
+              className="w-full sm:flex-1 py-3.5 px-6 rounded-2xl bg-gradient-to-r from-brand-500 via-indigo-600 to-purple-600 hover:from-brand-600 hover:to-indigo-700 text-white font-extrabold text-sm sm:text-base shadow-xl shadow-brand-500/30 hover:shadow-brand-500/50 transition-all flex items-center justify-center gap-2 transform active:scale-98 cursor-pointer"
+            >
+              <UserPlus className="w-4 h-4 sm:w-5 sm:h-5" />
+              <span>Save Plan & Create Account</span>
+              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+            </button>
+          )}
 
           <button
             type="button"
@@ -192,7 +239,7 @@ export const PersonalizedPlanModal = ({ isOpen, plan, submissionId, onClose }) =
             className="w-full sm:w-auto py-3.5 px-5 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/15 text-white font-bold text-xs sm:text-sm transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
           >
             <BookOpen className="w-4 h-4 text-brand-300" />
-            <span>Start Lesson 1</span>
+            <span>Explore Modules</span>
           </button>
         </div>
       </div>

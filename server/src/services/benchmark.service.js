@@ -8,23 +8,22 @@ export class BenchmarkService {
   /**
    * Calculates scores and assigns proficiency benchmarks based on learner submission answers.
    */
-  static async evaluateAssessmentSubmission(userId, assessmentId, answers, timeSpentSeconds = 0) {
-    const user = await User.findById(userId);
-    if (!user) {
-      throw ApiError.notFound('User not found');
-    }
+  static async evaluateAssessmentSubmission(userId, assessmentId, answers = [], timeSpentSeconds = 0) {
+    const user = userId ? await User.findById(userId) : null;
+    const userLang = user?.preferredLanguage || 'te';
+    const userAge = user?.age || 20;
 
     let assessment = null;
-    if (mongoose.Types.ObjectId.isValid(assessmentId)) {
+    if (assessmentId && mongoose.Types.ObjectId.isValid(assessmentId)) {
       assessment = await Assessment.findById(assessmentId);
     }
-    if (!assessment) {
+    if (!assessment && assessmentId) {
       assessment = await Assessment.findOne({ code: assessmentId });
     }
 
     // Fallback to dynamic diagnostic question bank if not in MongoDB
     if (!assessment) {
-      const diagData = getDiagnosticAssessmentData(user.preferredLanguage, user.age || 20);
+      const diagData = getDiagnosticAssessmentData(userLang, userAge);
       // Ensure it is saved in DB so submission can reference it
       assessment = await Assessment.findOneAndUpdate(
         { code: diagData.code },
@@ -136,7 +135,8 @@ export class BenchmarkService {
     if (areasForImprovement.length === 0) areasForImprovement.push('Keep challenging yourself with advanced reading modules');
 
     // Generate AI Personalized Learning Plan
-    const age = user.age || 20;
+    // Generate AI Personalized Learning Plan
+    const age = user?.age || 20;
     const ageCohort = age < 12 ? 'kids' : age < 18 ? 'teens' : 'adults';
 
     const moduleSequenceMap = {
@@ -173,7 +173,7 @@ export class BenchmarkService {
     const personalizedPlan = {
       assignedLevel: benchmarkAssigned,
       ageCohort,
-      language: user.preferredLanguage,
+      language: userLang,
       overallScore,
       startingModule: moduleSequenceMap[benchmarkAssigned] || moduleSequenceMap.beginner,
       recommendedDailyMinutes: overallScore < 50 ? 20 : 15,
@@ -195,11 +195,8 @@ export class BenchmarkService {
       },
     };
 
-    // Create submission record
-    const submission = await AssessmentSubmission.create({
-      userId,
+    let result = {
       assessmentId: assessment._id,
-      answers: gradedAnswers,
       scores: {
         overallScore,
         readingScore,
@@ -213,30 +210,47 @@ export class BenchmarkService {
       strengths,
       areasForImprovement,
       timeSpentSeconds,
-    });
+      personalizedPlan,
+    };
 
-    // Update User Profile with benchmark history, current proficiency level, and priority target skills
-    await User.findByIdAndUpdate(userId, {
-      $set: {
-        proficiencyLevel: benchmarkAssigned,
-        targetSkills: areasForImprovement.length > 0 ? areasForImprovement : user.targetSkills,
-      },
-      $push: {
-        benchmarkHistory: {
-          assessmentId: assessment._id,
-          benchmarkLevel: benchmarkAssigned,
-          overallScore,
-          readingScore,
-          writingScore,
-          comprehensionScore,
-          feedback,
-          assessedAt: new Date(),
+    if (userId && user) {
+      // Create submission record in MongoDB
+      const submission = await AssessmentSubmission.create({
+        userId,
+        assessmentId: assessment._id,
+        answers: gradedAnswers,
+        scores: result.scores,
+        benchmarkAssigned,
+        feedback,
+        strengths,
+        areasForImprovement,
+        timeSpentSeconds,
+      });
+
+      // Update User Profile with benchmark history
+      await User.findByIdAndUpdate(userId, {
+        $set: {
+          proficiencyLevel: benchmarkAssigned,
+          targetSkills: areasForImprovement.length > 0 ? areasForImprovement : user.targetSkills,
         },
-      },
-    });
+        $push: {
+          benchmarkHistory: {
+            assessmentId: assessment._id,
+            benchmarkLevel: benchmarkAssigned,
+            overallScore,
+            readingScore,
+            writingScore,
+            comprehensionScore,
+            feedback,
+            assessedAt: new Date(),
+          },
+        },
+      });
 
-    const result = submission.toObject();
-    result.personalizedPlan = personalizedPlan;
+      result = submission.toObject();
+      result.personalizedPlan = personalizedPlan;
+    }
+
     return result;
   }
 
