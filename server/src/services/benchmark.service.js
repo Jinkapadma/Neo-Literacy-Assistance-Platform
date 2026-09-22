@@ -18,6 +18,9 @@ export class BenchmarkService {
     if (mongoose.Types.ObjectId.isValid(assessmentId)) {
       assessment = await Assessment.findById(assessmentId);
     }
+    if (!assessment) {
+      assessment = await Assessment.findOne({ code: assessmentId });
+    }
 
     // Fallback to dynamic diagnostic question bank if not in MongoDB
     if (!assessment) {
@@ -25,7 +28,7 @@ export class BenchmarkService {
       // Ensure it is saved in DB so submission can reference it
       assessment = await Assessment.findOneAndUpdate(
         { code: diagData.code },
-        { $setOnInsert: diagData },
+        { $set: diagData },
         { upsert: true, new: true }
       );
     }

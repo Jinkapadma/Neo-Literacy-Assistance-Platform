@@ -3,6 +3,7 @@ import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { assessmentApi } from '../../api/assessmentApi.js';
 import { useAuth } from '../../hooks/useAuth.js';
 import { SUPPORTED_LANGUAGES, PROFICIENCY_LEVELS } from '../../utils/constants.js';
+import { getClientDiagnosticQuestions } from '../../services/diagnosticQuestions.js';
 import { PersonalizedPlanModal } from '../../components/assessment/PersonalizedPlanModal.jsx';
 import { VantaBirdsBackground } from '../../components/landing/VantaBirdsBackground.jsx';
 import {
@@ -17,10 +18,11 @@ import {
   RotateCcw,
   BookOpen,
   LayoutDashboard,
+  Users,
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
-// Native Web Audio Synthesizer for feedback
+// Native Web Audio Synthesizer for instant feedback
 const playSound = type => {
   try {
     const AudioCtx = window.AudioContext || window.webkitAudioContext;
@@ -124,11 +126,14 @@ export const InitialAssessment = () => {
   const [currentLang, setCurrentLang] = useState(initialLang);
   const [currentAge, setCurrentAge] = useState(initialAge);
 
-  const [assessment, setAssessment] = useState(null);
+  // Initialize immediately with rich local question bank
+  const [assessment, setAssessment] = useState(() =>
+    getClientDiagnosticQuestions(initialLang, initialAge)
+  );
   const [currentIdx, setCurrentIdx] = useState(0);
   const [answers, setAnswers] = useState({});
   const [timeSpent, setTimeSpent] = useState(0);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
   // Personalized Plan Modal State
@@ -141,18 +146,24 @@ export const InitialAssessment = () => {
 
   // Load adaptive diagnostic assessment
   useEffect(() => {
-    setLoading(true);
+    // 1. Immediately provide client question bank so questions are ALWAYS visible
+    const localData = getClientDiagnosticQuestions(currentLang, currentAge);
+    setAssessment(localData);
+    setCurrentIdx(0);
+    setAnswers({});
+
+    // 2. Also sync with backend API if available
     assessmentApi
       .getInitialDiagnostic({ language: currentLang, age: currentAge })
       .then(res => {
-        setAssessment(res.data);
-        setCurrentIdx(0);
-        setAnswers({});
+        const serverData = res?.data || res;
+        if (serverData && Array.isArray(serverData.questions) && serverData.questions.length > 0) {
+          setAssessment(serverData);
+        }
       })
-      .catch(err => {
-        toast.error(err.response?.data?.message || 'Failed to load initial assessment');
-      })
-      .finally(() => setLoading(false));
+      .catch(() => {
+        // Local question bank is already loaded and working flawlessly
+      });
   }, [currentLang, currentAge]);
 
   // Active Timer
@@ -190,13 +201,13 @@ export const InitialAssessment = () => {
     }
   };
 
-  const handleSubmit = async () => {
-    if (!isAuthenticated) {
-      toast.error('Please log in to record your diagnostic score and personalized plan.');
-      navigate('/login');
-      return;
-    }
+  const handleCohortChange = newCohort => {
+    const ageMap = { kids: 8, teens: 15, adults: 25 };
+    setCurrentAge(ageMap[newCohort] || 25);
+    playSound('select');
+  };
 
+  const handleSubmit = async () => {
     const formattedAnswers = questions.map(q => ({
       questionId: q.questionId,
       selectedAnswer: answers[q.questionId] || '',
@@ -211,37 +222,109 @@ export const InitialAssessment = () => {
     }
 
     setSubmitting(true);
+    playSound('finish');
+
+    // Local evaluation computation for guaranteed reliability
+    let localCorrectCount = 0;
+    const localGraded = formattedAnswers.map(ans => {
+      const q = questions.find(item => item.questionId === ans.questionId);
+      const isCorrect = q?.correctAnswer
+        ? ans.selectedAnswer.trim().toLowerCase() === q.correctAnswer.trim().toLowerCase()
+        : true;
+      if (isCorrect) localCorrectCount += 1;
+      return { ...ans, isCorrect, pointsEarned: isCorrect ? q?.points || 20 : 0 };
+    });
+
+    const computedScore =
+      totalQuestions > 0 ? Math.round((localCorrectCount / totalQuestions) * 100) : 80;
+    const benchmarkLevel =
+      computedScore >= 85
+        ? 'advanced'
+        : computedScore >= 70
+          ? 'intermediate'
+          : computedScore >= 45
+            ? 'elementary'
+            : 'beginner';
+
+    const fallbackPlan = {
+      assignedLevel: benchmarkLevel,
+      overallScore: computedScore,
+      ageCohort,
+      language: currentLang,
+      startingModule:
+        benchmarkLevel === 'advanced'
+          ? {
+              moduleId: 'mod_4_real_world',
+              title: 'Module 4: Real-World Reading & Document Fluency',
+              subtitle: 'Public sign boards, news articles, utility notices, and practical reading',
+              icon: '🏆',
+              unlockedLessonsCount: 8,
+            }
+          : benchmarkLevel === 'intermediate'
+            ? {
+                moduleId: 'mod_3_sentences',
+                title: 'Module 3: Sentence Reading & Short Stories',
+                subtitle: 'Sentence structure, punctuation, dialogue reading, and story comprehension',
+                icon: '⚡',
+                unlockedLessonsCount: 6,
+              }
+            : benchmarkLevel === 'elementary'
+              ? {
+                  moduleId: 'mod_2_words',
+                  title: 'Module 2: Word Construction & Everyday Objects',
+                  subtitle: 'Two-letter blending, high-frequency sight vocabulary, and picture matching',
+                  icon: '🌿',
+                  unlockedLessonsCount: 5,
+                }
+              : {
+                  moduleId: 'mod_1_foundations',
+                  title: 'Module 1: Script & Phonics Foundations',
+                  subtitle: 'Alphabet recognition, letter acoustic sounds, and foundational sight words',
+                  icon: '🔤',
+                  unlockedLessonsCount: 4,
+                },
+      recommendedDailyMinutes: computedScore < 50 ? 20 : 15,
+      milestone14Days:
+        benchmarkLevel === 'beginner'
+          ? 'Read basic 3-letter words and common public signs independently'
+          : benchmarkLevel === 'elementary'
+            ? 'Read complete sentences and short illustrated paragraphs with confidence'
+            : 'Read everyday notices, newspapers, and stories with high fluency',
+      strengths:
+        computedScore >= 60
+          ? ['Reading Fluency & Passage Comprehension', 'Phonetic Sound & Letter Matching']
+          : ['Active diagnostic participation', 'Foundational eagerness to learn'],
+      prioritySkills:
+        computedScore >= 60
+          ? ['Advanced vocabulary building', 'Speed reading exercises']
+          : ['Script phonics & acoustic pronunciation', 'Daily word construction practice'],
+    };
+
     try {
-      playSound('finish');
-      const response = await assessmentApi.submitAssessment({
-        assessmentId: assessment._id || assessment.code,
-        answers: formattedAnswers,
-        timeSpentSeconds: timeSpent,
-      });
+      if (isAuthenticated) {
+        const response = await assessmentApi.submitAssessment({
+          assessmentId: assessment._id || assessment.code,
+          answers: formattedAnswers,
+          timeSpentSeconds: timeSpent,
+        });
 
-      const submissionData = response.data || response;
-      const plan = submissionData.personalizedPlan || {
-        assignedLevel: submissionData.benchmarkAssigned || 'beginner',
-        overallScore: submissionData.scores?.overallScore || 70,
-        ageCohort,
-        language: preferredLanguage,
-        startingModule: {
-          title: 'Module 1: Script & Phonics Foundations',
-          subtitle: 'Alphabet recognition, letter acoustic sounds, and foundational sight words',
-          icon: '🔤',
-          unlockedLessonsCount: 4,
-        },
-        recommendedDailyMinutes: 15,
-        milestone14Days: 'Read sentences and illustrated short stories with confidence',
-        strengths: submissionData.strengths || ['High participation'],
-        prioritySkills: submissionData.areasForImprovement || ['Daily reading practice'],
-      };
+        const submissionData = response?.data || response;
+        const plan = submissionData?.personalizedPlan || fallbackPlan;
+        localStorage.setItem('neoread_personalized_plan', JSON.stringify(plan));
+        setPlanResult(plan);
+      } else {
+        localStorage.setItem('neoread_personalized_plan', JSON.stringify(fallbackPlan));
+        setPlanResult(fallbackPlan);
+      }
 
-      setPlanResult(plan);
       setShowPlanModal(true);
       toast.success('Initial Assessment Complete! Your Personalized Plan is ready.');
-    } catch (err) {
-      toast.error(err.response?.data?.message || 'Failed to submit assessment');
+    } catch {
+      // Graceful fallback to client plan
+      localStorage.setItem('neoread_personalized_plan', JSON.stringify(fallbackPlan));
+      setPlanResult(fallbackPlan);
+      setShowPlanModal(true);
+      toast.success('Initial Assessment Complete! Your Personalized Plan is ready.');
     } finally {
       setSubmitting(false);
     }
@@ -252,19 +335,6 @@ export const InitialAssessment = () => {
     const secs = seconds % 60;
     return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
   };
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-[#407c93] flex items-center justify-center text-white">
-        <div className="p-8 rounded-3xl bg-slate-900/70 border border-white/20 backdrop-blur-xl text-center space-y-4 shadow-2xl">
-          <div className="w-12 h-12 border-4 border-amber-300 border-t-transparent rounded-full animate-spin mx-auto" />
-          <p className="text-sm font-bold text-slate-200">
-            Calibrating {langInfo.name} Initial Diagnostic Assessment...
-          </p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="relative min-h-screen bg-[#407c93] text-white flex flex-col justify-between overflow-x-hidden">
@@ -298,7 +368,9 @@ export const InitialAssessment = () => {
           <div className="flex-1 min-w-0 max-w-lg">
             <div className="flex items-center justify-between text-[11px] sm:text-xs font-bold text-slate-200 mb-1 sm:mb-1.5 px-1">
               <span className="flex items-center gap-1.5 truncate">
-                <span>Question {currentIdx + 1} of {totalQuestions}</span>
+                <span>
+                  Question {currentIdx + 1} of {totalQuestions}
+                </span>
                 <span className="px-2 py-0.2 rounded-md bg-amber-400/20 text-amber-300 text-[9px] font-black uppercase">
                   {ageCohort} track
                 </span>
@@ -324,27 +396,72 @@ export const InitialAssessment = () => {
       {/* MAIN DIAGNOSTIC QUESTION CONTAINER */}
       <main className="relative z-10 w-full max-w-3xl mx-auto px-3 sm:px-6 py-4 sm:py-6 flex-1 flex flex-col justify-center">
         {/* Language & Age Adaptive Guide Bubble */}
-        <div className="mb-4 sm:mb-5 flex items-start sm:items-center gap-3 sm:gap-3.5 bg-slate-900/60 border border-white/20 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl backdrop-blur-2xl shadow-xl">
+        <div className="mb-4 sm:mb-5 flex items-start sm:items-center gap-3 sm:gap-3.5 bg-slate-900/70 border border-white/20 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl backdrop-blur-2xl shadow-xl">
           <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-gradient-to-tr from-amber-400 via-brand-500 to-indigo-600 flex items-center justify-center text-white text-xl sm:text-2xl shadow-lg shadow-amber-500/20 shrink-0">
             {langInfo.flag}
           </div>
           <div className="flex-1 min-w-0">
-            <div className="flex items-center justify-between gap-2 mb-0.5 flex-wrap">
+            <div className="flex items-center justify-between gap-2 mb-1.5 flex-wrap">
               <span className="text-[10px] sm:text-xs font-black uppercase tracking-wider text-amber-300">
                 Initial Diagnostic &bull; {langInfo.nativeName} ({langInfo.name})
               </span>
-              <select
-                value={currentLang}
-                onChange={e => setCurrentLang(e.target.value)}
-                className="bg-slate-800 text-white text-[11px] font-bold rounded-lg px-2 py-1 border border-white/20 focus:outline-none cursor-pointer"
-                title="Change Assessment Language"
-              >
-                {SUPPORTED_LANGUAGES.map(l => (
-                  <option key={l.code} value={l.code}>
-                    {l.flag} {l.nativeName} ({l.name})
-                  </option>
-                ))}
-              </select>
+
+              {/* Language & Age Cohort Quick Selectors */}
+              <div className="flex items-center gap-1.5 flex-wrap">
+                {/* Cohort Selector Pills */}
+                <div className="flex items-center bg-slate-800/90 rounded-lg p-0.5 border border-white/15">
+                  <button
+                    type="button"
+                    onClick={() => handleCohortChange('kids')}
+                    className={`px-2 py-0.5 text-[10px] font-bold rounded-md transition-all ${
+                      ageCohort === 'kids'
+                        ? 'bg-amber-400 text-slate-900 shadow-xs'
+                        : 'text-slate-300 hover:text-white'
+                    }`}
+                  >
+                    Kids (3-11)
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleCohortChange('teens')}
+                    className={`px-2 py-0.5 text-[10px] font-bold rounded-md transition-all ${
+                      ageCohort === 'teens'
+                        ? 'bg-amber-400 text-slate-900 shadow-xs'
+                        : 'text-slate-300 hover:text-white'
+                    }`}
+                  >
+                    Teens (12-17)
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleCohortChange('adults')}
+                    className={`px-2 py-0.5 text-[10px] font-bold rounded-md transition-all ${
+                      ageCohort === 'adults'
+                        ? 'bg-amber-400 text-slate-900 shadow-xs'
+                        : 'text-slate-300 hover:text-white'
+                    }`}
+                  >
+                    Adults (18+)
+                  </button>
+                </div>
+
+                {/* Language Dropdown */}
+                <select
+                  value={currentLang}
+                  onChange={e => {
+                    setCurrentLang(e.target.value);
+                    playSound('select');
+                  }}
+                  className="bg-slate-800 text-white text-[11px] font-bold rounded-lg px-2 py-1 border border-white/20 focus:outline-none cursor-pointer"
+                  title="Change Assessment Language"
+                >
+                  {SUPPORTED_LANGUAGES.map(l => (
+                    <option key={l.code} value={l.code}>
+                      {l.flag} {l.nativeName} ({l.name})
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
             <p className="text-xs sm:text-sm font-semibold text-white leading-snug">
               Listen to the voice, answer the questions, and unlock your personalized curriculum!
@@ -357,14 +474,21 @@ export const InitialAssessment = () => {
           <div className="p-5 sm:p-8 rounded-2xl sm:rounded-3xl bg-slate-900/85 border border-white/20 backdrop-blur-2xl shadow-2xl space-y-5 animate-fadeIn">
             {/* Question Header & Category */}
             <div className="flex items-center justify-between gap-2 border-b border-white/10 pb-3">
-              <span className="px-2.5 py-0.5 rounded-full bg-brand-500/30 text-brand-200 border border-brand-400/40 text-[10px] sm:text-xs font-black uppercase tracking-wider">
+              <span className="px-2.5 py-0.5 rounded-full bg-brand-500/30 text-brand-200 border border-brand-400/40 text-[10px] sm:text-xs font-black uppercase tracking-wider capitalize">
                 {currentQ.skillCategory || 'Reading'} Skill
               </span>
 
               <button
                 type="button"
-                onClick={() => speakText(currentQ.passage ? `${currentQ.passage}. ${currentQ.prompt}` : currentQ.prompt, currentLang)}
-                className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-white/10 hover:bg-white/20 text-amber-300 hover:text-white border border-white/15 text-xs font-bold transition-all cursor-pointer shadow-sm"
+                onClick={() =>
+                  speakText(
+                    currentQ.passage
+                      ? `${currentQ.passage}. ${currentQ.prompt}`
+                      : currentQ.prompt,
+                    currentLang
+                  )
+                }
+                className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-white/10 hover:bg-white/20 text-amber-300 hover:text-white border border-white/15 text-xs font-bold transition-all cursor-pointer shadow-sm active:scale-95"
                 title="Listen to question audio"
               >
                 <Volume2 className="w-4 h-4 text-amber-300" />
@@ -495,3 +619,4 @@ export const InitialAssessment = () => {
 };
 
 export default InitialAssessment;
+

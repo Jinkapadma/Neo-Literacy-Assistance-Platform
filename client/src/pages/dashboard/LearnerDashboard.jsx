@@ -30,6 +30,16 @@ export const LearnerDashboard = () => {
   const [benchmarkData, setBenchmarkData] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // Retrieve locally saved personalized plan if available
+  const savedPlan = (() => {
+    try {
+      const saved = localStorage.getItem('neoread_personalized_plan');
+      return saved ? JSON.parse(saved) : null;
+    } catch {
+      return null;
+    }
+  })();
+
   // Load user's diagnostic assessment and benchmark history
   useEffect(() => {
     if (user?._id) {
@@ -43,19 +53,39 @@ export const LearnerDashboard = () => {
     }
   }, [user?._id]);
 
+  const targetLangCode = savedPlan?.language || user?.preferredLanguage || 'te';
   const langInfo =
-    SUPPORTED_LANGUAGES.find(l => l.code === user?.preferredLanguage) || SUPPORTED_LANGUAGES[0];
-  const proficiency = user?.proficiencyLevel || 'beginner';
+    SUPPORTED_LANGUAGES.find(l => l.code === targetLangCode) || SUPPORTED_LANGUAGES[0];
+
+  const proficiency =
+    savedPlan?.assignedLevel ||
+    user?.proficiencyLevel ||
+    benchmarkData?.currentProficiencyLevel ||
+    'beginner';
+
   const levelDetails = PROFICIENCY_LEVELS[proficiency] || PROFICIENCY_LEVELS.beginner;
-  const isUnassessed = proficiency === 'unassessed' || !benchmarkData?.latestBenchmark;
+  const isUnassessed =
+    !savedPlan && (proficiency === 'unassessed' || !benchmarkData?.latestBenchmark);
+
+  const activeAgeCohort =
+    savedPlan?.ageCohort ||
+    (user?.age && user.age < 12 ? 'kids' : user?.age && user.age < 18 ? 'teens' : 'adults');
 
   const ageCohort =
-    user?.age && user.age < 12 ? 'Junior Phonics' : user?.age && user.age < 18 ? 'Youth Reading' : 'Functional Adult';
+    activeAgeCohort === 'kids'
+      ? 'Junior Phonics'
+      : activeAgeCohort === 'teens'
+        ? 'Youth Reading'
+        : 'Functional Adult';
 
-  const latestScore = benchmarkData?.latestBenchmark?.overallScore || (isUnassessed ? 0 : 75);
-  const readingScore = benchmarkData?.latestBenchmark?.readingScore || 70;
-  const writingScore = benchmarkData?.latestBenchmark?.writingScore || 65;
-  const comprehensionScore = benchmarkData?.latestBenchmark?.comprehensionScore || 80;
+  const latestScore =
+    savedPlan?.overallScore || benchmarkData?.latestBenchmark?.overallScore || (isUnassessed ? 0 : 80);
+  const readingScore =
+    savedPlan?.skillScores?.reading || benchmarkData?.latestBenchmark?.readingScore || 75;
+  const writingScore =
+    savedPlan?.skillScores?.writing || benchmarkData?.latestBenchmark?.writingScore || 70;
+  const comprehensionScore =
+    savedPlan?.skillScores?.comprehension || benchmarkData?.latestBenchmark?.comprehensionScore || 85;
 
   if (loading) {
     return <Spinner size="lg" message="Loading your personalized dashboard..." className="min-h-[50vh]" />;
@@ -144,19 +174,30 @@ export const LearnerDashboard = () => {
                   Current Curriculum Path
                 </span>
                 <h3 className="text-base sm:text-lg font-black text-slate-900">
-                  {proficiency === 'advanced'
-                    ? 'Module 4: Real-World Reading & Fluency'
-                    : proficiency === 'intermediate'
-                      ? 'Module 3: Sentence Reading & Stories'
-                      : proficiency === 'elementary'
-                        ? 'Module 2: Word Construction & Objects'
-                        : 'Module 1: Script & Phonics Foundations'}
+                  {savedPlan?.startingModule?.title ||
+                    (proficiency === 'advanced'
+                      ? 'Module 4: Real-World Reading & Fluency'
+                      : proficiency === 'intermediate'
+                        ? 'Module 3: Sentence Reading & Stories'
+                        : proficiency === 'elementary'
+                          ? 'Module 2: Word Construction & Objects'
+                          : 'Module 1: Script & Phonics Foundations')}
                 </h3>
               </div>
             </div>
 
             <ProficiencyBadge level={proficiency} size="sm" />
           </div>
+
+          {/* Personalized Milestone Callout */}
+          {savedPlan?.milestone14Days && (
+            <div className="p-3 rounded-2xl bg-amber-50 border border-amber-200/80 text-xs font-semibold text-amber-900 flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-amber-500 shrink-0" />
+              <span>
+                <strong>14-Day Milestone Goal:</strong> {savedPlan.milestone14Days}
+              </span>
+            </div>
+          )}
 
           {/* Module Progress Bar */}
           <div className="space-y-2">

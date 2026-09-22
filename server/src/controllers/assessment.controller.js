@@ -10,22 +10,13 @@ export const getInitialDiagnosticAssessment = asyncHandler(async (req, res) => {
   const age = Number(req.query.age || req.user?.age || 20);
   const cohort = age < 12 ? 'kids' : age < 18 ? 'teens' : 'adults';
 
-  // 1. Try finding existing assessment in database matching language and age cohort
-  let assessment = await Assessment.findOne({
-    language,
-    ageCohort: cohort,
-    isPublished: true,
-  });
-
-  // 2. Fallback to dynamic question bank and upsert in DB
-  if (!assessment) {
-    const diagData = getDiagnosticAssessmentData(language, age);
-    assessment = await Assessment.findOneAndUpdate(
-      { code: diagData.code },
-      { $setOnInsert: diagData },
-      { upsert: true, new: true }
-    );
-  }
+  // Always sync with dynamic question bank for all 8 languages & cohorts
+  const diagData = getDiagnosticAssessmentData(language, age);
+  const assessment = await Assessment.findOneAndUpdate(
+    { code: diagData.code },
+    { $set: diagData },
+    { upsert: true, new: true }
+  );
 
   // Strip correct answers for learner taking the test
   const isPrivileged = req.user && (req.user.role === 'admin' || req.user.role === 'educator');
