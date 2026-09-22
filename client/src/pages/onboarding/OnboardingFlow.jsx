@@ -228,25 +228,25 @@ export const OnboardingFlow = () => {
       />
 
       {/* TOP HEADER & DUOLINGO-STYLE PROGRESS BAR */}
-      <header className="relative z-20 w-full max-w-4xl mx-auto px-4 sm:px-6 pt-6 pb-2">
-        <div className="flex items-center justify-between gap-4">
+      <header className="relative z-20 w-full max-w-4xl mx-auto px-3 sm:px-6 pt-4 sm:pt-6 pb-2">
+        <div className="flex items-center justify-between gap-2.5 sm:gap-4">
           {/* Back Button */}
           <button
             type="button"
             onClick={handleBack}
-            className="p-2.5 rounded-2xl bg-slate-900/40 hover:bg-slate-900/70 border border-white/20 text-slate-200 hover:text-white backdrop-blur-md transition-all shadow-md active:scale-95 cursor-pointer"
+            className="p-2 sm:p-2.5 rounded-xl sm:rounded-2xl bg-slate-900/40 hover:bg-slate-900/70 border border-white/20 text-slate-200 hover:text-white backdrop-blur-md transition-all shadow-md active:scale-95 cursor-pointer shrink-0"
             aria-label="Previous step"
           >
-            <ArrowLeft className="w-5 h-5" />
+            <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
           </button>
 
           {/* Duolingo Progress Bar */}
-          <div className="flex-1 max-w-lg">
-            <div className="flex items-center justify-between text-xs font-bold text-slate-200 mb-1.5 px-1">
+          <div className="flex-1 min-w-0 max-w-lg">
+            <div className="flex items-center justify-between text-[11px] sm:text-xs font-bold text-slate-200 mb-1 sm:mb-1.5 px-1">
               <span>{step <= totalSteps ? `Step ${step} of ${totalSteps}` : 'Curriculum Ready!'}</span>
               <span className="text-amber-300 font-extrabold">{Math.round(progressPercent)}%</span>
             </div>
-            <div className="w-full bg-slate-900/50 rounded-full h-3.5 p-0.5 border border-white/20 backdrop-blur-md overflow-hidden">
+            <div className="w-full bg-slate-900/50 rounded-full h-3 sm:h-3.5 p-0.5 border border-white/20 backdrop-blur-md overflow-hidden">
               <div
                 className="h-full rounded-full bg-gradient-to-r from-emerald-400 via-teal-300 to-amber-300 transition-all duration-500 ease-out shadow-lg"
                 style={{ width: `${progressPercent}%` }}
@@ -254,31 +254,36 @@ export const OnboardingFlow = () => {
             </div>
           </div>
 
-          {/* Quick Direct Login Option */}
-          <Link
-            to="/login"
-            className="text-xs font-bold text-slate-200 hover:text-white px-3.5 py-2 rounded-xl bg-slate-900/40 hover:bg-slate-900/70 border border-white/20 backdrop-blur-md transition-all whitespace-nowrap shadow-sm"
-          >
-            Sign In
-          </Link>
+          {/* Quick Direct Login Option - REMOVED after survey is completed (step > totalSteps) */}
+          {step <= totalSteps ? (
+            <Link
+              to="/login"
+              className="text-[11px] sm:text-xs font-bold text-slate-200 hover:text-white px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-xl bg-slate-900/40 hover:bg-slate-900/70 border border-white/20 backdrop-blur-md transition-all whitespace-nowrap shadow-sm shrink-0"
+            >
+              Sign In
+            </Link>
+          ) : (
+            /* Spacer to keep progress bar centered cleanly when survey is completed */
+            <div className="w-8 sm:w-10 shrink-0" />
+          )}
         </div>
       </header>
 
       {/* MAIN QUESTIONNAIRE CONTAINER */}
-      <main className="relative z-10 w-full max-w-3xl mx-auto px-4 sm:px-6 py-6 flex-1 flex flex-col justify-center">
+      <main className="relative z-10 w-full max-w-3xl mx-auto px-3 sm:px-6 py-4 sm:py-6 flex-1 flex flex-col justify-center">
         {/* DUOLINGO MASCOT & SPEECH BUBBLE */}
-        <div className="mb-6 flex items-start sm:items-center gap-3.5 bg-slate-900/60 border border-white/20 p-4 sm:p-5 rounded-2xl backdrop-blur-2xl shadow-xl animate-fadeIn">
-          <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-tr from-amber-400 via-brand-500 to-indigo-600 flex items-center justify-center text-white text-2xl sm:text-3xl shadow-lg shadow-amber-500/20 shrink-0 transform hover:scale-105 transition-transform">
+        <div className="mb-4 sm:mb-6 flex items-start sm:items-center gap-3 sm:gap-3.5 bg-slate-900/60 border border-white/20 p-3.5 sm:p-5 rounded-xl sm:rounded-2xl backdrop-blur-2xl shadow-xl animate-fadeIn">
+          <div className="w-11 h-11 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-gradient-to-tr from-amber-400 via-brand-500 to-indigo-600 flex items-center justify-center text-white text-2xl sm:text-3xl shadow-lg shadow-amber-500/20 shrink-0 transform hover:scale-105 transition-transform">
             🦉
           </div>
-          <div className="flex-1">
-            <div className="flex items-center gap-2 mb-1">
-              <span className="text-xs font-black uppercase tracking-wider text-amber-300">
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 mb-0.5 sm:mb-1">
+              <span className="text-[10px] sm:text-xs font-black uppercase tracking-wider text-amber-300">
                 NeoRead Guide
               </span>
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
             </div>
-            <p className="text-sm sm:text-base font-semibold text-white leading-snug">
+            <p className="text-xs sm:text-sm md:text-base font-semibold text-white leading-snug">
               {mascotSpeech[step]}
             </p>
           </div>
@@ -290,7 +295,7 @@ export const OnboardingFlow = () => {
         {step === 1 && (
           <div className="space-y-4 animate-fadeIn">
             <div className="text-center sm:text-left space-y-1">
-              <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-black text-white tracking-tight">
                 What language would you like to learn?
               </h1>
               <p className="text-xs sm:text-sm text-slate-200 font-medium">
@@ -300,12 +305,12 @@ export const OnboardingFlow = () => {
 
             {/* South Indian Languages Section */}
             <div className="space-y-2">
-              <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-amber-300 pt-2">
-                <Sparkles className="w-4 h-4 text-amber-300" />
+              <div className="flex items-center gap-2 text-[11px] sm:text-xs font-black uppercase tracking-wider text-amber-300 pt-1 sm:pt-2">
+                <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-300" />
                 <span>Featured South Indian Languages</span>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
                 {SUPPORTED_LANGUAGES.slice(0, 4).map(lang => {
                   const isSelected = selectedLanguage === lang.code;
                   return (
@@ -313,41 +318,43 @@ export const OnboardingFlow = () => {
                       key={lang.code}
                       type="button"
                       onClick={() => handleLanguageSelect(lang)}
-                      className={`relative p-4 rounded-2xl border text-left transition-all backdrop-blur-xl group cursor-pointer flex items-center justify-between ${
+                      className={`relative p-3 sm:p-4 rounded-xl sm:rounded-2xl border text-left transition-all backdrop-blur-xl group cursor-pointer flex items-center justify-between ${
                         isSelected
-                          ? 'border-brand-400 bg-brand-600/40 shadow-xl shadow-brand-500/30 scale-[1.02] ring-2 ring-brand-400/50'
+                          ? 'border-brand-400 bg-brand-600/40 shadow-xl shadow-brand-500/30 scale-[1.01] sm:scale-[1.02] ring-2 ring-brand-400/50'
                           : 'border-white/20 bg-slate-900/50 hover:bg-slate-900/70 hover:border-white/40'
                       }`}
                     >
-                      <div className="flex items-center gap-3.5">
-                        <div className="text-3xl p-2 rounded-xl bg-white/10 border border-white/10">
+                      <div className="flex items-center gap-2.5 sm:gap-3.5 min-w-0">
+                        <div className="text-2xl sm:text-3xl p-1.5 sm:p-2 rounded-xl bg-white/10 border border-white/10 shrink-0">
                           {lang.flag}
                         </div>
-                        <div>
-                          <div className="flex items-center gap-2">
-                            <span className="text-lg font-black text-white tracking-tight">
+                        <div className="min-w-0">
+                          <div className="flex items-center gap-1.5 sm:gap-2">
+                            <span className="text-base sm:text-lg font-black text-white tracking-tight">
                               {lang.nativeName}
                             </span>
-                            <span className="text-xs font-semibold text-slate-300">
+                            <span className="text-xs font-semibold text-slate-300 truncate">
                               ({lang.name})
                             </span>
                           </div>
-                          <p className="text-xs text-slate-300 font-medium">{lang.region}</p>
-                          <span className="inline-block mt-1 px-2 py-0.5 text-[10px] font-bold rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/30">
+                          <p className="text-[11px] sm:text-xs text-slate-300 font-medium truncate">
+                            {lang.region}
+                          </p>
+                          <span className="inline-block mt-0.5 sm:mt-1 px-2 py-0.5 text-[9px] sm:text-[10px] font-bold rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/30">
                             {lang.badge || lang.speakers}
                           </span>
                         </div>
                       </div>
 
-                      <div className="flex flex-col items-end gap-2">
+                      <div className="flex flex-col items-end gap-2 shrink-0 ml-2">
                         <div
-                          className={`w-6 h-6 rounded-full border flex items-center justify-center transition-all ${
+                          className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full border flex items-center justify-center transition-all ${
                             isSelected
                               ? 'border-brand-300 bg-brand-400 text-slate-900 font-bold'
                               : 'border-white/30 bg-white/5 text-transparent'
                           }`}
                         >
-                          <Check className="w-3.5 h-3.5 stroke-[3]" />
+                          <Check className="w-3 h-3 sm:w-3.5 sm:h-3.5 stroke-[3]" />
                         </div>
                         <button
                           type="button"
@@ -357,6 +364,7 @@ export const OnboardingFlow = () => {
                           }}
                           className="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white transition-colors cursor-pointer"
                           title="Listen to pronunciation"
+                          aria-label={`Pronounce ${lang.name}`}
                         >
                           <Volume2 className="w-3.5 h-3.5" />
                         </button>
@@ -368,11 +376,11 @@ export const OnboardingFlow = () => {
             </div>
 
             {/* Other Languages Section */}
-            <div className="space-y-2 pt-2">
-              <div className="text-xs font-black uppercase tracking-wider text-slate-300">
+            <div className="space-y-2 pt-1 sm:pt-2">
+              <div className="text-[11px] sm:text-xs font-black uppercase tracking-wider text-slate-300">
                 Additional Languages
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
                 {SUPPORTED_LANGUAGES.slice(4).map(lang => {
                   const isSelected = selectedLanguage === lang.code;
                   return (
@@ -380,29 +388,29 @@ export const OnboardingFlow = () => {
                       key={lang.code}
                       type="button"
                       onClick={() => handleLanguageSelect(lang)}
-                      className={`relative p-3.5 rounded-2xl border text-left transition-all backdrop-blur-xl group cursor-pointer flex items-center justify-between ${
+                      className={`relative p-3 sm:p-3.5 rounded-xl sm:rounded-2xl border text-left transition-all backdrop-blur-xl group cursor-pointer flex items-center justify-between ${
                         isSelected
-                          ? 'border-brand-400 bg-brand-600/40 shadow-xl shadow-brand-500/30 scale-[1.02] ring-2 ring-brand-400/50'
+                          ? 'border-brand-400 bg-brand-600/40 shadow-xl shadow-brand-500/30 scale-[1.01] sm:scale-[1.02] ring-2 ring-brand-400/50'
                           : 'border-white/20 bg-slate-900/50 hover:bg-slate-900/70 hover:border-white/40'
                       }`}
                     >
-                      <div className="flex items-center gap-3">
-                        <div className="text-2xl p-1.5 rounded-lg bg-white/10 border border-white/10">
+                      <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+                        <div className="text-xl sm:text-2xl p-1.5 rounded-lg bg-white/10 border border-white/10 shrink-0">
                           {lang.flag}
                         </div>
-                        <div>
+                        <div className="min-w-0">
                           <div className="flex items-center gap-1.5">
-                            <span className="text-base font-bold text-white tracking-tight">
+                            <span className="text-sm sm:text-base font-bold text-white tracking-tight">
                               {lang.nativeName}
                             </span>
-                            <span className="text-xs text-slate-300">({lang.name})</span>
+                            <span className="text-xs text-slate-300 truncate">({lang.name})</span>
                           </div>
-                          <p className="text-[11px] text-slate-300">{lang.region}</p>
+                          <p className="text-[10px] sm:text-[11px] text-slate-300 truncate">{lang.region}</p>
                         </div>
                       </div>
 
                       <div
-                        className={`w-5 h-5 rounded-full border flex items-center justify-center transition-all ${
+                        className={`w-5 h-5 rounded-full border flex items-center justify-center shrink-0 ml-2 transition-all ${
                           isSelected
                             ? 'border-brand-300 bg-brand-400 text-slate-900 font-bold'
                             : 'border-white/30 bg-white/5 text-transparent'
@@ -424,7 +432,7 @@ export const OnboardingFlow = () => {
         {step === 2 && (
           <div className="space-y-4 animate-fadeIn">
             <div className="text-center sm:text-left space-y-1">
-              <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-black text-white tracking-tight">
                 Why are you learning {currentLangObj.name}?
               </h1>
               <p className="text-xs sm:text-sm text-slate-200 font-medium">
@@ -432,7 +440,7 @@ export const OnboardingFlow = () => {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 pt-1 sm:pt-2">
               {ONBOARDING_REASONS.map(reason => {
                 const isSelected = selectedReason === reason.id;
                 return (
@@ -443,27 +451,27 @@ export const OnboardingFlow = () => {
                       setSelectedReason(reason.id);
                       playSound('select');
                     }}
-                    className={`p-4 rounded-2xl border text-left transition-all backdrop-blur-xl group cursor-pointer flex items-start gap-3.5 ${
+                    className={`p-3.5 sm:p-4 rounded-xl sm:rounded-2xl border text-left transition-all backdrop-blur-xl group cursor-pointer flex items-start gap-3 sm:gap-3.5 ${
                       isSelected
-                        ? 'border-brand-400 bg-brand-600/40 shadow-xl shadow-brand-500/30 scale-[1.02] ring-2 ring-brand-400/50'
+                        ? 'border-brand-400 bg-brand-600/40 shadow-xl shadow-brand-500/30 scale-[1.01] sm:scale-[1.02] ring-2 ring-brand-400/50'
                         : 'border-white/20 bg-slate-900/50 hover:bg-slate-900/70 hover:border-white/40'
                     }`}
                   >
-                    <div className="text-3xl p-2 rounded-xl bg-white/10 border border-white/10 shrink-0">
+                    <div className="text-2xl sm:text-3xl p-1.5 sm:p-2 rounded-xl bg-white/10 border border-white/10 shrink-0">
                       {reason.icon}
                     </div>
-                    <div className="flex-1">
-                      <div className="flex items-center justify-between">
-                        <h3 className="text-sm sm:text-base font-bold text-white">
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between gap-1">
+                        <h3 className="text-xs sm:text-sm md:text-base font-bold text-white truncate">
                           {reason.title}
                         </h3>
                         {reason.popular && (
-                          <span className="px-2 py-0.5 text-[9px] font-black uppercase tracking-wider rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/30">
+                          <span className="px-1.5 sm:px-2 py-0.5 text-[8px] sm:text-[9px] font-black uppercase tracking-wider rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/30 shrink-0">
                             Popular
                           </span>
                         )}
                       </div>
-                      <p className="text-xs text-slate-300 mt-1 leading-relaxed">
+                      <p className="text-[11px] sm:text-xs text-slate-300 mt-1 leading-relaxed">
                         {reason.description}
                       </p>
                     </div>
@@ -480,7 +488,7 @@ export const OnboardingFlow = () => {
         {step === 3 && (
           <div className="space-y-4 animate-fadeIn">
             <div className="text-center sm:text-left space-y-1">
-              <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-black text-white tracking-tight">
                 What literacy skills do you need most?
               </h1>
               <p className="text-xs sm:text-sm text-slate-200 font-medium">
@@ -488,7 +496,7 @@ export const OnboardingFlow = () => {
               </p>
             </div>
 
-            <div className="space-y-2.5 pt-2">
+            <div className="space-y-2 sm:space-y-2.5 pt-1 sm:pt-2">
               {ONBOARDING_NEEDS.map(need => {
                 const isSelected = selectedNeeds.includes(need.id);
                 return (
@@ -496,30 +504,34 @@ export const OnboardingFlow = () => {
                     key={need.id}
                     type="button"
                     onClick={() => handleNeedToggle(need.id)}
-                    className={`w-full p-4 rounded-2xl border text-left transition-all backdrop-blur-xl group cursor-pointer flex items-center justify-between ${
+                    className={`w-full p-3 sm:p-4 rounded-xl sm:rounded-2xl border text-left transition-all backdrop-blur-xl group cursor-pointer flex items-center justify-between ${
                       isSelected
                         ? 'border-brand-400 bg-brand-600/40 shadow-xl shadow-brand-500/30 scale-[1.01] ring-2 ring-brand-400/50'
                         : 'border-white/20 bg-slate-900/50 hover:bg-slate-900/70 hover:border-white/40'
                     }`}
                   >
-                    <div className="flex items-center gap-3.5">
-                      <div className="text-2xl p-2 rounded-xl bg-white/10 border border-white/10 shrink-0">
+                    <div className="flex items-center gap-3 sm:gap-3.5 min-w-0">
+                      <div className="text-xl sm:text-2xl p-1.5 sm:p-2 rounded-xl bg-white/10 border border-white/10 shrink-0">
                         {need.icon}
                       </div>
-                      <div>
-                        <h3 className="text-sm sm:text-base font-bold text-white">{need.title}</h3>
-                        <p className="text-xs text-slate-300 leading-relaxed">{need.description}</p>
+                      <div className="min-w-0">
+                        <h3 className="text-xs sm:text-sm md:text-base font-bold text-white truncate">
+                          {need.title}
+                        </h3>
+                        <p className="text-[11px] sm:text-xs text-slate-300 leading-relaxed">
+                          {need.description}
+                        </p>
                       </div>
                     </div>
 
                     <div
-                      className={`w-6 h-6 rounded-lg border flex items-center justify-center shrink-0 transition-all ${
+                      className={`w-5 h-5 sm:w-6 sm:h-6 rounded-lg border flex items-center justify-center shrink-0 ml-2 transition-all ${
                         isSelected
                           ? 'border-brand-300 bg-brand-400 text-slate-900 font-bold'
                           : 'border-white/30 bg-white/5 text-transparent'
                       }`}
                     >
-                      <Check className="w-4 h-4 stroke-[3]" />
+                      <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[3]" />
                     </div>
                   </button>
                 );
@@ -534,7 +546,7 @@ export const OnboardingFlow = () => {
         {step === 4 && (
           <div className="space-y-4 animate-fadeIn">
             <div className="text-center sm:text-left space-y-1">
-              <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-black text-white tracking-tight">
                 What's your daily practice goal?
               </h1>
               <p className="text-xs sm:text-sm text-slate-200 font-medium">
@@ -542,7 +554,7 @@ export const OnboardingFlow = () => {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3.5 pt-1 sm:pt-2">
               {ONBOARDING_DAILY_GOALS.map(goal => {
                 const isSelected = selectedDailyGoal === goal.id;
                 return (
@@ -553,34 +565,36 @@ export const OnboardingFlow = () => {
                       setSelectedDailyGoal(goal.id);
                       playSound('select');
                     }}
-                    className={`p-4 rounded-2xl border text-left transition-all backdrop-blur-xl group cursor-pointer flex flex-col justify-between ${
+                    className={`p-3.5 sm:p-4 rounded-xl sm:rounded-2xl border text-left transition-all backdrop-blur-xl group cursor-pointer flex flex-col justify-between ${
                       isSelected
-                        ? 'border-brand-400 bg-brand-600/40 shadow-xl shadow-brand-500/30 scale-[1.02] ring-2 ring-brand-400/50'
+                        ? 'border-brand-400 bg-brand-600/40 shadow-xl shadow-brand-500/30 scale-[1.01] sm:scale-[1.02] ring-2 ring-brand-400/50'
                         : 'border-white/20 bg-slate-900/50 hover:bg-slate-900/70 hover:border-white/40'
                     }`}
                   >
-                    <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center justify-between gap-1 mb-2">
                       <div className="flex items-center gap-2">
-                        <span className="text-2xl">{goal.icon}</span>
+                        <span className="text-xl sm:text-2xl">{goal.icon}</span>
                         <div>
-                          <h3 className="text-base font-bold text-white">{goal.levelTitle}</h3>
-                          <span className="text-xs font-black text-amber-300">
+                          <h3 className="text-sm sm:text-base font-bold text-white">
+                            {goal.levelTitle}
+                          </h3>
+                          <span className="text-[11px] sm:text-xs font-black text-amber-300">
                             {goal.hoursDisplay}
                           </span>
                         </div>
                       </div>
                       {goal.recommended && (
-                        <span className="px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wider rounded-full bg-emerald-400/20 text-emerald-300 border border-emerald-400/30">
+                        <span className="px-2 py-0.5 text-[8px] sm:text-[10px] font-black uppercase tracking-wider rounded-full bg-emerald-400/20 text-emerald-300 border border-emerald-400/30 shrink-0">
                           Recommended
                         </span>
                       )}
                     </div>
 
-                    <p className="text-xs text-slate-300 leading-relaxed mb-3">
+                    <p className="text-[11px] sm:text-xs text-slate-300 leading-relaxed mb-2 sm:mb-3">
                       {goal.description}
                     </p>
 
-                    <div className="flex items-center justify-between pt-2 border-t border-white/10 text-[11px] font-semibold text-slate-300">
+                    <div className="flex items-center justify-between pt-2 border-t border-white/10 text-[10px] sm:text-[11px] font-semibold text-slate-300">
                       <span>Pace: {goal.pace}</span>
                       <span className="text-amber-300 font-bold">{goal.xpMultiplier}</span>
                     </div>
@@ -597,7 +611,7 @@ export const OnboardingFlow = () => {
         {step === 5 && (
           <div className="space-y-4 animate-fadeIn">
             <div className="text-center sm:text-left space-y-1">
-              <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-black text-white tracking-tight">
                 How much {currentLangObj.name} do you know?
               </h1>
               <p className="text-xs sm:text-sm text-slate-200 font-medium">
@@ -605,7 +619,7 @@ export const OnboardingFlow = () => {
               </p>
             </div>
 
-            <div className="space-y-3 pt-2">
+            <div className="space-y-2.5 sm:space-y-3 pt-1 sm:pt-2">
               {ONBOARDING_LEVELS.map(lvl => {
                 const isSelected = selectedLevel === lvl.id;
                 return (
@@ -616,37 +630,39 @@ export const OnboardingFlow = () => {
                       setSelectedLevel(lvl.id);
                       playSound('select');
                     }}
-                    className={`w-full p-4 rounded-2xl border text-left transition-all backdrop-blur-xl group cursor-pointer flex items-center justify-between ${
+                    className={`w-full p-3.5 sm:p-4 rounded-xl sm:rounded-2xl border text-left transition-all backdrop-blur-xl group cursor-pointer flex items-center justify-between ${
                       isSelected
                         ? 'border-brand-400 bg-brand-600/40 shadow-xl shadow-brand-500/30 scale-[1.01] ring-2 ring-brand-400/50'
                         : 'border-white/20 bg-slate-900/50 hover:bg-slate-900/70 hover:border-white/40'
                     }`}
                   >
-                    <div className="flex items-center gap-3.5">
-                      <div className="text-3xl p-2 rounded-xl bg-white/10 border border-white/10 shrink-0">
+                    <div className="flex items-center gap-3 sm:gap-3.5 min-w-0">
+                      <div className="text-2xl sm:text-3xl p-1.5 sm:p-2 rounded-xl bg-white/10 border border-white/10 shrink-0">
                         {lvl.icon}
                       </div>
-                      <div>
-                        <div className="flex items-center gap-2">
-                          <h3 className="text-sm sm:text-base font-bold text-white">{lvl.title}</h3>
-                          <span className="px-2 py-0.5 text-[9px] font-bold rounded-md bg-white/10 text-slate-300 border border-white/20">
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+                          <h3 className="text-xs sm:text-sm md:text-base font-bold text-white">
+                            {lvl.title}
+                          </h3>
+                          <span className="px-1.5 sm:px-2 py-0.5 text-[8px] sm:text-[9px] font-bold rounded-md bg-white/10 text-slate-300 border border-white/20">
                             {lvl.badge}
                           </span>
                         </div>
-                        <p className="text-xs text-slate-300 leading-relaxed mt-0.5">
+                        <p className="text-[11px] sm:text-xs text-slate-300 leading-relaxed mt-0.5">
                           {lvl.subtitle}
                         </p>
                       </div>
                     </div>
 
                     <div
-                      className={`w-6 h-6 rounded-full border flex items-center justify-center shrink-0 transition-all ${
+                      className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full border flex items-center justify-center shrink-0 ml-2 transition-all ${
                         isSelected
                           ? 'border-brand-300 bg-brand-400 text-slate-900 font-bold'
                           : 'border-white/30 bg-white/5 text-transparent'
                       }`}
                     >
-                      <Check className="w-3.5 h-3.5 stroke-[3]" />
+                      <Check className="w-3 h-3 sm:w-3.5 sm:h-3.5 stroke-[3]" />
                     </div>
                   </button>
                 );
@@ -656,102 +672,103 @@ export const OnboardingFlow = () => {
         )}
 
         {/* =========================================================================
-            STEP 6: CELEBRATION & PERSONALIZED PLAN SUMMARY
+            STEP 6: CELEBRATION & PERSONALIZED PLAN SUMMARY (Survey Completed)
            ========================================================================= */}
         {step === 6 && (
-          <div className="space-y-6 animate-fadeIn py-2">
-            <div className="p-8 sm:p-10 rounded-3xl bg-slate-900/80 border border-white/20 backdrop-blur-2xl shadow-2xl text-center space-y-6">
+          <div className="space-y-4 sm:space-y-6 animate-fadeIn py-1 sm:py-2">
+            <div className="p-5 sm:p-8 md:p-10 rounded-2xl sm:rounded-3xl bg-slate-900/85 border border-white/20 backdrop-blur-2xl shadow-2xl text-center space-y-4 sm:space-y-6">
               {/* Confetti & Trophy Badge */}
               <div className="relative inline-block mx-auto">
-                <div className="w-20 h-20 rounded-3xl bg-gradient-to-tr from-amber-400 via-brand-500 to-indigo-600 text-white flex items-center justify-center mx-auto shadow-2xl shadow-amber-400/30 animate-bounce">
-                  <Trophy className="w-10 h-10 text-amber-200" />
+                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl sm:rounded-3xl bg-gradient-to-tr from-amber-400 via-brand-500 to-indigo-600 text-white flex items-center justify-center mx-auto shadow-2xl shadow-amber-400/30 animate-bounce">
+                  <Trophy className="w-8 h-8 sm:w-10 sm:h-10 text-amber-200" />
                 </div>
-                <div className="absolute -top-2 -right-2 text-2xl animate-spin">✨</div>
-                <div className="absolute -bottom-2 -left-2 text-2xl animate-pulse">🎉</div>
+                <div className="absolute -top-1 -right-1 text-xl sm:text-2xl animate-spin">✨</div>
+                <div className="absolute -bottom-1 -left-1 text-xl sm:text-2xl animate-pulse">🎉</div>
               </div>
 
-              <div className="space-y-2">
-                <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-emerald-400/20 text-emerald-300 border border-emerald-400/30 text-xs font-black uppercase tracking-wider">
-                  <ShieldCheck className="w-3.5 h-3.5" />
+              <div className="space-y-1.5 sm:space-y-2">
+                <span className="inline-flex items-center gap-1.5 px-3 py-0.5 sm:px-3.5 sm:py-1 rounded-full bg-emerald-400/20 text-emerald-300 border border-emerald-400/30 text-[10px] sm:text-xs font-black uppercase tracking-wider">
+                  <ShieldCheck className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                   <span>Personalized Learning Plan Ready</span>
                 </span>
-                <h1 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-tight">
                   You're Ready to Learn {currentLangObj.name}!
                 </h1>
-                <p className="text-sm text-slate-200 max-w-md mx-auto leading-relaxed">
+                <p className="text-xs sm:text-sm text-slate-200 max-w-md mx-auto leading-relaxed">
                   We've calibrated your curriculum with voice assistance and phonics lessons
                 </p>
               </div>
 
               {/* Personalized Plan Snapshot Card */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-left">
-                <div className="p-3.5 rounded-2xl bg-white/5 border border-white/15 backdrop-blur-md">
-                  <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 text-left">
+                <div className="p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-white/5 border border-white/15 backdrop-blur-md">
+                  <span className="text-[10px] sm:text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-0.5 sm:mb-1">
                     Language
                   </span>
-                  <div className="flex items-center gap-1.5 font-black text-white text-base">
+                  <div className="flex items-center gap-1.5 font-black text-white text-sm sm:text-base truncate">
                     <span>{currentLangObj.flag}</span>
-                    <span>{currentLangObj.nativeName}</span>
+                    <span className="truncate">{currentLangObj.nativeName}</span>
                   </div>
                 </div>
 
-                <div className="p-3.5 rounded-2xl bg-white/5 border border-white/15 backdrop-blur-md">
-                  <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
+                <div className="p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-white/5 border border-white/15 backdrop-blur-md">
+                  <span className="text-[10px] sm:text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-0.5 sm:mb-1">
                     Daily Goal
                   </span>
-                  <div className="flex items-center gap-1 font-black text-amber-300 text-sm">
-                    <Flame className="w-4 h-4 text-amber-400" />
-                    <span>{currentGoalObj.hoursDisplay}</span>
+                  <div className="flex items-center gap-1 font-black text-amber-300 text-xs sm:text-sm truncate">
+                    <Flame className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400 shrink-0" />
+                    <span className="truncate">{currentGoalObj.hoursDisplay}</span>
                   </div>
                 </div>
 
-                <div className="p-3.5 rounded-2xl bg-white/5 border border-white/15 backdrop-blur-md">
-                  <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
+                <div className="p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-white/5 border border-white/15 backdrop-blur-md">
+                  <span className="text-[10px] sm:text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-0.5 sm:mb-1">
                     Target Goal
                   </span>
-                  <div className="flex items-center gap-1 font-bold text-white text-xs truncate">
+                  <div className="flex items-center gap-1 font-bold text-white text-[11px] sm:text-xs truncate">
                     <Target className="w-3.5 h-3.5 text-sky-400 shrink-0" />
                     <span className="truncate">{currentReasonObj.title.split('&')[0]}</span>
                   </div>
                 </div>
 
-                <div className="p-3.5 rounded-2xl bg-white/5 border border-white/15 backdrop-blur-md">
-                  <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
+                <div className="p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-white/5 border border-white/15 backdrop-blur-md">
+                  <span className="text-[10px] sm:text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-0.5 sm:mb-1">
                     Starting Point
                   </span>
-                  <div className="flex items-center gap-1 font-bold text-emerald-300 text-xs">
-                    <span>{currentLevelObj.badge}</span>
+                  <div className="flex items-center gap-1 font-bold text-emerald-300 text-[11px] sm:text-xs truncate">
+                    <span className="truncate">{currentLevelObj.badge}</span>
                   </div>
                 </div>
               </div>
 
               {/* Projected Milestone Pill */}
-              <div className="p-3 rounded-2xl bg-gradient-to-r from-brand-600/30 to-indigo-600/30 border border-brand-400/30 text-xs font-semibold text-slate-200">
+              <div className="p-2.5 sm:p-3 rounded-xl sm:rounded-2xl bg-gradient-to-r from-brand-600/30 to-indigo-600/30 border border-brand-400/30 text-[11px] sm:text-xs font-semibold text-slate-200 leading-snug">
                 🚀 Projected Milestone:{' '}
                 <span className="text-white font-bold">
                   Read complete sentences in just 14 days with {currentGoalObj.hoursDisplay}!
                 </span>
               </div>
 
-              {/* Action Buttons to Login or Register */}
+              {/* Action Buttons to Register or Login */}
               <div className="space-y-3 pt-2">
                 <button
                   type="button"
-                  onClick={handleProceedToLogin}
-                  className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-brand-500 via-indigo-600 to-purple-600 hover:from-brand-600 hover:to-purple-700 text-white font-black text-base shadow-xl shadow-brand-500/40 hover:shadow-brand-500/60 transition-all flex items-center justify-center gap-2 transform active:scale-98 cursor-pointer"
+                  onClick={handleProceedToRegister}
+                  className="w-full py-3.5 sm:py-4 px-6 rounded-xl sm:rounded-2xl bg-gradient-to-r from-emerald-500 via-teal-500 to-indigo-600 hover:from-emerald-600 hover:to-indigo-700 text-white font-black text-sm sm:text-base shadow-xl shadow-emerald-500/30 hover:shadow-emerald-500/50 transition-all flex items-center justify-center gap-2 transform active:scale-98 cursor-pointer"
                 >
-                  <span>Continue to Sign In</span>
-                  <ArrowRight className="w-5 h-5" />
+                  <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-amber-300" />
+                  <span>Create Free Account & Start Learning</span>
+                  <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
                 </button>
 
-                <div className="flex items-center justify-center gap-4 text-xs font-semibold text-slate-300">
-                  <span>Don't have an account yet?</span>
+                <div className="flex items-center justify-center gap-2 text-xs sm:text-sm font-semibold text-slate-300 pt-1">
+                  <span>Already have an account?</span>
                   <button
                     type="button"
-                    onClick={handleProceedToRegister}
-                    className="font-bold text-brand-300 hover:text-white underline hover:no-underline cursor-pointer"
+                    onClick={handleProceedToLogin}
+                    className="font-bold text-amber-300 hover:text-white underline hover:no-underline cursor-pointer"
                   >
-                    Create Free Account
+                    Sign In
                   </button>
                 </div>
               </div>
@@ -761,15 +778,15 @@ export const OnboardingFlow = () => {
 
         {/* BOTTOM CONTINUE ACTION BAR (Steps 1 to 5) */}
         {step <= totalSteps && (
-          <div className="pt-6 flex items-center justify-between gap-4 border-t border-white/10 mt-6">
-            <div className="text-xs text-slate-300 font-medium">
-              Press <span className="font-bold text-white bg-white/10 px-2 py-0.5 rounded">Continue</span> to save progress
+          <div className="pt-4 sm:pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 border-t border-white/10 mt-4 sm:mt-6">
+            <div className="text-[11px] sm:text-xs text-slate-300 font-medium text-center sm:text-left">
+              Press <span className="font-bold text-white bg-white/10 px-2 py-0.5 rounded">Continue</span> to save your choices
             </div>
 
             <button
               type="button"
               onClick={handleNext}
-              className="py-3.5 px-8 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-extrabold text-sm sm:text-base shadow-xl shadow-emerald-500/30 hover:shadow-emerald-500/50 transition-all flex items-center gap-2 transform active:scale-98 cursor-pointer"
+              className="w-full sm:w-auto py-3.5 sm:py-4 px-6 sm:px-8 rounded-xl sm:rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-extrabold text-sm sm:text-base shadow-xl shadow-emerald-500/30 hover:shadow-emerald-500/50 transition-all flex items-center justify-center gap-2 transform active:scale-98 cursor-pointer"
             >
               <span>{step === totalSteps ? 'Complete & Generate Plan' : 'Continue'}</span>
               <ArrowRight className="w-4 h-4" />
@@ -779,7 +796,7 @@ export const OnboardingFlow = () => {
       </main>
 
       {/* FOOTER */}
-      <footer className="relative z-10 py-4 text-center text-xs text-slate-300 font-medium">
+      <footer className="relative z-10 py-3 sm:py-4 text-center text-[11px] sm:text-xs text-slate-300 font-medium px-4">
         <span>© 2026 {BRAND.name}. Free Public Multilingual Literacy Platform.</span>
       </footer>
     </div>
