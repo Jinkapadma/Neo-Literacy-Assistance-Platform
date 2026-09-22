@@ -2,6 +2,7 @@ import { Router } from 'express';
 import {
   getAllAssessments,
   getAssessmentById,
+  getInitialDiagnosticAssessment,
   submitAssessment,
   getUserBenchmark,
   createAssessment,
@@ -16,6 +17,9 @@ import {
 } from '../validators/assessment.validator.js';
 
 const router = Router();
+
+// Age- and Language-Adaptive Initial Diagnostic Assessment
+router.get('/initial-diagnostic', optionalAuth, getInitialDiagnosticAssessment);
 
 router.get('/', validate(getAssessmentsQuerySchema), getAllAssessments);
 

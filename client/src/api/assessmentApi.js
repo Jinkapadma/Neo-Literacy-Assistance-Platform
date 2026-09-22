@@ -1,6 +1,11 @@
 import { axiosInstance } from './axiosInstance.js';
 
 export const assessmentApi = {
+  getInitialDiagnostic: async (params = {}) => {
+    const res = await axiosInstance.get('/assessments/initial-diagnostic', { params });
+    return res.data;
+  },
+
   getAllAssessments: async (params = {}) => {
     const res = await axiosInstance.get('/assessments', { params });
     return res.data;

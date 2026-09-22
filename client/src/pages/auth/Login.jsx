@@ -44,8 +44,22 @@ export const Login = () => {
   const onSubmit = async values => {
     setIsLoading(true);
     try {
-      await login(values);
-      navigate(from, { replace: true });
+      const loggedUser = await login(values);
+      if (
+        loggedUser?.role === 'learner' &&
+        (loggedUser?.proficiencyLevel === 'unassessed' || !loggedUser?.proficiencyLevel)
+      ) {
+        navigate('/initial-assessment', {
+          replace: true,
+          state: {
+            preferredLanguage: loggedUser.preferredLanguage,
+            age: loggedUser.age,
+          },
+        });
+      } else {
+        const dest = from === '/curriculum' ? '/dashboard' : from;
+        navigate(dest, { replace: true });
+      }
     } catch {
       // Error notification handled in AuthContext
     } finally {

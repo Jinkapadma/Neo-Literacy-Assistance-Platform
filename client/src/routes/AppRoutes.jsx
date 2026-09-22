@@ -5,8 +5,10 @@ import { ProtectedRoute } from '../components/layout/ProtectedRoute.jsx';
 
 import { LandingPage } from '../pages/landing/LandingPage.jsx';
 import { OnboardingFlow } from '../pages/onboarding/OnboardingFlow.jsx';
+import { InitialAssessment } from '../pages/assessment/InitialAssessment.jsx';
 import { Login } from '../pages/auth/Login.jsx';
 import { Register } from '../pages/auth/Register.jsx';
+import { LearnerDashboard } from '../pages/dashboard/LearnerDashboard.jsx';
 import { LearnerProfile } from '../pages/profile/LearnerProfile.jsx';
 import { CurriculumList } from '../pages/curriculum/CurriculumList.jsx';
 import { CurriculumDetail } from '../pages/curriculum/CurriculumDetail.jsx';
@@ -25,27 +27,32 @@ export const AppRoutes = () => {
       <Route path="/onboarding" element={<OnboardingFlow />} />
       <Route path="/get-started" element={<OnboardingFlow />} />
 
+      {/* Age- and Language-Adaptive Initial Diagnostic Assessment */}
+      <Route path="/initial-assessment" element={<InitialAssessment />} />
+
       {/* Standalone Auth Pages (Clean form without left sidebar or top navbar) */}
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
 
-      {/* Internal Application Routes with Layout */}
+      {/* Internal Application Routes with Layout (Left Sidebar + Header) */}
       <Route element={<Layout />}>
+        {/* Main Learner Dashboard with Left Sidebar */}
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <LearnerDashboard />
+            </ProtectedRoute>
+          }
+        />
+
         <Route path="/curriculum" element={<CurriculumList />} />
         <Route path="/curriculum/:id" element={<CurriculumDetail />} />
         <Route path="/content" element={<ContentLibrary />} />
         <Route path="/assessment" element={<AssessmentPage />} />
         <Route path="/assessment/:id" element={<AssessmentPage />} />
 
-        {/* Protected Learner Routes */}
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <LearnerProfile />
-            </ProtectedRoute>
-          }
-        />
+        {/* Protected Learner Profile */}
         <Route
           path="/profile"
           element={

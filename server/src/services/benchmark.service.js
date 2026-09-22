@@ -1,15 +1,33 @@
+import mongoose from 'mongoose';
 import { Assessment, AssessmentSubmission } from '../models/Assessment.model.js';
 import { User } from '../models/User.model.js';
 import { ApiError } from '../utils/apiError.js';
+import { getDiagnosticAssessmentData } from './diagnosticQuestionBank.js';
 
 export class BenchmarkService {
   /**
    * Calculates scores and assigns proficiency benchmarks based on learner submission answers.
    */
   static async evaluateAssessmentSubmission(userId, assessmentId, answers, timeSpentSeconds = 0) {
-    const assessment = await Assessment.findById(assessmentId);
+    const user = await User.findById(userId);
+    if (!user) {
+      throw ApiError.notFound('User not found');
+    }
+
+    let assessment = null;
+    if (mongoose.Types.ObjectId.isValid(assessmentId)) {
+      assessment = await Assessment.findById(assessmentId);
+    }
+
+    // Fallback to dynamic diagnostic question bank if not in MongoDB
     if (!assessment) {
-      throw ApiError.notFound('Assessment not found');
+      const diagData = getDiagnosticAssessmentData(user.preferredLanguage, user.age || 20);
+      // Ensure it is saved in DB so submission can reference it
+      assessment = await Assessment.findOneAndUpdate(
+        { code: diagData.code },
+        { $setOnInsert: diagData },
+        { upsert: true, new: true }
+      );
     }
 
     const questionMap = new Map();
@@ -75,6 +93,8 @@ export class BenchmarkService {
     const readingScore = calculateSkillPercent('reading');
     const writingScore = calculateSkillPercent('writing');
     const comprehensionScore = calculateSkillPercent('comprehension');
+    const phonicsScore = calculateSkillPercent('phonics');
+    const vocabularyScore = calculateSkillPercent('vocabulary');
 
     // Assign benchmark level
     let benchmarkAssigned = 'beginner';
@@ -98,21 +118,84 @@ export class BenchmarkService {
 
     // Determine strengths & areas for improvement
     if (readingScore >= 70) strengths.push('Reading Fluency & Passage Comprehension');
-    else areasForImprovement.push('Reading Speed and Word Recognition');
+    else areasForImprovement.push('Reading Speed & Word Recognition');
 
     if (writingScore >= 70) strengths.push('Sentence Construction & Spelling');
-    else areasForImprovement.push('Letter Formation & Word Spelling');
+    else areasForImprovement.push('Letter Formation & Spelling');
 
-    if (comprehensionScore >= 70) strengths.push('Story Understanding & Context Extraction');
+    if (comprehensionScore >= 70) strengths.push('Story Understanding & Context Clues');
     else areasForImprovement.push('Context Clues & Question Answering');
 
-    if (strengths.length === 0) strengths.push('Eagerness to learn and complete the assessment');
-    if (areasForImprovement.length === 0) areasForImprovement.push('Keep challenging yourself with advanced texts');
+    if (phonicsScore >= 70) strengths.push('Phonetic Sound & Letter Matching');
+    else areasForImprovement.push('Script Phonics & Acoustic Pronunciation');
+
+    if (strengths.length === 0) strengths.push('Active participation and diagnostic completion');
+    if (areasForImprovement.length === 0) areasForImprovement.push('Keep challenging yourself with advanced reading modules');
+
+    // Generate AI Personalized Learning Plan
+    const age = user.age || 20;
+    const ageCohort = age < 12 ? 'kids' : age < 18 ? 'teens' : 'adults';
+
+    const moduleSequenceMap = {
+      beginner: {
+        moduleId: 'mod_1_foundations',
+        title: 'Module 1: Script & Phonics Foundations',
+        subtitle: 'Alphabet recognition, letter acoustic sounds, and foundational sight words',
+        icon: '🔤',
+        unlockedLessonsCount: 4,
+      },
+      elementary: {
+        moduleId: 'mod_2_words',
+        title: 'Module 2: Word Construction & Everyday Objects',
+        subtitle: 'Two-letter blending, high-frequency sight vocabulary, and picture matching',
+        icon: '🌿',
+        unlockedLessonsCount: 5,
+      },
+      intermediate: {
+        moduleId: 'mod_3_sentences',
+        title: 'Module 3: Sentence Reading & Short Stories',
+        subtitle: 'Sentence structure, punctuation, dialogue reading, and story comprehension',
+        icon: '⚡',
+        unlockedLessonsCount: 6,
+      },
+      advanced: {
+        moduleId: 'mod_4_real_world',
+        title: 'Module 4: Real-World Reading & Document Fluency',
+        subtitle: 'Public sign boards, news articles, utility notices, and practical reading',
+        icon: '🏆',
+        unlockedLessonsCount: 8,
+      },
+    };
+
+    const personalizedPlan = {
+      assignedLevel: benchmarkAssigned,
+      ageCohort,
+      language: user.preferredLanguage,
+      overallScore,
+      startingModule: moduleSequenceMap[benchmarkAssigned] || moduleSequenceMap.beginner,
+      recommendedDailyMinutes: overallScore < 50 ? 20 : 15,
+      dailyXpTarget: 50,
+      prioritySkills: areasForImprovement.slice(0, 3),
+      strengths: strengths.slice(0, 3),
+      milestone14Days:
+        benchmarkAssigned === 'beginner'
+          ? 'Read basic 3-letter words and common public signs independently'
+          : benchmarkAssigned === 'elementary'
+            ? 'Read complete sentences and short illustrated paragraphs with confidence'
+            : 'Read everyday notices, newspapers, and stories with high fluency',
+      skillScores: {
+        reading: readingScore,
+        writing: writingScore,
+        comprehension: comprehensionScore,
+        phonics: phonicsScore,
+        vocabulary: vocabularyScore,
+      },
+    };
 
     // Create submission record
     const submission = await AssessmentSubmission.create({
       userId,
-      assessmentId,
+      assessmentId: assessment._id,
       answers: gradedAnswers,
       scores: {
         overallScore,
@@ -129,12 +212,15 @@ export class BenchmarkService {
       timeSpentSeconds,
     });
 
-    // Update User Profile with benchmark history and current proficiency level
+    // Update User Profile with benchmark history, current proficiency level, and priority target skills
     await User.findByIdAndUpdate(userId, {
-      $set: { proficiencyLevel: benchmarkAssigned },
+      $set: {
+        proficiencyLevel: benchmarkAssigned,
+        targetSkills: areasForImprovement.length > 0 ? areasForImprovement : user.targetSkills,
+      },
       $push: {
         benchmarkHistory: {
-          assessmentId,
+          assessmentId: assessment._id,
           benchmarkLevel: benchmarkAssigned,
           overallScore,
           readingScore,
@@ -146,7 +232,9 @@ export class BenchmarkService {
       },
     });
 
-    return submission;
+    const result = submission.toObject();
+    result.personalizedPlan = personalizedPlan;
+    return result;
   }
 
   /**

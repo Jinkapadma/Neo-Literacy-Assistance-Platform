@@ -1,8 +1,45 @@
 import { Assessment, AssessmentSubmission } from '../models/Assessment.model.js';
 import { BenchmarkService } from '../services/benchmark.service.js';
+import { getDiagnosticAssessmentData } from '../services/diagnosticQuestionBank.js';
 import { ApiError } from '../utils/apiError.js';
 import { ApiResponse } from '../utils/apiResponse.js';
 import { asyncHandler } from '../middlewares/asyncHandler.js';
+
+export const getInitialDiagnosticAssessment = asyncHandler(async (req, res) => {
+  const language = req.query.language || req.user?.preferredLanguage || 'te';
+  const age = Number(req.query.age || req.user?.age || 20);
+  const cohort = age < 12 ? 'kids' : age < 18 ? 'teens' : 'adults';
+
+  // 1. Try finding existing assessment in database matching language and age cohort
+  let assessment = await Assessment.findOne({
+    language,
+    ageCohort: cohort,
+    isPublished: true,
+  });
+
+  // 2. Fallback to dynamic question bank and upsert in DB
+  if (!assessment) {
+    const diagData = getDiagnosticAssessmentData(language, age);
+    assessment = await Assessment.findOneAndUpdate(
+      { code: diagData.code },
+      { $setOnInsert: diagData },
+      { upsert: true, new: true }
+    );
+  }
+
+  // Strip correct answers for learner taking the test
+  const isPrivileged = req.user && (req.user.role === 'admin' || req.user.role === 'educator');
+  const payload = assessment.toObject();
+
+  if (!isPrivileged) {
+    payload.questions = payload.questions.map(q => {
+      const { correctAnswer: _c, explanation: _e, ...cleanQ } = q;
+      return cleanQ;
+    });
+  }
+
+  return ApiResponse.success(res, payload, 'Initial diagnostic assessment retrieved successfully');
+});
 
 export const getAllAssessments = asyncHandler(async (req, res) => {
   const { language, type, targetLevel, page = 1, limit = 10 } = req.query;

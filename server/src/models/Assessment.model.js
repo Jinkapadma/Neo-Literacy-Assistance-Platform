@@ -69,7 +69,7 @@ const assessmentSchema = new mongoose.Schema(
     },
     language: {
       type: String,
-      enum: ['en', 'hi', 'es', 'fr', 'bn', 'te', 'ta', 'mr'],
+      enum: ['en', 'hi', 'es', 'fr', 'bn', 'te', 'ta', 'kn', 'ml', 'mr'],
       required: true,
       index: true,
     },
@@ -77,6 +77,17 @@ const assessmentSchema = new mongoose.Schema(
       type: String,
       enum: ['reading', 'writing', 'comprehension', 'benchmark'],
       required: true,
+      index: true,
+    },
+    ageCohort: {
+      type: String,
+      enum: ['kids', 'teens', 'adults', 'all'],
+      default: 'all',
+      index: true,
+    },
+    isInitialDiagnostic: {
+      type: Boolean,
+      default: false,
       index: true,
     },
     targetLevel: {

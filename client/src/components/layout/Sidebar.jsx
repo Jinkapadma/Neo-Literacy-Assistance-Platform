@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import {
   Home,
+  LayoutDashboard,
   GraduationCap,
   BookOpen,
   Award,
@@ -17,12 +18,23 @@ export const Sidebar = ({ isOpen, onClose }) => {
   const { user, isAuthenticated } = useAuth();
 
   const navItems = [
-    {
-      to: '/',
-      label: 'Home',
-      icon: Home,
-      color: 'text-indigo-600',
-    },
+    ...(isAuthenticated
+      ? [
+          {
+            to: '/dashboard',
+            label: 'Learner Dashboard',
+            icon: LayoutDashboard,
+            color: 'text-brand-600',
+          },
+        ]
+      : [
+          {
+            to: '/',
+            label: 'Home',
+            icon: Home,
+            color: 'text-indigo-600',
+          },
+        ]),
     {
       to: '/curriculum',
       label: 'Curriculums & Modules',

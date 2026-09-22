@@ -74,8 +74,14 @@ export const Register = () => {
         preferredLanguage: currentLanguage,
         targetSkills: currentSkills,
       };
-      await registerAuth(payload);
-      navigate('/assessment', { replace: true });
+      const newUser = await registerAuth(payload);
+      navigate('/initial-assessment', {
+        replace: true,
+        state: {
+          preferredLanguage: newUser?.preferredLanguage || currentLanguage,
+          age: newUser?.age || values.age,
+        },
+      });
     } catch {
       // Notification handled in AuthContext
     } finally {
