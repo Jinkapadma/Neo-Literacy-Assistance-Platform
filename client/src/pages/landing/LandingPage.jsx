@@ -5,6 +5,8 @@ import { BookOpen, Menu, X, ArrowRight, Sparkles } from 'lucide-react';
 import { BRAND } from '../../utils/branding.js';
 import { SparkleButton } from '../../components/common/SparkleButton.jsx';
 
+import { DualLanguageSwitcher } from '../../components/common/DualLanguageSwitcher.jsx';
+
 import { HeroSection } from './sections/HeroSection.jsx';
 import { FeaturesSection } from './sections/FeaturesSection.jsx';
 import { HowItWorksSection } from './sections/HowItWorksSection.jsx';
@@ -99,21 +101,25 @@ export const LandingPage = () => {
             )}
           </nav>
 
-          {/* Auth Action Buttons */}
+          {/* Dual Language & Auth Action Buttons */}
           <div className="hidden md:flex items-center gap-3">
+            <DualLanguageSwitcher />
             <SparkleButton to="/onboarding">
               Log In
             </SparkleButton>
           </div>
 
           {/* Mobile Hamburger Button */}
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-xl text-slate-200 hover:text-white hover:bg-white/10 md:hidden focus:outline-none"
-            aria-label="Toggle Navigation Menu"
-          >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+          <div className="flex items-center gap-2 md:hidden">
+            <DualLanguageSwitcher />
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="p-2 rounded-xl text-slate-200 hover:text-white hover:bg-white/10 focus:outline-none"
+              aria-label="Toggle Navigation Menu"
+            >
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Slide-in Drawer */}

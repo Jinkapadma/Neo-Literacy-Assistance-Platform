@@ -302,16 +302,36 @@ export const LanguageProvider = ({ children }) => {
 
   /**
    * Fast translation helper: looks up key in active Bhashini UI bundle,
-   * or returns defaultText if not found.
+   * local dictionary, or client translation cache.
    */
   const t = useCallback(
     (key, defaultText = '') => {
-      if (uiBundle && uiBundle[key]) {
-        return uiBundle[key];
-      }
+      if (!key) return defaultText || '';
+      if (interfaceLanguage === 'en') return defaultText || key;
+
+      // 1. Direct key match in active Bhashini bundle
+      if (uiBundle && uiBundle[key]) return uiBundle[key];
+
+      // 2. Default text match in active Bhashini bundle
+      if (defaultText && uiBundle && uiBundle[defaultText]) return uiBundle[defaultText];
+
+      // 3. Local hardcoded UI dictionary match
       if (LOCAL_UI_DICTIONARY[interfaceLanguage]?.[key]) {
         return LOCAL_UI_DICTIONARY[interfaceLanguage][key];
       }
+
+      // 4. Check client translation cache
+      try {
+        const cached = localStorage.getItem(`neoread_translations_${interfaceLanguage}`);
+        if (cached) {
+          const parsed = JSON.parse(cached);
+          if (parsed[key]) return parsed[key];
+          if (defaultText && parsed[defaultText]) return parsed[defaultText];
+        }
+      } catch {
+        // Ignore JSON error
+      }
+
       return defaultText || key;
     },
     [uiBundle, interfaceLanguage]

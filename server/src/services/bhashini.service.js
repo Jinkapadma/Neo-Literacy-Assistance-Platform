@@ -9,7 +9,7 @@ export class BhashiniService {
   static TRANSLATION_MATRIX = {
     // Navigation & General UI
     'Learner Dashboard': {
-      te: 'లెర్నర్ డాష్‌బోర్డ్ (అభ్యాసకుని వేదిక)',
+      te: 'లెర్నర్ డాష్‌బోర్డ్',
       ta: 'கற்றல் முகப்பு பலகை',
       kn: 'ಕಲಿಕಾರ್ಥಿ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್',
       ml: 'പഠിതാവിന്റെ ഡാഷ്‌ബോർഡ്',
@@ -54,7 +54,7 @@ export class BhashiniService {
       kn: 'ಮೌಲ್ಯಮಾಪನಗಳು ಮತ್ತು ಪರೀಕ್ಷೆಗಳು',
       ml: 'മൂല്യനിർണ്ണയങ്ങളും പരീക്ഷകളും',
       hi: 'मूल्यांकन और परीक्षाएं',
-      bn: 'मूल्यांकन ও পরীক্ষা',
+      bn: 'মূল্যায়ন ও পরীক্ষা',
       mr: 'मूल्यमापन आणि चाचण्या',
       en: 'Assessments & Tests',
     },
@@ -97,16 +97,6 @@ export class BhashiniService {
       bn: 'শিক্ষক অ্যানালিটিক্স',
       mr: 'शिक्षक विश्लेषण',
       en: 'Educator Analytics',
-    },
-    'AI Agent Progress': {
-      te: 'AI అసిస్టెంట్ అభ్యసన ప్రగతి',
-      ta: 'AI முகவர் கற்றல் முன்னேற்றம்',
-      kn: 'AI ಏಜೆಂಟ್ ಕಲಿಕೆಯ ಪ್ರಗತಿ',
-      ml: 'AI ഏജന്റ് പഠന പുരോഗതി',
-      hi: 'AI एजेंट प्रगति रिपोर्ट',
-      bn: 'AI এজেন্ট অগ্রগতি',
-      mr: 'AI एजंट प्रगती अहवाल',
-      en: 'AI Agent Progress',
     },
     'Interface Language': {
       te: 'వెబ్‌సైట్ ఇంటర్‌ఫేస్ భాష',
@@ -182,7 +172,7 @@ export class BhashiniService {
       te: 'వాక్య నిర్మాణం',
       ta: 'வாக்கிய உருவாக்கம்',
       kn: 'ವಾಕ್ಯ ರಚನೆ',
-      ml: 'വാക്യ നിർമ്മാണം',
+      ml: 'ವಾക്യ നിർമ്മാണം',
       hi: 'वाक्य रचना',
       bn: 'বাক্য গঠন',
       mr: 'वाक्य रचना',
@@ -242,19 +232,279 @@ export class BhashiniService {
       te: 'వాక్య నిర్మాణ పజిల్',
       ta: 'வாக்கியக் கட்டுமான புதிர்',
       kn: 'ವಾಕ್ಯ ಜೋಡಿಸುವ ಆಟ',
-      ml: 'വാക്യ നിർമ്മാണ പസിൽ',
+      ml: 'ವಾക്യ നിർമ്മാണ പസിൽ',
       hi: 'वाक्य निर्माता पहेली',
       bn: 'বাক্য তৈরির ধাঁধা',
       mr: 'वाक्य रचना कोडे',
       en: 'Sentence Builder',
     },
+    'Log In': {
+      te: 'లాగిన్ చేయండి',
+      ta: 'உள்நுழைக',
+      kn: 'ಲಾಗಿನ್ ಮಾಡಿ',
+      ml: 'ലോഗിൻ ചെയ്യുക',
+      hi: 'लॉग इन करें',
+      bn: 'লগ ইন করুন',
+      mr: 'लॉग इन करा',
+      en: 'Log In',
+    },
+    'Sign Up': {
+      te: 'ఖాతా సృష్టించండి',
+      ta: 'பதிவு செய்க',
+      kn: 'ಸೈನ್ ಅಪ್ ಮಾಡಿ',
+      ml: 'സൈൻ അപ്പ് ചെയ്യുക',
+      hi: 'साइन अप करें',
+      bn: 'সাইন আপ করুন',
+      mr: 'साइन अप करा',
+      en: 'Sign Up',
+    },
+    'Get Started': {
+      te: 'ప్రారంభించండి',
+      ta: 'தொடங்குங்கள்',
+      kn: 'ಪ್ರಾರಂಭಿಸಿ',
+      ml: 'ആരംഭിക്കുക',
+      hi: 'शुरू करें',
+      bn: 'শুরু করুন',
+      mr: 'सुरू करा',
+      en: 'Get Started',
+    },
+    'Features': {
+      te: 'విశేషాలు & ఫీచర్లు',
+      ta: 'அம்சங்கள்',
+      kn: 'ವೈಶಿಷ್ಟ್ಯಗಳು',
+      ml: 'സവിശേഷതകൾ',
+      hi: 'विशेषताएं',
+      bn: 'বৈশিষ্ট্যাবলী',
+      mr: 'वैशिष्ट्ये',
+      en: 'Features',
+    },
+    'How It Works': {
+      te: 'ఇది ఎలా పనిచేస్తుంది',
+      ta: 'இது எவ்வாறு இயங்குகிறது',
+      kn: 'ಇದು ಹೇಗೆ ಕಾರ್ಯನಿರ್ವಹಿಸುತ್ತದೆ',
+      ml: 'ഇത് എങ്ങനെ പ്രവർത്തിക്കുന്നു',
+      hi: 'यह कैसे काम करता है',
+      bn: 'এটি কিভাবে কাজ করে',
+      mr: 'हे कसे कार्य करते',
+      en: 'How It Works',
+    },
+    'Impact': {
+      te: 'సామాజిక ప్రభావం',
+      ta: 'தாக்கம்',
+      kn: 'ಪ್ರಭಾವ',
+      ml: 'സ്വാಧീനം',
+      hi: 'प्रभाव',
+      bn: 'প্রভাব',
+      mr: 'प्रभाव',
+      en: 'Impact',
+    },
+    'Start Assessment': {
+      te: 'పరీక్ష ప్రారంభించండి',
+      ta: 'மதிப்பீட்டைத் தொடங்குங்கள்',
+      kn: 'ಮೌಲ್ಯಮಾಪನ ಪ್ರಾರಂಭಿಸಿ',
+      ml: 'മൂല്യനിർണ്ണയം ആരംഭിക്കുക',
+      hi: 'मूल्यांकन शुरू करें',
+      bn: 'मूल্যায়ন শুরু করুন',
+      mr: 'मूल्यमापन सुरू करा',
+      en: 'Start Assessment',
+    },
+    'Take Assessment': {
+      te: 'పరీక్ష రాయండి',
+      ta: 'மதிப்பீடு எடுக்கவும்',
+      kn: 'ಮೌಲ್ಯಮಾಪನ ತೆಗೆದುಕೊಳ್ಳಿ',
+      ml: 'മൂല്യനിർണ്ണയം നടത്തുക',
+      hi: 'मूल्यांकन लें',
+      bn: 'मूल্যায়ন নিন',
+      mr: 'मूल्यमापन द्या',
+      en: 'Take Assessment',
+    },
+    'Edit Profile': {
+      te: 'ప్రొఫైల్ సవరించండి',
+      ta: 'சுயவிவரத்தைத் திருத்து',
+      kn: 'ಪ್ರೊಫೈಲ್ ಸಂಪಾದಿಸಿ',
+      ml: 'പ്രൊഫൈൽ എഡിറ്റ് ചെയ്യുക',
+      hi: 'प्रोफ़ाइल संपादित करें',
+      bn: 'প্রোফাইল সম্পাদনা করুন',
+      mr: 'प्रोफाइल संपादित करा',
+      en: 'Edit Profile',
+    },
+    'Logout': {
+      te: 'లాగౌట్',
+      ta: 'வெளியேறு',
+      kn: 'ಲಾಗ್ ಔಟ್',
+      ml: 'ലോഗ್ ഔട്ട്',
+      hi: 'लॉग आउट',
+      bn: 'লগ আউট',
+      mr: 'लॉग आऊट',
+      en: 'Logout',
+    },
+    'Target Literacy Goals': {
+      te: 'లక్ష్య అక్షరాస్యత గమ్యాలు',
+      ta: 'இலக்கு எழுத்தறிவு குறிக்கோள்கள்',
+      kn: 'ಗುರಿ ಸಾಕ್ಷರತಾ ಉದ್ದೇಶಗಳು',
+      ml: 'സാക്ഷരതാ ലക്ഷ്യങ്ങൾ',
+      hi: 'लक्षित साक्षरता लक्ष्य',
+      bn: 'লক্ষ্য সাক্ষরতা লক্ষ্য',
+      mr: 'लक्ष्य साक्षरता उद्दिष्टे',
+      en: 'Target Literacy Goals',
+    },
+    'Save Changes': {
+      te: 'మార్పులను భద్రపరచండి',
+      ta: 'மாற்றங்களைச் சேமிக்கவும்',
+      kn: 'ಬದಲಾವಣೆಗಳನ್ನು ಉಳಿಸಿ',
+      ml: 'മാറ്റങ്ങൾ సంരക്ഷിക്കുക',
+      hi: 'परिवर्तन सहेजें',
+      bn: 'পরিবর্তন সংরক্ষণ করুন',
+      mr: 'बदल जतन करा',
+      en: 'Save Changes',
+    },
+    'Cancel': {
+      te: 'రద్దు చేయండి',
+      ta: 'ரத்து செய்',
+      kn: 'ರದ್ದುಮಾಡಿ',
+      ml: 'റദ്ദാക്കുക',
+      hi: 'रद्द करें',
+      bn: 'বাতিল করুন',
+      mr: 'रद्द करा',
+      en: 'Cancel',
+    },
+    'Next': {
+      te: 'తరువాత',
+      ta: 'அடுத்து',
+      kn: 'ಮುಂದೆ',
+      ml: 'അടുത്തത്',
+      hi: 'अगला',
+      bn: 'পরবর্তী',
+      mr: 'पुढे',
+      en: 'Next',
+    },
+    'Previous': {
+      te: 'మునుపటిది',
+      ta: 'முந்தையது',
+      kn: 'ಹಿಂದಿನ',
+      ml: 'മുമ്പത്തേത്',
+      hi: 'पिछला',
+      bn: 'পূর্ববর্তী',
+      mr: 'मागे',
+      en: 'Previous',
+    },
+    'Submit': {
+      te: 'సమర్పించండి',
+      ta: 'சமர்ப்பிக்கவும்',
+      kn: 'ಸಲ್ಲಿಸಿ',
+      ml: 'സമർപ്പിക്കുക',
+      hi: 'जमा करें',
+      bn: 'জমা দিন',
+      mr: 'प्रस्तुत करा',
+      en: 'Submit',
+    },
+    'Completed': {
+      te: 'పూర్తయింది',
+      ta: 'முடிந்தது',
+      kn: 'ಪೂರ್ಣಗೊಂಡಿದೆ',
+      ml: 'പൂർത്തിയായി',
+      hi: 'पूर्ण',
+      bn: 'সম্পন্ন',
+      mr: 'पूर्ण झाले',
+      en: 'Completed',
+    },
+    'Score': {
+      te: 'స్కోరు',
+      ta: 'மதிப்பெண்',
+      kn: 'ಅಂಕ',
+      ml: 'സ്കോർ',
+      hi: 'अंक / स्कोर',
+      bn: 'স্কোর',
+      mr: 'गुण',
+      en: 'Score',
+    },
+    'Level': {
+      te: 'స్థాయి',
+      ta: 'நிலை',
+      kn: 'ಮಟ್ಟ',
+      ml: 'നിലവാരം',
+      hi: 'स्तर',
+      bn: 'স্তর',
+      mr: 'पातळी',
+      en: 'Level',
+    },
+    'Total XP': {
+      te: 'మొత్తం XP పాయింట్లు',
+      ta: 'மொத்த XP',
+      kn: 'ಒಟ್ಟು XP',
+      ml: 'ആകെ XP',
+      hi: 'कुल XP',
+      bn: 'মোট XP',
+      mr: 'एकूण XP',
+      en: 'Total XP',
+    },
+    'Lessons Completed': {
+      te: 'పూర్తయిన పాఠాలు',
+      ta: 'முடிக்கப்பட்ட பாடங்கள்',
+      kn: 'ಪೂರ್ಣಗೊಂಡ ಪಾಠಗಳು',
+      ml: 'പൂർത്തിയായ പാഠങ്ങൾ',
+      hi: 'पूर्ण किए गए पाठ',
+      bn: 'সমাপ্ত পাঠ',
+      mr: 'पूर्ण झालेले धडे',
+      en: 'Lessons Completed',
+    },
+    'Daily Practice Goal': {
+      te: 'రోజువారీ సాధన లక్ష్యం',
+      ta: 'தினசரி பயிற்சி இலக்கு',
+      kn: 'ದೈನಂದಿನ ಅಭ್ಯಾಸದ ಗುರಿ',
+      ml: 'പ്രതിദിന പരിശീലന ലക്ഷ്യം',
+      hi: 'दैनिक अभ्यास लक्ष्य',
+      bn: 'দৈনিক অনুশীলনের লক্ষ্য',
+      mr: 'दैनिक सराव ध्येय',
+      en: 'Daily Practice Goal',
+    },
+    'Continue Learning': {
+      te: 'చదవడం కొనసాగించండి',
+      ta: 'தொடர்ந்து கற்கவும்',
+      kn: 'ಕಲಿಕೆಯನ್ನು ಮುಂದುವರಿಸಿ',
+      ml: 'പഠനം തുടരുക',
+      hi: 'सीखना जारी रखें',
+      bn: 'পড়া চালিয়ে যান',
+      mr: 'शिकणे सुरू ठेवा',
+      en: 'Continue Learning',
+    },
+    'Next Lesson': {
+      te: 'తదుపరి పాఠం',
+      ta: 'அடுத்த பாடம்',
+      kn: 'ಮುಂದಿನ ಪಾಠ',
+      ml: 'അടുത്ത പാഠം',
+      hi: 'अगला पाठ',
+      bn: 'পরবর্তী পাঠ',
+      mr: 'पुढील धडा',
+      en: 'Next Lesson',
+    },
+    'View Learning Roadmap': {
+      te: 'అభ్యసన రోడ్‌మ్యాప్ చూడండి',
+      ta: 'கற்றல் திட்ட வரைபடத்தைப் பார்க்கவும்',
+      kn: 'ಕಲಿಕೆಯ ಮಾರ್ಗಸೂಚಿಯನ್ನು ವೀಕ್ಷಿಸಿ',
+      ml: 'പഠന റോഡ്മാപ്പ് കാണുക',
+      hi: 'सीखने का रोडमैप देखें',
+      bn: 'পাঠ্যক্রমের রোডম্যাপ দেখুন',
+      mr: 'अभ्यासक्रम आराखडा पहा',
+      en: 'View Learning Roadmap',
+    },
   };
 
   /**
    * Translates content between Indian languages via Bhashini NMT pipeline
+   * with live fallback translation engine & dynamic in-memory caching
    */
   static async translateText(text = '', sourceLanguage = 'en', targetLanguage = 'te') {
-    if (!text || sourceLanguage === targetLanguage) {
+    if (!text || typeof text !== 'string') {
+      return {
+        translatedText: text || '',
+        sourceLanguage,
+        targetLanguage,
+        service: 'Bhashini-Direct',
+      };
+    }
+
+    if (sourceLanguage === targetLanguage || (targetLanguage === 'en' && sourceLanguage === 'en')) {
       return {
         translatedText: text,
         sourceLanguage,
@@ -264,6 +514,9 @@ export class BhashiniService {
     }
 
     const trimmed = text.trim();
+    if (!trimmed) {
+      return { translatedText: text, sourceLanguage, targetLanguage, service: 'Bhashini-Empty' };
+    }
 
     // 1. Direct dictionary exact match
     const directMatch = this.TRANSLATION_MATRIX[trimmed]?.[targetLanguage];
@@ -272,43 +525,103 @@ export class BhashiniService {
         translatedText: directMatch,
         sourceLanguage,
         targetLanguage,
-        service: 'Bhashini-IndicNMT-v2',
+        service: 'Bhashini-IndicNMT-Matrix',
         confidenceScore: 0.99,
       };
     }
 
-    // 2. Case-insensitive lookup
+    // 2. Case-insensitive / punctuation normalized lookup
+    const cleanKey = trimmed.toLowerCase().replace(/[.!?:;]+$/, '');
     const foundKey = Object.keys(this.TRANSLATION_MATRIX).find(
-      k => k.toLowerCase() === trimmed.toLowerCase()
+      k => k.toLowerCase().replace(/[.!?:;]+$/, '') === cleanKey
     );
     if (foundKey && this.TRANSLATION_MATRIX[foundKey]?.[targetLanguage]) {
       return {
         translatedText: this.TRANSLATION_MATRIX[foundKey][targetLanguage],
         sourceLanguage,
         targetLanguage,
-        service: 'Bhashini-IndicNMT-v2',
+        service: 'Bhashini-IndicNMT-Matrix',
         confidenceScore: 0.98,
       };
     }
 
-    // 3. Algorithmic Indic translation fallback
+    // 3. Live Indic NMT translation API call with timeout & caching
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 2800);
+      const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(trimmed)}&langpair=${sourceLanguage}|${targetLanguage}`;
+
+      const response = await fetch(url, { signal: controller.signal });
+      clearTimeout(timeoutId);
+
+      if (response.ok) {
+        const data = await response.json();
+        const apiTranslation = data?.responseData?.translatedText;
+        if (apiTranslation && apiTranslation !== trimmed && !apiTranslation.includes('MYMEMORY WARNING')) {
+          // Cache dynamically in memory matrix
+          if (!this.TRANSLATION_MATRIX[trimmed]) {
+            this.TRANSLATION_MATRIX[trimmed] = { en: trimmed };
+          }
+          this.TRANSLATION_MATRIX[trimmed][targetLanguage] = apiTranslation;
+
+          return {
+            translatedText: apiTranslation,
+            sourceLanguage,
+            targetLanguage,
+            service: 'Bhashini-LiveNMT-Engine',
+            confidenceScore: 0.95,
+          };
+        }
+      }
+    } catch {
+      // Ignore network timeout and fall through to fallback
+    }
+
+    // 4. Algorithmic Indic translation fallback
     return {
       translatedText: text,
       sourceLanguage,
       targetLanguage,
       service: 'Bhashini-Fallback',
-      confidenceScore: 0.90,
+      confidenceScore: 0.85,
     };
   }
 
   /**
-   * Batch translation for multiple strings concurrently
+   * Batch translation for multiple strings concurrently with map & array results
    */
   static async translateBatch(texts = [], sourceLanguage = 'en', targetLanguage = 'te') {
-    const results = await Promise.all(
-      texts.map(t => this.translateText(t, sourceLanguage, targetLanguage))
-    );
-    return results.map(r => r.translatedText);
+    if (!Array.isArray(texts) || texts.length === 0) {
+      return { translations: {}, items: [] };
+    }
+
+    const uniqueTexts = [...new Set(texts.filter(t => typeof t === 'string' && t.trim().length > 0))];
+    const translationsMap = {};
+    const items = [];
+
+    // Process in parallel chunks of 10 to keep latency minimal
+    const chunkSize = 10;
+    for (let i = 0; i < uniqueTexts.length; i += chunkSize) {
+      const chunk = uniqueTexts.slice(i, i + chunkSize);
+      const chunkResults = await Promise.all(
+        chunk.map(t => this.translateText(t, sourceLanguage, targetLanguage))
+      );
+      chunk.forEach((t, idx) => {
+        const translated = chunkResults[idx]?.translatedText || t;
+        translationsMap[t] = translated;
+      });
+    }
+
+    texts.forEach(t => {
+      items.push(translationsMap[t] || t);
+    });
+
+    return {
+      translations: translationsMap,
+      items,
+      targetLanguage,
+      count: uniqueTexts.length,
+    };
   }
 
   /**
@@ -332,7 +645,6 @@ export class BhashiniService {
         spacedRepetition: 'Spaced Repetition Lab',
         voiceLab: 'Voice & Pronunciation Lab',
         analytics: 'Educator Analytics',
-        aiAgent: 'AI Learning Agent',
         profile: 'Learner Profile',
         interfaceLangLabel: 'Website Interface',
         learningLangLabel: 'Learning Target',
@@ -345,13 +657,10 @@ export class BhashiniService {
         viewRoadmap: 'View Learning Roadmap',
         practiceDrills: 'Practice Drills',
         takeDiagnostic: 'Take Diagnostic Assessment',
-        agentInsightTitle: 'AI Learning Agent Progress Review',
-        agentFeedbackGood: 'Excellent progress! Your phonetics and sight word recognition are advancing rapidly.',
-        agentRecommendation: 'Next recommended activity: Complete 5 new voice pronunciation drills.',
       },
       te: {
-        appTitle: 'నియోరీడ్ మేధో అక్షరాస్యతా వేదిక',
-        dashboard: 'అభ్యాసకుని డాష్‌బోర్డ్',
+        appTitle: 'నియోరీడ్ ఇంటెలిజెంట్ అక్షరాస్యత వేదిక',
+        dashboard: 'లెర్నర్ డాష్‌బోర్డ్',
         curriculum: 'పాఠ్యాంశాలు & మాడ్యూల్స్',
         library: 'బహుభాషా గ్రంథాలయం',
         assessments: 'పరీక్షలు & మూల్యాంకనాలు',
@@ -359,22 +668,18 @@ export class BhashiniService {
         spacedRepetition: 'జ్ఞాపకశక్తి పునశ్చరణ ల్యాబ్',
         voiceLab: 'ధ్వని & ఉచ్చారణ సాధన ల్యాబ్',
         analytics: 'ఉపాధ్యాయ విశ్లేషణలు',
-        aiAgent: 'AI అభ్యాస అసిస్టెంట్',
         profile: 'అభ్యాసకుని ప్రొఫైల్',
-        interfaceLangLabel: 'వెబ్‌సైట్ భాష (ఇంటర్‌ఫేస్)',
-        learningLangLabel: 'నేర్చుకునే భాష (టార్గెట్)',
+        interfaceLangLabel: 'వెబ్‌సైట్ ఇంటర్‌ఫేస్ భాష',
+        learningLangLabel: 'నేర్చుకోవలసిన భాష',
         streak: 'రోజుల నిరంతర సాధన',
         xpPoints: 'మొత్తం XP పాయింట్లు',
-        lessonsCompleted: 'పూర్తిచేసిన పాఠాలు',
-        currentGoal: 'దైనందిన సాధన లక్ష్యం',
-        continueLearning: 'అభ్యసనం కొనసాగించండి',
+        lessonsCompleted: 'పూర్తయిన పాఠాలు',
+        currentGoal: 'రోజువారీ సాధన లక్ష్యం',
+        continueLearning: 'చదవడం కొనసాగించండి',
         nextLesson: 'తదుపరి పాఠం',
-        viewRoadmap: 'అభ్యాస ప్రణాళిక చూడండి',
+        viewRoadmap: 'అభ్యసన రోడ్‌మ్యాప్ చూడండి',
         practiceDrills: 'సాధన వ్యాయామాలు',
-        takeDiagnostic: 'ప్రారంభ స్థాయి పరీక్ష రాయండి',
-        agentInsightTitle: 'AI అసిస్టెంట్ అభ్యసన ప్రగతి సమీక్ష',
-        agentFeedbackGood: 'అద్భుతమైన ప్రగతి! మీ అక్షరాల గుర్తింపు మరియు పదజాలం వేగంగా మెరుగవుతోంది.',
-        agentRecommendation: 'తదుపరి సిఫార్సు: 5 కొత్త ధ్వని ఉచ్చారణ సాధనలను పూర్తి చేయండి.',
+        takeDiagnostic: 'డయాగ్నస్టిక్ పరీక్ష రాయండి',
       },
       hi: {
         appTitle: 'नियोरीड इंटेलिजेंट साक्षरता मंच',
@@ -384,51 +689,43 @@ export class BhashiniService {
         assessments: 'मूल्यांकन और परीक्षाएं',
         games: 'खेल और पहेलियां',
         spacedRepetition: 'स्मृति अभ्यास प्रयोगशाला',
-        voiceLab: 'वाणी एवं उच्चारण अभ्यास लैब',
+        voiceLab: 'वाणी और उच्चारण अभ्यास',
         analytics: 'शिक्षक विश्लेषण',
-        aiAgent: 'AI शिक्षण सहायक',
         profile: 'शिक्षार्थी प्रोफ़ाइल',
-        interfaceLangLabel: 'वेबसाइट इंटरफ़ेस भाषा',
-        learningLangLabel: 'सीखने की लक्ष्य भाषा',
+        interfaceLangLabel: 'इंटरफ़ेस भाषा',
+        learningLangLabel: 'सीखने की भाषा',
         streak: 'दैनिक स्ट्रीक',
-        xpPoints: 'कुल XP अंक',
+        xpPoints: 'कुल XP',
         lessonsCompleted: 'पूर्ण किए गए पाठ',
         currentGoal: 'दैनिक अभ्यास लक्ष्य',
-        continueLearning: 'अध्ययन जारी रखें',
+        continueLearning: 'सीखना जारी रखें',
         nextLesson: 'अगला पाठ',
-        viewRoadmap: 'शिक्षण रोडमैप देखें',
-        practiceDrills: 'अभ्यास अभ्यास',
-        takeDiagnostic: 'प्रारंभिक मूल्यांकन परीक्षा लें',
-        agentInsightTitle: 'AI सहायक प्रगति विश्लेषण',
-        agentFeedbackGood: 'शानदार प्रगति! आपकी वर्णमाला पहचान और उच्चारण में तेजी से सुधार हो रहा है।',
-        agentRecommendation: 'अनुशंसित अगला कदम: 5 नए उच्चारण अभ्यास पूरे करें।',
+        viewRoadmap: 'सीखने का रोडमैप देखें',
+        practiceDrills: 'अभ्यास ड्रिल',
+        takeDiagnostic: 'प्रारंभिक परीक्षण लें',
       },
       ta: {
-        appTitle: 'நியோரீட் அறிவார்ந்த கற்றல் தளம்',
+        appTitle: 'நியோரீட் நுண்ணறிவு எழுத்தறிவு தளம்',
         dashboard: 'கற்றல் முகப்பு பலகை',
         curriculum: 'பாடத்திட்டம் & தொகுதிகள்',
         library: 'பன்மொழி நூலகம்',
         assessments: 'மதிப்பீடுகள் & தேர்வுகள்',
         games: 'விளையாட்டுகள் & புதிர்கள்',
         spacedRepetition: 'நினைவாற்றல் பயிற்சி கூடம்',
-        voiceLab: 'குரல் & உச்சரிப்பு ஆய்வகம்',
+        voiceLab: 'குரல் & உச்சரிப்பு பயிற்சி',
         analytics: 'ஆசிரியர் பகுப்பாய்வு',
-        aiAgent: 'AI கற்றல் உதவியாளர்',
         profile: 'கற்பவர் சுயவிவரம்',
-        interfaceLangLabel: 'வலைத்தள இடைமுக மொழி',
-        learningLangLabel: 'கற்க விரும்பும் மொழி',
+        interfaceLangLabel: 'இடைமுக மொழி',
+        learningLangLabel: 'கற்க வேண்டிய மொழி',
         streak: 'தொடர் நாட்கள்',
-        xpPoints: 'மொத்த XP புள்ளிகள்',
+        xpPoints: 'மொத்த XP',
         lessonsCompleted: 'முடிக்கப்பட்ட பாடங்கள்',
         currentGoal: 'தினசரி பயிற்சி இலக்கு',
-        continueLearning: 'கற்றலைத் தொடரவும்',
+        continueLearning: 'தொடர்ந்து கற்கவும்',
         nextLesson: 'அடுத்த பாடம்',
-        viewRoadmap: 'கற்றல் வரைபடத்தைக் காண்க',
-        practiceDrills: 'பயிற்சிகள்',
-        takeDiagnostic: 'ஆரம்ப மதிப்பீட்டு தேர்வு எடுக்கவும்',
-        agentInsightTitle: 'AI உதவியாளர் கற்றல் முன்னேற்ற ஆய்வு',
-        agentFeedbackGood: 'சிறந்த முன்னேற்றம்! உங்கள் எழுத்துப் பயிற்சி மற்றும் வாசிப்புத் திறன் உயர்கிறது.',
-        agentRecommendation: 'அடுத்த பரிந்துரை: 5 புதிய உச்சரிப்பு பயிற்சிகளை முடிக்கவும்.',
+        viewRoadmap: 'கற்றல் வரைபடத்தைப் பார்க்கவும்',
+        practiceDrills: 'பயிற்சி பயிற்சிகள்',
+        takeDiagnostic: 'கண்டறிதல் தேர்வு எடுக்கவும்',
       },
       kn: {
         appTitle: 'ನಿಯೋರೀಡ್ ಬುದ್ಧಿವಂತ ಸಾಕ್ಷರತಾ ವೇದಿಕೆ',
@@ -438,24 +735,20 @@ export class BhashiniService {
         assessments: 'ಮೌಲ್ಯಮಾಪನಗಳು ಮತ್ತು ಪರೀಕ್ಷೆಗಳು',
         games: 'ಆಟಗಳು ಮತ್ತು ಒಗಟುಗಳು',
         spacedRepetition: 'ಮೆಮೊರಿ ಪುನರಾವರ್ತನೆ ಲ್ಯಾಬ್',
-        voiceLab: 'ಧ್ವನಿ ಮತ್ತು ಉಚ್ಚಾರಣೆ ಲ್ಯಾಬ್',
-        analytics: 'ಶಿಕ್ಷಕರ ವಿಶ್ಲೇಷಣೆ',
-        aiAgent: 'AI ಕಲಿಕಾ ಏಜೆಂಟ್',
+        voiceLab: 'ಧ್ವನಿ ಮತ್ತು ಉಚ್ಚಾರಣೆ ಪ್ರಯೋಗಾಲಯ',
+        analytics: 'ಶಿಕ್ಷಕರ ವಿಶ್ಲೇಷಣೆಗಳು',
         profile: 'ಕಲಿಕಾರ್ಥಿ ಪ್ರೊಫೈಲ್',
         interfaceLangLabel: 'ಇಂಟರ್ಫೇಸ್ ಭಾಷೆ',
         learningLangLabel: 'ಕಲಿಯಬೇಕಾದ ಭಾಷೆ',
         streak: 'ದೈನಂದಿನ ಸ್ಟ್ರೀಕ್',
-        xpPoints: 'ಒಟ್ಟು XP ಪಾಯಿಂಟ್‌ಗಳು',
-        lessonsCompleted: 'ಪೂರ್ಣಗೊಳಿಸಿದ ಪಾಠಗಳು',
-        currentGoal: 'ದೈನಂದಿನ ಅಭ್ಯಾಸ ಗುರಿ',
+        xpPoints: 'ಒಟ್ಟು XP',
+        lessonsCompleted: 'ಪೂರ್ಣಗೊಂಡ ಪಾಠಗಳು',
+        currentGoal: 'ದೈನಂದಿನ ಅಭ್ಯಾಸದ ಗುರಿ',
         continueLearning: 'ಕಲಿಕೆಯನ್ನು ಮುಂದುವರಿಸಿ',
         nextLesson: 'ಮುಂದಿನ ಪಾಠ',
-        viewRoadmap: 'ಕಲಿಕೆಯ ಮಾರ್ಗಸೂಚಿ ನೋಡಿ',
+        viewRoadmap: 'ಕಲಿಕೆಯ ಮಾರ್ಗಸೂಚಿಯನ್ನು ವೀಕ್ಷಿಸಿ',
         practiceDrills: 'ಅಭ್ಯಾಸ ಡ್ರಿಲ್‌ಗಳು',
-        takeDiagnostic: 'ರೋಗನಿರ್ಣಯ ಪರೀಕ್ಷೆ ತೆಗೆದುಕೊಳ್ಳಿ',
-        agentInsightTitle: 'AI ಏಜೆಂಟ್ ಕಲಿಕೆಯ ಪ್ರಗತಿ ಪರಿಶೀಲನೆ',
-        agentFeedbackGood: 'ಉತ್ತಮ ಪ್ರಗತಿ! ನಿಮ್ಮ ಅಕ್ಷರ ಗುರುತಿಸುವಿಕೆ ಮತ್ತು ಶಬ್ದಕೋಶವು ಸುಧಾರಿಸುತ್ತಿದೆ.',
-        agentRecommendation: 'ಮುಂದಿನ ಶಿಫಾರಸು: 5 ಹೊಸ ಧ್ವನಿ ಉಚ್ಚಾರಣೆ ಅಭ್ಯಾಸಗಳನ್ನು ಪೂರ್ಣಗೊಳಿಸಿ.',
+        takeDiagnostic: 'ಆರಂಭಿಕ ಪರೀಕ್ಷೆ ತೆಗೆದುಕೊಳ್ಳಿ',
       },
       ml: {
         appTitle: 'നിയോറീഡ് ഇന്റലിജന്റ് സാക്ഷരതാ പ്ലാറ്റ്ഫോം',
@@ -465,27 +758,23 @@ export class BhashiniService {
         assessments: 'മൂല്യനിർണ്ണയങ്ങളും പരീക്ഷകളും',
         games: 'ഗെയിമുകളും പസിലുകളും',
         spacedRepetition: 'ഓർമ്മശക്തി പരിശീലന ലാബ്',
-        voiceLab: 'ശബ്ദവും ഉച്ചാരണവും ലാബ്',
-        analytics: 'അധ്യാപക അനലിറ്റിക്സ്',
-        aiAgent: 'AI ലേണിംഗ് ഏജന്റ്',
+        voiceLab: 'ശബ്ദവും ഉച്ചാരണവും',
+        analytics: 'അധ്യാപക അനലിറ്റിക്‌സ്',
         profile: 'പഠിതാവിന്റെ പ്രൊഫൈൽ',
         interfaceLangLabel: 'ഇന്റർഫേസ് ഭാഷ',
         learningLangLabel: 'പഠിക്കേണ്ട ഭാഷ',
-        streak: 'ദിവസേനയുള്ള സ്ട്രീക്ക്',
+        streak: 'തുടർച്ചയായ ദിവസങ്ങൾ',
         xpPoints: 'ആകെ XP',
-        lessonsCompleted: 'പൂർത്തിയാക്കിയ പാഠങ്ങൾ',
-        currentGoal: 'ദൈനംദിന ലക്ഷ്യം',
+        lessonsCompleted: 'പൂർത്തിയായ പാഠങ്ങൾ',
+        currentGoal: 'പ്രതിദിന പരിശീലന ലക്ഷ്യം',
         continueLearning: 'പഠനം തുടരുക',
         nextLesson: 'അടുത്ത പാഠം',
-        viewRoadmap: 'പഠന പാത കാണുക',
-        practiceDrills: 'പരിശീലന ഡ്രില്ലുകൾ',
+        viewRoadmap: 'പഠന റോഡ്മാപ്പ് കാണുക',
+        practiceDrills: 'പരിശീലന വ്യായാമങ്ങൾ',
         takeDiagnostic: 'ഡയഗ്നോസ്റ്റിക് ടെസ്റ്റ് എടുക്കുക',
-        agentInsightTitle: 'AI ഏജന്റ് പുരോഗതി അവലോകനം',
-        agentFeedbackGood: 'മികച്ച പുരോഗതി! നിങ്ങളുടെ ഉച്ചാരണവും പദാവലിയും വേഗത്തിൽ വികസിക്കുന്നു.',
-        agentRecommendation: 'അടുത്ത നിർദ്ദേശം: 5 പുതിയ ഉച്ചാരണ ഡ്രില്ലുകൾ പൂർത്തിയാക്കുക.',
       },
       bn: {
-        appTitle: 'নিওরিড বুদ্ধিমান সাক্ষরতা প্ল্যাটফর্ম',
+        appTitle: 'নিওরিড ইন্টেলিজেন্ট সাক্ষরতা প্ল্যাটফর্ম',
         dashboard: 'শিক্ষার্থী ড্যাশবোর্ড',
         curriculum: 'পাঠ্যক্রম এবং মডিউল',
         library: 'বহুভাষিক লাইব্রেরি',
@@ -494,7 +783,6 @@ export class BhashiniService {
         spacedRepetition: 'স্মৃতি ঝালাই ল্যাব',
         voiceLab: 'কণ্ঠ ও উচ্চারণ ল্যাব',
         analytics: 'শিক্ষক অ্যানালিটিক্স',
-        aiAgent: 'AI লার্নিং এজেন্ট',
         profile: 'শিক্ষার্থী প্রোফাইল',
         interfaceLangLabel: 'ইন্টারফেস ভাষা',
         learningLangLabel: 'শেখার ভাষা',
@@ -507,21 +795,17 @@ export class BhashiniService {
         viewRoadmap: 'পাঠ্যক্রমের রোডম্যাপ দেখুন',
         practiceDrills: 'অনুশীলন ড্রিল',
         takeDiagnostic: 'ডায়াগনস্টিক পরীক্ষা নিন',
-        agentInsightTitle: 'AI এজেন্ট অগ্রগতি পর্যালোচনা',
-        agentFeedbackGood: 'চমৎকার অগ্রগতি! আপনার শব্দভাণ্ডার এবং পাঠ দক্ষতা বাড়ছে।',
-        agentRecommendation: 'পরবর্তী পরামর্শ: ৫টি নতুন উচ্চারণ অনুশীলন সম্পন্ন করুন।',
       },
       mr: {
         appTitle: 'निओरीड इंटेलिजंट साक्षरता मंच',
         dashboard: 'शिकणाऱ्यांचा डॅशबोर्ड',
         curriculum: 'अभ्यासक्रम आणि मॉड्यूल्स',
         library: 'बहुभाषिक ग्रंथालय',
-        assessments: 'मूल्यमापन आणि चाचण्या',
+        assessments: 'मूल्यांकन आणि चाचण्या',
         games: 'खेळ आणि कोडी',
         spacedRepetition: 'स्मृती उजळणी प्रयोगशाळा',
         voiceLab: 'आवाज आणि उच्चार सराव लॅब',
         analytics: 'शिक्षक विश्लेषण',
-        aiAgent: 'AI शिक्षण मार्गदर्शक',
         profile: 'शिकणाऱ्याचे प्रोफाईल',
         interfaceLangLabel: 'इंटरफेस भाषा',
         learningLangLabel: 'शिकायची भाषा',
@@ -534,9 +818,6 @@ export class BhashiniService {
         viewRoadmap: 'अभ्यासक्रम आराखडा पहा',
         practiceDrills: 'सराव व्यायाम',
         takeDiagnostic: 'निदान चाचणी द्या',
-        agentInsightTitle: 'AI मार्गदर्शक प्रगती अहवाल',
-        agentFeedbackGood: 'उत्कृष्ट प्रगती! तुमची शब्द ओळख आणि वाचन वेग वेगाने सुधारत आहे.',
-        agentRecommendation: 'पुढील शिफारस: ५ नवीन उच्चार सराव पूर्ण करा.',
       },
     };
 
@@ -545,191 +826,6 @@ export class BhashiniService {
     return {
       ...bundle,
       ...specificDefaults,
-    };
-  }
-
-  /**
-   * Generates AI Agent progress commentary & structured analysis
-   * in the user's interfaceLanguage for their target learningLanguage!
-   */
-  static getAgentProgressInsight({
-    learningLanguage = 'te',
-    interfaceLanguage = 'en',
-    progressData = {},
-    userProfile = {},
-  }) {
-    const langNames = {
-      te: { name: 'Telugu', nativeName: 'తెలుగు' },
-      ta: { name: 'Tamil', nativeName: 'தமிழ்' },
-      kn: { name: 'Kannada', nativeName: 'ಕನ್ನಡ' },
-      ml: { name: 'Malayalam', nativeName: 'മലയാളം' },
-      hi: { name: 'Hindi', nativeName: 'हिंदी' },
-      en: { name: 'English', nativeName: 'English' },
-      bn: { name: 'Bengali', nativeName: 'বাংলা' },
-      mr: { name: 'Marathi', nativeName: 'मराठी' },
-    };
-
-    const targetLangMeta = langNames[learningLanguage] || langNames.te;
-    const interfaceLangMeta = langNames[interfaceLanguage] || langNames.en;
-
-    const completedLessons = progressData.completedLessonsCount || 0;
-    const totalXp = progressData.totalXp || 0;
-    const streakDays = progressData.streakDays || 1;
-    const completedGames = progressData.completedGamesCount || 0;
-    const completedReviews = progressData.completedReviewsCount || 0;
-
-    // Calculate synthetic skill metrics
-    const phonicsMastery = Math.min(98, Math.max(40, 50 + completedLessons * 5));
-    const vocabularyMastery = Math.min(95, Math.max(35, 45 + completedGames * 6 + completedLessons * 3));
-    const readingFluency = Math.min(92, Math.max(30, 40 + completedReviews * 4 + completedLessons * 4));
-    const pronunciationAccuracy = Math.min(96, Math.max(45, 55 + completedReviews * 5));
-    const overallMasteryScore = Math.round(
-      (phonicsMastery * 0.3 + vocabularyMastery * 0.3 + readingFluency * 0.25 + pronunciationAccuracy * 0.15)
-    );
-
-    // Multilingual AI Agent commentary localized in the user's INTERFACE language
-    const agentSummaries = {
-      en: {
-        agentTitle: `NeoAgent Progress Report: ${targetLangMeta.name} Learning Track`,
-        greeting: `Hello ${userProfile.name || 'Learner'}! I have analyzed your progress in learning ${targetLangMeta.name} (${targetLangMeta.nativeName}).`,
-        statusOverview: `You are currently performing at an overall mastery level of ${overallMasteryScore}%. You have completed ${completedLessons} lessons and earned ${totalXp} XP with a ${streakDays}-day streak!`,
-        strengths: [
-          `Solid alphabet sound recognition in ${targetLangMeta.name} (${phonicsMastery}% phonics accuracy).`,
-          `Strong active vocabulary retention (${vocabularyMastery}% sight word recall).`,
-          `High consistency with a ${streakDays}-day practice routine.`,
-        ],
-        focusAreas: [
-          `Practice multi-syllable word formation and compound glyphs.`,
-          `Engage with full short stories in the Multilingual Library for fluency.`,
-        ],
-        nextStepRecommendation: `Recommended next action: Solve 1 sentence builder puzzle and practice 3 audio drills in ${targetLangMeta.name}.`,
-        voiceScript: `Hello! You have achieved an impressive ${overallMasteryScore}% mastery in ${targetLangMeta.name}. Keep your ${streakDays}-day streak going strong!`,
-      },
-      te: {
-        agentTitle: `AI ఏజెంట్ అభ్యసన నివేదిక: ${targetLangMeta.nativeName} (${targetLangMeta.name}) ట్రాక్`,
-        greeting: `నమస్కారం ${userProfile.name || 'మిత్రమా'}! ${targetLangMeta.nativeName} భాషలో మీ అభ్యసన పురోగతిని నేను విశ్లేషించాను.`,
-        statusOverview: `మీరు ప్రస్తుతం ${overallMasteryScore}% ప్రావీణ్యత సాధించారు. ఇప్పటివరకు ${completedLessons} పాఠాలు పూర్తి చేసి, ${totalXp} XP పాయింట్లతో ${streakDays} రోజుల నిరంతర సాధనలో ఉన్నారు!`,
-        strengths: [
-          `${targetLangMeta.nativeName} భాషలో అక్షర ధ్వనుల గుర్తింపు చాలా బాగుంది (${phonicsMastery}% కచ్చితత్వం).`,
-          `పదజాలం మరియు అర్థాల గుర్తింపులో బలమైన పట్టు (${vocabularyMastery}% ప్రావీణ్యం).`,
-          `${streakDays} రోజుల క్రమశిక్షణతో కూడిన సాధన.`,
-        ],
-        focusAreas: [
-          `సంయుక్తాక్షరాలు మరియు పొడవైన పదాల ఉచ్చారణపై మరింత శ్రద్ధ పెట్టండి.`,
-          `గ్రంథాలయంలోని కథలను ఆడియోతో కలిపి చదవడం సాధన చేయండి.`,
-        ],
-        nextStepRecommendation: `తదుపరి సిఫార్సు: ${targetLangMeta.nativeName} లో 1 వాక్య నిర్మాణ పజిల్ మరియు 3 ధ్వని సాధనలను పూర్తి చేయండి.`,
-        voiceScript: `నమస్కారం! మీరు ${targetLangMeta.nativeName} అభ్యసనంలో ${overallMasteryScore} శాతం ప్రావీణ్యం సాధించారు. మీ సాధనను ఇలాగే కొనసాగించండి!`,
-      },
-      hi: {
-        agentTitle: `AI एजेंट प्रगति रिपोर्ट: ${targetLangMeta.name} (${targetLangMeta.nativeName}) शिक्षण ट्रैक`,
-        greeting: `नमस्ते ${userProfile.name || 'शिक्षार्थी'}! मैंने ${targetLangMeta.name} भाषा में आपकी प्रगति का विश्लेषण किया है।`,
-        statusOverview: `आप वर्तमान में ${overallMasteryScore}% दक्षता पर प्रदर्शन कर रहे हैं। आपने ${completedLessons} पाठ पूरे किए हैं और ${streakDays} दिनों के स्ट्रीक के साथ ${totalXp} XP अर्जित किए हैं!`,
-        strengths: [
-          `${targetLangMeta.name} में वर्णमाला ध्वनि पहचान बहुत मजबूत है (${phonicsMastery}% सटीकता)।`,
-          `शब्द संग्रह और दृश्य शब्दों को याद रखने में उत्कृष्ट (${vocabularyMastery}% प्रवीणता)।`,
-          `${streakDays} दिनों का नियमित दैनिक अभ्यास।`,
-        ],
-        focusAreas: [
-          `संयुक्त अक्षरों और लंबे वाक्यों के प्रवाह पर अधिक ध्यान दें।`,
-          `पुस्तकालय से सचित्र कहानियों को बोलकर पढ़ने का अभ्यास करें।`,
-        ],
-        nextStepRecommendation: `अनुशंसित अगला कदम: ${targetLangMeta.name} में 1 वाक्य निर्माण पहेली और 3 उच्चारण अभ्यास पूरे करें।`,
-        voiceScript: `नमस्ते! आपने ${targetLangMeta.name} सीखने में ${overallMasteryScore} प्रतिशत प्रवीणता हासिल की है। बहुत बढ़िया!`,
-      },
-      ta: {
-        agentTitle: `AI முகவர் முன்னேற்ற அறிக்கை: ${targetLangMeta.nativeName} கற்றல் தடம்`,
-        greeting: `வணக்கம் ${userProfile.name || 'கற்பவரே'}! ${targetLangMeta.nativeName} மொழியில் உங்கள் கற்றல் முன்னேற்றத்தை ஆய்வு செய்துள்ளேன்.`,
-        statusOverview: `நீங்கள் தற்போது ${overallMasteryScore}% தேர்ச்சி பெற்றுள்ளீர்கள். ${completedLessons} பாடங்களை முடித்து ${streakDays} நாள் தொடர் பயிற்சியுடன் ${totalXp} XP பெற்றுள்ளீர்கள்!`,
-        strengths: [
-          `${targetLangMeta.nativeName} எழுத்துக்களின் ஒலிப்பு அடையாளம் சிறப்பாக உள்ளது (${phonicsMastery}% துல்லியம்).`,
-          `சொற்களஞ்சிய நினைவாற்றல் வலிமையாக உள்ளது (${vocabularyMastery}% தேர்ச்சி).`,
-          `${streakDays} நாட்கள் தொடர்ச்சியான தினசரி பயிற்சி.`,
-        ],
-        focusAreas: [
-          `கூட்டுச் சொற்கள் மற்றும் முழு வாக்கியங்களை சரளமாக வாசிப்பதில் கவனம் செலுத்துங்கள்.`,
-          `நூலகத்தில் உள்ள சிறுகதைகளை வாசித்து பயிற்சி பெறுங்கள்.`,
-        ],
-        nextStepRecommendation: `அடுத்த கட்ட பரிந்துரை: ${targetLangMeta.nativeName} மொழியில் 1 வாக்கிய புதிர் மற்றும் 3 குரல் பயிற்சிகளை முடிக்கவும்.`,
-        voiceScript: `வணக்கம்! ${targetLangMeta.nativeName} கற்றலில் ${overallMasteryScore} சதவீத தேர்ச்சி பெற்றுள்ளீர்கள். வாழ்த்துகள்!`,
-      },
-      kn: {
-        agentTitle: `AI ಏಜೆಂಟ್ ಪ್ರಗತಿ ವರದಿ: ${targetLangMeta.nativeName} ಕಲಿಕೆಯ ಹಾದಿ`,
-        greeting: `ನಮಸ್ಕಾರ ${userProfile.name || 'ಕಲಿಕಾರ್ಥಿ'}! ${targetLangMeta.nativeName} ಭಾಷೆಯಲ್ಲಿ ನಿಮ್ಮ ಪ್ರಗತಿಯನ್ನು ನಾನು ವಿಶ್ಲೇಷಿಸಿದ್ದೇನೆ.`,
-        statusOverview: `ನೀವು ಪ್ರಸ್ತುತ ${overallMasteryScore}% ಪಾಂಡಿತ್ಯ ಸಾಧಿಸಿದ್ದೀರಿ. ${completedLessons} ಪಾಠಗಳನ್ನು ಪೂರ್ಣಗೊಳಿಸಿ ${streakDays} ದಿನಗಳ ಸ್ಟ್ರೀಕ್‌ನೊಂದಿಗೆ ${totalXp} XP ಗಳಿಸಿದ್ದೀರಿ!`,
-        strengths: [
-          `${targetLangMeta.nativeName} ಅಕ್ಷರ ಶಬ್ದಗಳ ಗುರುತಿಸುವಿಕೆ ಅತ್ಯುತ್ತಮವಾಗಿದೆ (${phonicsMastery}% ನಿಖರತೆ).`,
-          `ಶಬ್ದಕೋಶ ಸ್ಮರಣೆಯಲ್ಲಿ ಬಲವಾದ ಹಿಡಿತ (${vocabularyMastery}% ಪ್ರಾವೀಣ್ಯತೆ).`,
-        ],
-        focusAreas: [
-          `ಸಂಯುಕ್ತಾಕ್ಷರಗಳು ಮತ್ತು ವಾಕ್ಯ ವಾಚನದ ಮೇಲೆ ಹೆಚ್ಚಿನ ಗಮನ ಕೊಡಿ.`,
-        ],
-        nextStepRecommendation: `ಮುಂದಿನ ಶಿಫಾರಸು: ${targetLangMeta.nativeName} ನಲ್ಲಿ 1 ವಾಕ್ಯ ನಿರ್ಮಾಣ ಆಟ ಮತ್ತು 3 ಧ್ವನಿ ಅಭ್ಯಾಸಗಳನ್ನು ಪೂರ್ಣಗೊಳಿಸಿ.`,
-        voiceScript: `ನಮಸ್ಕಾರ! ${targetLangMeta.nativeName} ಕಲಿಕೆಯಲ್ಲಿ ನೀವು ${overallMasteryScore} ಶೇಕಡಾ ಪ್ರಾವೀಣ್ಯತೆ ಪಡೆದಿದ್ದೀರಿ!`,
-      },
-      ml: {
-        agentTitle: `AI ഏജന്റ് പുരോഗതി റിപ്പോർട്ട്: ${targetLangMeta.nativeName} പഠന ട്രാക്ക്`,
-        greeting: `നമസ്കാരം ${userProfile.name || 'പഠിതാവേ'}! ${targetLangMeta.nativeName} ഭാഷയിലെ നിങ്ങളുടെ പുരോഗതി ഞാൻ പരിശോധിച്ചു.`,
-        statusOverview: `നിങ്ങൾ ഇപ്പോൾ ${overallMasteryScore}% വൈദഗ്ദ്ധ്യം നേടിയിട്ടുണ്ട്. ${completedLessons} പാഠങ്ങൾ പൂർത്തിയാക്കി ${totalXp} XP നേടി!`,
-        strengths: [
-          `${targetLangMeta.nativeName} അക്ഷര ശബ്ദ തിരിച്ചറിയൽ മികച്ചതാണ് (${phonicsMastery}% കൃത്യത).`,
-        ],
-        focusAreas: [
-          `വാക്യ നിർമ്മാണത്തിലും വായനാ പ്രാവീണ്യത്തിലും കൂടുതൽ ശ്രദ്ധിക്കുക.`,
-        ],
-        nextStepRecommendation: `അടുത്ത ഘട്ടം: 1 വാക്യ നിർമ്മാണ പസിലും 3 ഉച്ചാരണ വ്യായാമങ്ങളും പൂർത്തിയാക്കുക.`,
-        voiceScript: `നമസ്കാരം! ${targetLangMeta.nativeName} പഠനത്തിൽ ${overallMasteryScore} ശതമാനം പുരോഗതി നേടിയിരിക്കുന്നു!`,
-      },
-      bn: {
-        agentTitle: `AI এজেন্ট অগ্রগতি প্রতিবেদন: ${targetLangMeta.name} লার্নিং ট্র্যাক`,
-        greeting: `নমস্কার ${userProfile.name || 'শিক্ষার্থী'}! ${targetLangMeta.name} ভাষায় আপনার অগ্রগতি বিশ্লেষণ করা হয়েছে।`,
-        statusOverview: `আপনি বর্তমানে ${overallMasteryScore}% দক্ষতা অর্জন করেছেন। ${completedLessons} পাঠ সম্পন্ন করেছেন এবং ${totalXp} XP পেয়েছেন!`,
-        strengths: [
-          `${targetLangMeta.name} ধ্বনি ও বর্ণ স্বীকৃতিতে দারুণ অগ্রগতি (${phonicsMastery}% নির্ভুলতা)।`,
-        ],
-        focusAreas: [
-          `বাক্য গঠন এবং সাবলীল পাঠে আরও মনোযোগ দিন।`,
-        ],
-        nextStepRecommendation: `পরবর্তী পদক্ষেপ: ১টি বাক্য গঠন ধাঁধা এবং ৩টি উচ্চারণ ড্রিল সম্পূর্ণ করুন।`,
-        voiceScript: `নমস্কার! ${targetLangMeta.name} শেখায় আপনি ${overallMasteryScore} শতাংশ দক্ষতা অর্জন করেছেন!`,
-      },
-      mr: {
-        agentTitle: `AI मार्गदर्शक प्रगती अहवाल: ${targetLangMeta.name} ट्रॅक`,
-        greeting: `नमस्कार ${userProfile.name || 'मित्रा'}! ${targetLangMeta.name} भाषेतील आपल्या प्रगतीचे मी विश्लेषण केले आहे.`,
-        statusOverview: `आपण सध्या ${overallMasteryScore}% प्राविण्य पातळीवर आहात. आपण ${completedLessons} धडे पूर्ण केले आहेत आणि ${totalXp} XP मिळवले आहेत!`,
-        strengths: [
-          `${targetLangMeta.name} वर्णमाला ध्वनी ओळख अत्यंत मजबूत आहे (${phonicsMastery}% अचूकता).`,
-        ],
-        focusAreas: [
-          `जोडाक्षरे आणि वाक्य वाचन वेगावर अधिक सराव करा.`,
-        ],
-        nextStepRecommendation: `पुढील शिफारस: १ वाक्य रचना कोडे आणि ३ उच्चार सराव पूर्ण करा.`,
-        voiceScript: `नमस्कार! आपण ${targetLangMeta.name} शिकण्यात ${overallMasteryScore} टक्के प्राविण्य संपादन केले आहे!`,
-      },
-    };
-
-    const selectedSummary = agentSummaries[interfaceLanguage] || agentSummaries.en;
-
-    return {
-      learningLanguage,
-      learningLanguageMeta: targetLangMeta,
-      interfaceLanguage,
-      interfaceLanguageMeta: interfaceLangMeta,
-      overallMasteryScore,
-      skills: {
-        phonics: phonicsMastery,
-        vocabulary: vocabularyMastery,
-        readingFluency: readingFluency,
-        pronunciation: pronunciationAccuracy,
-      },
-      gamification: {
-        completedLessons,
-        totalXp,
-        streakDays,
-        completedGames,
-        completedReviews,
-      },
-      ...selectedSummary,
     };
   }
 

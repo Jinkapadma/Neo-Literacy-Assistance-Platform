@@ -5,6 +5,7 @@ import { AuthProvider } from './context/AuthContext.jsx';
 import { AccessibilityProvider } from './context/AccessibilityContext.jsx';
 import { LanguageProvider } from './context/LanguageContext.jsx';
 import { ProgressProvider } from './context/ProgressContext.jsx';
+import { GlobalAutoTranslator } from './components/common/GlobalAutoTranslator.jsx';
 import { AppRoutes } from './routes/AppRoutes.jsx';
 
 export function App() {
@@ -27,6 +28,7 @@ export function App() {
                   },
                 }}
               />
+              <GlobalAutoTranslator />
               <AppRoutes />
             </ProgressProvider>
           </LanguageProvider>

@@ -10,8 +10,8 @@ export const translateText = asyncHandler(async (req, res) => {
 
 export const translateBatch = asyncHandler(async (req, res) => {
   const { texts = [], sourceLanguage = 'en', targetLanguage = 'te' } = req.body;
-  const translations = await BhashiniService.translateBatch(texts, sourceLanguage, targetLanguage);
-  return ApiResponse.success(res, { translations }, 'Batch texts translated successfully via Bhashini');
+  const result = await BhashiniService.translateBatch(texts, sourceLanguage, targetLanguage);
+  return ApiResponse.success(res, result, 'Batch texts translated successfully via Bhashini');
 });
 
 export const getUIBundle = asyncHandler(async (req, res) => {
