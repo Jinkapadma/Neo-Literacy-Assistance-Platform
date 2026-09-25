@@ -24,17 +24,23 @@ import { Card } from '../../components/common/Card.jsx';
 import { Badge } from '../../components/common/Badge.jsx';
 import { Button } from '../../components/common/Button.jsx';
 import { Loader } from '../../components/common/Loader.jsx';
-import { SUPPORTED_LANGUAGES } from '../../utils/constants.js';
-import toast from 'react-hot-toast';
+import { useLanguage } from '../../hooks/useLanguage.js';
 
 export const GamesHub = () => {
   const { user } = useAuth();
   const { progress, recordGameWin } = useProgress();
   const { speakText } = useAccessibility();
+  const { learningLanguage, interfaceLanguage, learningLangMeta, interfaceLangMeta, t } = useLanguage();
 
   const [activeTab, setActiveTab] = useState('scramble'); // 'scramble' | 'memory' | 'quiz' | 'builder'
-  const [selectedLanguage, setSelectedLanguage] = useState(user?.preferredLanguage || 'te');
+  const [selectedLanguage, setSelectedLanguage] = useState(learningLanguage || 'te');
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (learningLanguage) {
+      setSelectedLanguage(learningLanguage);
+    }
+  }, [learningLanguage]);
 
   // 1. Word Scramble State
   const [scramblePuzzles, setScramblePuzzles] = useState([]);

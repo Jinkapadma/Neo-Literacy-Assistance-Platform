@@ -107,7 +107,8 @@ export const OnboardingFlow = () => {
   const totalSteps = 5;
 
   // Survey answers state
-  const [selectedLanguage, setSelectedLanguage] = useState('te'); // Default to Telugu (South Indian)
+  const [selectedLanguage, setSelectedLanguage] = useState('te'); // Default to Telugu (Target Learning Language)
+  const [selectedInterfaceLanguage, setSelectedInterfaceLanguage] = useState('en'); // Interface Language (Bhashini AI)
   const [selectedReason, setSelectedReason] = useState('career');
   const [selectedNeeds, setSelectedNeeds] = useState(['phonics', 'vocabulary']);
   const [selectedDailyGoal, setSelectedDailyGoal] = useState('regular');
@@ -116,6 +117,8 @@ export const OnboardingFlow = () => {
   // Find current objects
   const currentLangObj =
     SUPPORTED_LANGUAGES.find(l => l.code === selectedLanguage) || SUPPORTED_LANGUAGES[0];
+  const currentInterfaceLangObj =
+    SUPPORTED_LANGUAGES.find(l => l.code === selectedInterfaceLanguage) || SUPPORTED_LANGUAGES[5];
   const currentGoalObj =
     ONBOARDING_DAILY_GOALS.find(g => g.id === selectedDailyGoal) || ONBOARDING_DAILY_GOALS[1];
   const currentReasonObj =
@@ -125,7 +128,7 @@ export const OnboardingFlow = () => {
 
   // Mascot dynamic quotes per step
   const mascotSpeech = {
-    1: `Namaskaram! Choose a South Indian or regional language to start your journey.`,
+    1: `Namaskaram! Choose the language you want to learn, and your preferred interface language.`,
     2: `Great choice! What inspires you to learn ${currentLangObj.name} (${currentLangObj.nativeName})?`,
     3: `Personalizing your lessons! Which literacy skills would you like to master?`,
     4: `Consistency is the secret to fluency! How much time can you commit each day?`,
@@ -165,6 +168,8 @@ export const OnboardingFlow = () => {
       // Save onboarding preferences to localStorage
       const onboardingData = {
         language: currentLangObj,
+        learningLanguage: selectedLanguage,
+        interfaceLanguage: selectedInterfaceLanguage,
         reason: currentReasonObj,
         needs: selectedNeeds,
         dailyGoal: currentGoalObj,
@@ -172,6 +177,8 @@ export const OnboardingFlow = () => {
         completedAt: new Date().toISOString(),
       };
       localStorage.setItem('neoread_onboarding_data', JSON.stringify(onboardingData));
+      localStorage.setItem('neoread_learning_lang', selectedLanguage);
+      localStorage.setItem('neoread_interface_lang', selectedInterfaceLanguage);
     }
   };
 
@@ -191,6 +198,8 @@ export const OnboardingFlow = () => {
       state: {
         fromOnboarding: true,
         preferredLanguage: selectedLanguage,
+        learningLanguage: selectedLanguage,
+        interfaceLanguage: selectedInterfaceLanguage,
         dailyGoal: currentGoalObj,
       },
     });
@@ -202,6 +211,8 @@ export const OnboardingFlow = () => {
       state: {
         fromOnboarding: true,
         preferredLanguage: selectedLanguage,
+        learningLanguage: selectedLanguage,
+        interfaceLanguage: selectedInterfaceLanguage,
         targetSkills: selectedNeeds,
         dailyGoal: currentGoalObj,
       },
@@ -418,6 +429,42 @@ export const OnboardingFlow = () => {
                       >
                         <Check className="w-3 h-3 stroke-[3]" />
                       </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Interface Language Preference Section */}
+            <div className="p-4 rounded-2xl bg-slate-900/70 border border-white/20 backdrop-blur-md space-y-2.5 mt-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold uppercase tracking-wider text-amber-300 flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+                  Website Interface Language (Bhashini AI)
+                </span>
+                <span className="text-xs text-slate-300 font-semibold">
+                  UI: {currentInterfaceLangObj.nativeName}
+                </span>
+              </div>
+              <p className="text-[11px] text-slate-300 leading-snug">
+                Which language should the website menus, instructions, hints, and explanations be shown in?
+              </p>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1">
+                {SUPPORTED_LANGUAGES.map(lang => {
+                  const isSelected = selectedInterfaceLanguage === lang.code;
+                  return (
+                    <button
+                      key={`ui-select-${lang.code}`}
+                      type="button"
+                      onClick={() => setSelectedInterfaceLanguage(lang.code)}
+                      className={`p-2 rounded-xl border text-xs font-semibold flex items-center justify-between transition-all cursor-pointer ${
+                        isSelected
+                          ? 'border-indigo-400 bg-indigo-600/40 text-white font-bold ring-1 ring-indigo-400'
+                          : 'border-white/10 bg-white/5 text-slate-300 hover:bg-white/10'
+                      }`}
+                    >
+                      <span className="truncate">{lang.flag} {lang.nativeName}</span>
+                      {isSelected && <Check className="w-3 h-3 text-indigo-300 shrink-0" />}
                     </button>
                   );
                 })}
@@ -703,11 +750,21 @@ export const OnboardingFlow = () => {
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 text-left">
                 <div className="p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-white/5 border border-white/15 backdrop-blur-md">
                   <span className="text-[10px] sm:text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-0.5 sm:mb-1">
-                    Language
+                    Learning Track
                   </span>
                   <div className="flex items-center gap-1.5 font-black text-white text-sm sm:text-base truncate">
                     <span>{currentLangObj.flag}</span>
                     <span className="truncate">{currentLangObj.nativeName}</span>
+                  </div>
+                </div>
+
+                <div className="p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-white/5 border border-white/15 backdrop-blur-md">
+                  <span className="text-[10px] sm:text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-0.5 sm:mb-1">
+                    UI Language
+                  </span>
+                  <div className="flex items-center gap-1.5 font-black text-indigo-300 text-sm sm:text-base truncate">
+                    <span>{currentInterfaceLangObj.flag}</span>
+                    <span className="truncate">{currentInterfaceLangObj.nativeName}</span>
                   </div>
                 </div>
 

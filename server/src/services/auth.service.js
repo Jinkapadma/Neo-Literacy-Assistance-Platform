@@ -4,17 +4,22 @@ import { ApiError } from '../utils/apiError.js';
 import { env } from '../config/env.js';
 
 export class AuthService {
-  static async register({ name, email, password, preferredLanguage, role, targetSkills }) {
+  static async register({ name, email, password, preferredLanguage, interfaceLanguage, learningLanguage, role, targetSkills }) {
     const existingUser = await User.findOne({ email: email.toLowerCase() });
     if (existingUser) {
       throw ApiError.conflict('An account with this email address already exists.');
     }
 
+    const resolvedInterface = interfaceLanguage || preferredLanguage || 'en';
+    const resolvedLearning = learningLanguage || preferredLanguage || 'te';
+
     const user = await User.create({
       name,
       email: email.toLowerCase(),
       password,
-      preferredLanguage: preferredLanguage || 'en',
+      preferredLanguage: resolvedLearning,
+      interfaceLanguage: resolvedInterface,
+      learningLanguage: resolvedLearning,
       role: role || 'learner',
       targetSkills: targetSkills || ['reading', 'writing', 'comprehension', 'phonics', 'vocabulary'],
     });
@@ -31,6 +36,8 @@ export class AuthService {
         name: user.name,
         email: user.email,
         preferredLanguage: user.preferredLanguage,
+        interfaceLanguage: user.interfaceLanguage,
+        learningLanguage: user.learningLanguage,
         role: user.role,
         proficiencyLevel: user.proficiencyLevel,
         targetSkills: user.targetSkills,
@@ -69,6 +76,8 @@ export class AuthService {
         name: user.name,
         email: user.email,
         preferredLanguage: user.preferredLanguage,
+        interfaceLanguage: user.interfaceLanguage || 'en',
+        learningLanguage: user.learningLanguage || user.preferredLanguage || 'te',
         role: user.role,
         proficiencyLevel: user.proficiencyLevel,
         targetSkills: user.targetSkills,
@@ -112,6 +121,8 @@ export class AuthService {
           name: user.name,
           email: user.email,
           preferredLanguage: user.preferredLanguage,
+          interfaceLanguage: user.interfaceLanguage || 'en',
+          learningLanguage: user.learningLanguage || user.preferredLanguage || 'te',
           role: user.role,
           proficiencyLevel: user.proficiencyLevel,
         },
@@ -147,13 +158,25 @@ export class AuthService {
   }
 
   static async updateProfile(userId, updateData) {
-    const allowedFields = ['name', 'preferredLanguage', 'targetSkills', 'avatar', 'proficiencyLevel'];
+    const allowedFields = [
+      'name',
+      'preferredLanguage',
+      'interfaceLanguage',
+      'learningLanguage',
+      'targetSkills',
+      'avatar',
+      'proficiencyLevel',
+    ];
     const filteredUpdate = {};
 
     for (const key of allowedFields) {
       if (updateData[key] !== undefined) {
         filteredUpdate[key] = updateData[key];
       }
+    }
+
+    if (filteredUpdate.learningLanguage && !filteredUpdate.preferredLanguage) {
+      filteredUpdate.preferredLanguage = filteredUpdate.learningLanguage;
     }
 
     const updatedUser = await User.findByIdAndUpdate(userId, { $set: filteredUpdate }, { new: true, runValidators: true });

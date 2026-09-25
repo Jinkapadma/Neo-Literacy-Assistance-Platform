@@ -73,6 +73,18 @@ const userSchema = new mongoose.Schema(
       default: 'en',
       index: true,
     },
+    interfaceLanguage: {
+      type: String,
+      enum: ['en', 'hi', 'es', 'fr', 'bn', 'te', 'ta', 'kn', 'ml', 'mr'],
+      default: 'en',
+      index: true,
+    },
+    learningLanguage: {
+      type: String,
+      enum: ['en', 'hi', 'es', 'fr', 'bn', 'te', 'ta', 'kn', 'ml', 'mr'],
+      default: 'te',
+      index: true,
+    },
     age: {
       type: Number,
       min: 3,
@@ -146,6 +158,8 @@ userSchema.methods.generateAccessToken = function () {
       role: this.role,
       name: this.name,
       preferredLanguage: this.preferredLanguage,
+      interfaceLanguage: this.interfaceLanguage || 'en',
+      learningLanguage: this.learningLanguage || this.preferredLanguage || 'te',
       proficiencyLevel: this.proficiencyLevel,
     },
     env.JWT_ACCESS_SECRET,

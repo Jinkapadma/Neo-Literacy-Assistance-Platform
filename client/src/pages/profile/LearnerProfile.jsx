@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../hooks/useAuth.js';
+import { useLanguage } from '../../hooks/useLanguage.js';
 import { assessmentApi } from '../../api/assessmentApi.js';
 import { Card } from '../../components/common/Card.jsx';
 import { Button } from '../../components/common/Button.jsx';
@@ -17,19 +18,44 @@ import {
   BookOpen,
   ArrowRight,
   TrendingUp,
+  Target,
+  Sparkles,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export const LearnerProfile = () => {
   const { user, updateProfile } = useAuth();
+  const {
+    interfaceLanguage,
+    setInterfaceLanguage,
+    learningLanguage,
+    setLearningLanguage,
+    learningLangMeta,
+    interfaceLangMeta,
+    t,
+    openAgentModal,
+  } = useLanguage();
+
   const [benchmarkData, setBenchmarkData] = useState(null);
   const [loadingBenchmark, setLoadingBenchmark] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
     name: user?.name || '',
-    preferredLanguage: user?.preferredLanguage || 'en',
+    learningLanguage: learningLanguage || 'te',
+    interfaceLanguage: interfaceLanguage || 'en',
     targetSkills: user?.targetSkills || [],
   });
+
+  useEffect(() => {
+    if (user) {
+      setFormData({
+        name: user.name || '',
+        learningLanguage: user.learningLanguage || learningLanguage || 'te',
+        interfaceLanguage: user.interfaceLanguage || interfaceLanguage || 'en',
+        targetSkills: user.targetSkills || [],
+      });
+    }
+  }, [user, learningLanguage, interfaceLanguage]);
 
   useEffect(() => {
     if (user?._id) {
@@ -60,14 +86,16 @@ export const LearnerProfile = () => {
 
   const handleSaveProfile = async e => {
     e.preventDefault();
-    await updateProfile(formData);
+    await updateProfile({
+      name: formData.name,
+      learningLanguage: formData.learningLanguage,
+      preferredLanguage: formData.learningLanguage,
+      interfaceLanguage: formData.interfaceLanguage,
+      targetSkills: formData.targetSkills,
+    });
+    setLearningLanguage(formData.learningLanguage);
+    setInterfaceLanguage(formData.interfaceLanguage);
     setIsEditing(false);
-  };
-
-  const langInfo = SUPPORTED_LANGUAGES.find(l => l.code === user?.preferredLanguage) || {
-    flag: '🌐',
-    nativeName: user?.preferredLanguage,
-    name: 'Standard',
   };
 
   const latestBenchmark = benchmarkData?.latestBenchmark;
@@ -90,17 +118,34 @@ export const LearnerProfile = () => {
               </Badge>
             </div>
             <p className="text-sm text-slate-500 font-medium">{user?.email}</p>
-            <div className="flex items-center gap-3 pt-1 flex-wrap">
+
+            <div className="flex items-center gap-2.5 pt-1 flex-wrap">
               <ProficiencyBadge level={user?.proficiencyLevel} size="md" />
-              <span className="text-xs font-semibold px-2.5 py-1 bg-slate-100 text-slate-700 rounded-full flex items-center gap-1">
-                <span>{langInfo.flag}</span>
-                <span>{langInfo.nativeName} ({langInfo.name})</span>
+
+              {/* Target Learning Language Badge */}
+              <span className="text-xs font-bold px-3 py-1 bg-brand-50 text-brand-700 rounded-full flex items-center gap-1 border border-brand-200 shadow-xs">
+                <Target className="w-3.5 h-3.5 text-brand-600" />
+                <span>Learning: {learningLangMeta.flag} {learningLangMeta.nativeName} ({learningLangMeta.name})</span>
+              </span>
+
+              {/* Interface Language Badge */}
+              <span className="text-xs font-bold px-3 py-1 bg-indigo-50 text-indigo-700 rounded-full flex items-center gap-1 border border-indigo-200 shadow-xs">
+                <Globe className="w-3.5 h-3.5 text-indigo-600" />
+                <span>UI: {interfaceLangMeta.nativeName}</span>
               </span>
             </div>
           </div>
         </div>
 
         <div className="flex items-center gap-3 w-full md:w-auto">
+          <Button
+            variant="outline"
+            onClick={openAgentModal}
+            icon={Sparkles}
+            className="flex-1 md:flex-initial text-amber-700 border-amber-300 bg-amber-50"
+          >
+            AI Agent Report
+          </Button>
           <Button
             variant="outline"
             onClick={() => setIsEditing(!isEditing)}
@@ -119,8 +164,8 @@ export const LearnerProfile = () => {
 
       {/* Profile Editing Modal / Inline Box */}
       {isEditing && (
-        <Card className="p-6 sm:p-8 border-2 border-brand-300 bg-brand-50/20">
-          <h3 className="text-lg font-bold text-slate-900 mb-4">Edit Profile Details</h3>
+        <Card className="p-6 sm:p-8 border-2 border-brand-300 bg-brand-50/20 rounded-3xl">
+          <h3 className="text-lg font-bold text-slate-900 mb-4">Edit Profile & Language Preferences</h3>
           <form onSubmit={handleSaveProfile} className="space-y-4">
             <div>
               <label className="block text-sm font-semibold text-slate-700 mb-1">Full Name</label>
@@ -133,21 +178,50 @@ export const LearnerProfile = () => {
               />
             </div>
 
-            <div>
-              <label className="block text-sm font-semibold text-slate-700 mb-1">
-                Preferred Primary Language
-              </label>
-              <select
-                value={formData.preferredLanguage}
-                onChange={e => setFormData({ ...formData, preferredLanguage: e.target.value })}
-                className="w-full p-2.5 bg-white border border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none"
-              >
-                {SUPPORTED_LANGUAGES.map(lang => (
-                  <option key={lang.code} value={lang.code}>
-                    {lang.flag} {lang.nativeName} ({lang.name})
-                  </option>
-                ))}
-              </select>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* Target Language to Learn */}
+              <div>
+                <label className="block text-sm font-bold text-brand-700 mb-1 flex items-center gap-1.5">
+                  <Target className="w-4 h-4 text-brand-600" />
+                  Language You Are Learning (Target)
+                </label>
+                <select
+                  value={formData.learningLanguage}
+                  onChange={e => setFormData({ ...formData, learningLanguage: e.target.value })}
+                  className="w-full p-2.5 bg-white border border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none text-sm font-semibold"
+                >
+                  {SUPPORTED_LANGUAGES.map(lang => (
+                    <option key={lang.code} value={lang.code}>
+                      {lang.flag} {lang.nativeName} ({lang.name})
+                    </option>
+                  ))}
+                </select>
+                <p className="text-[11px] text-slate-500 mt-1">
+                  All curriculums, word puzzles, voice drills, and stories will focus on this language.
+                </p>
+              </div>
+
+              {/* Website Interface Language */}
+              <div>
+                <label className="block text-sm font-bold text-indigo-700 mb-1 flex items-center gap-1.5">
+                  <Globe className="w-4 h-4 text-indigo-600" />
+                  Website Interface Language (Bhashini AI)
+                </label>
+                <select
+                  value={formData.interfaceLanguage}
+                  onChange={e => setFormData({ ...formData, interfaceLanguage: e.target.value })}
+                  className="w-full p-2.5 bg-white border border-slate-300 rounded-xl focus:border-indigo-500 focus:outline-none text-sm font-semibold"
+                >
+                  {SUPPORTED_LANGUAGES.map(lang => (
+                    <option key={lang.code} value={lang.code}>
+                      {lang.flag} {lang.nativeName} ({lang.name})
+                    </option>
+                  ))}
+                </select>
+                <p className="text-[11px] text-slate-500 mt-1">
+                  Menus, explanations, instructions, and AI Agent speech will be translated into this language.
+                </p>
+              </div>
             </div>
 
             <div>
@@ -162,7 +236,7 @@ export const LearnerProfile = () => {
                       key={skill.id}
                       type="button"
                       onClick={() => handleSkillToggle(skill.id)}
-                      className={`p-2.5 rounded-xl border text-xs font-semibold text-left transition-colors flex items-center justify-between ${
+                      className={`p-2.5 rounded-xl border text-xs font-semibold text-left transition-colors flex items-center justify-between cursor-pointer ${
                         isChecked
                           ? 'border-brand-600 bg-brand-100 text-brand-900'
                           : 'border-slate-200 bg-white text-slate-700'
@@ -194,10 +268,10 @@ export const LearnerProfile = () => {
           <div>
             <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
               <TrendingUp className="w-5 h-5 text-brand-600" />
-              Literacy Proficiency Benchmark
+              Literacy Proficiency Benchmark ({learningLangMeta.name})
             </h2>
             <p className="text-xs text-slate-500">
-              Evaluated based on reading comprehension, phonetic accuracy, and writing mechanics.
+              Evaluated based on reading comprehension, phonetic accuracy, and writing mechanics in {learningLangMeta.nativeName}.
             </p>
           </div>
         </div>
@@ -213,15 +287,15 @@ export const LearnerProfile = () => {
             comprehensionScore={latestBenchmark.comprehensionScore || 0}
           />
         ) : (
-          <Card className="p-8 text-center space-y-4 border-dashed border-2 border-slate-300">
+          <Card className="p-8 text-center space-y-4 border-dashed border-2 border-slate-300 rounded-3xl">
             <Award className="w-12 h-12 text-slate-400 mx-auto" />
             <div>
               <h3 className="text-lg font-bold text-slate-900">No Assessment Completed Yet</h3>
               <p className="text-sm text-slate-500 max-w-md mx-auto mt-1">
-                Take your first 15-minute diagnostic literacy assessment to discover your reading baseline and unlock tailored modules.
+                Take your first 15-minute diagnostic literacy assessment to discover your reading baseline and unlock tailored modules in {learningLangMeta.name}.
               </p>
             </div>
-            <Link to="/assessment">
+            <Link to="/initial-assessment">
               <Button variant="primary" icon={ArrowRight} iconPosition="right">
                 Start Diagnostic Assessment
               </Button>

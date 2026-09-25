@@ -17,13 +17,21 @@ import {
   Clock,
   Sparkles,
 } from 'lucide-react';
+import { useLanguage } from '../../hooks/useLanguage.js';
 
 export const CurriculumList = () => {
+  const { learningLanguage, interfaceLanguage, learningLangMeta, interfaceLangMeta, t } = useLanguage();
   const [curricula, setCurricula] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedLanguage, setSelectedLanguage] = useState('');
+  const [selectedLanguage, setSelectedLanguage] = useState(learningLanguage || '');
   const [selectedLevel, setSelectedLevel] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
+
+  useEffect(() => {
+    if (learningLanguage && !selectedLanguage) {
+      setSelectedLanguage(learningLanguage);
+    }
+  }, [learningLanguage]);
 
   const fetchCurricula = async () => {
     setLoading(true);

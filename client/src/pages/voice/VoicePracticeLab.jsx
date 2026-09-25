@@ -24,12 +24,20 @@ import { Card } from '../../components/common/Card.jsx';
 import { Badge } from '../../components/common/Badge.jsx';
 import { Button } from '../../components/common/Button.jsx';
 import { Loader } from '../../components/common/Loader.jsx';
+import { useLanguage } from '../../hooks/useLanguage.js';
 
 export const VoicePracticeLab = () => {
   const { user } = useAuth();
   const { recordSpacedReview } = useProgress();
-  const [language, setLanguage] = useState(user?.nativeLanguage || 'te');
+  const { learningLanguage, interfaceLanguage, learningLangMeta, interfaceLangMeta, t } = useLanguage();
+  const [language, setLanguage] = useState(learningLanguage || 'te');
   const [difficulty, setDifficulty] = useState('beginner');
+
+  useEffect(() => {
+    if (learningLanguage) {
+      setLanguage(learningLanguage);
+    }
+  }, [learningLanguage]);
   const [phrases, setPhrases] = useState([]);
   const [selectedPhrase, setSelectedPhrase] = useState(null);
   const [loading, setLoading] = useState(true);

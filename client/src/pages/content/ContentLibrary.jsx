@@ -27,9 +27,12 @@ import {
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
+import { useLanguage } from '../../hooks/useLanguage.js';
+
 export const ContentLibrary = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const { selectedLanguage, setSelectedLanguage, speakText, stopSpeaking } = useAccessibility();
+  const { speakText, stopSpeaking } = useAccessibility();
+  const { learningLanguage, setLearningLanguage, interfaceLanguage, learningLangMeta, interfaceLangMeta, t } = useLanguage();
   const { recordSpacedReview } = useProgress();
 
   const [contentList, setContentList] = useState([]);
@@ -40,14 +43,14 @@ export const ContentLibrary = () => {
 
   // Active reading modal
   const [activeContent, setActiveContent] = useState(null);
-  const [activeTranslationLang, setActiveTranslationLang] = useState(null);
+  const [activeTranslationLang, setActiveTranslationLang] = useState(interfaceLanguage || null);
   const [dynamicTranslation, setDynamicTranslation] = useState(null);
   const [translating, setTranslating] = useState(false);
   const [quizAnswers, setQuizAnswers] = useState({});
   const [quizFeedback, setQuizFeedback] = useState({});
   const [hasCompletedCurrentReading, setHasCompletedCurrentReading] = useState(false);
 
-  const languageFilter = searchParams.get('lang') || selectedLanguage || 'en';
+  const languageFilter = searchParams.get('lang') || learningLanguage || 'te';
   const directId = searchParams.get('id');
 
   const fetchContent = async () => {

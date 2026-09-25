@@ -11,6 +11,8 @@ export const registerSchema = z.object({
     password: z.string().min(6, 'Password must be at least 6 characters'),
     age: z.coerce.number().min(3, 'Age must be at least 3').max(120, 'Please enter a valid age').optional(),
     preferredLanguage: languageEnum.default('en'),
+    interfaceLanguage: languageEnum.default('en'),
+    learningLanguage: languageEnum.default('te'),
     role: roleEnum.default('learner'),
     targetSkills: z.array(z.string()).optional(),
   }),
@@ -33,6 +35,8 @@ export const updateProfileSchema = z.object({
   body: z.object({
     name: z.string().min(2).max(100).optional(),
     preferredLanguage: languageEnum.optional(),
+    interfaceLanguage: languageEnum.optional(),
+    learningLanguage: languageEnum.optional(),
     targetSkills: z.array(z.string()).optional(),
     avatar: z.string().url().optional(),
     proficiencyLevel: proficiencyEnum.optional(),
