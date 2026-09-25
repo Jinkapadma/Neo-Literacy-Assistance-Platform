@@ -33,7 +33,6 @@ export const LearnerProfile = () => {
     learningLangMeta,
     interfaceLangMeta,
     t,
-    openAgentModal,
   } = useLanguage();
 
   const [benchmarkData, setBenchmarkData] = useState(null);
@@ -140,14 +139,6 @@ export const LearnerProfile = () => {
         <div className="flex items-center gap-3 w-full md:w-auto">
           <Button
             variant="outline"
-            onClick={openAgentModal}
-            icon={Sparkles}
-            className="flex-1 md:flex-initial text-amber-700 border-amber-300 bg-amber-50"
-          >
-            AI Agent Report
-          </Button>
-          <Button
-            variant="outline"
             onClick={() => setIsEditing(!isEditing)}
             icon={Edit3}
             className="flex-1 md:flex-initial"
@@ -219,7 +210,7 @@ export const LearnerProfile = () => {
                   ))}
                 </select>
                 <p className="text-[11px] text-slate-500 mt-1">
-                  Menus, explanations, instructions, and AI Agent speech will be translated into this language.
+                  Menus, explanations, and audio instructions will be translated into this language.
                 </p>
               </div>
             </div>

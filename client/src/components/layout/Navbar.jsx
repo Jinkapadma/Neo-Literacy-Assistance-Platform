@@ -33,7 +33,7 @@ export const Navbar = ({ onToggleSidebar }) => {
     setTextScale,
   } = useAccessibility();
 
-  const { openAgentModal, learningLangMeta, interfaceLangMeta, t } = useLanguage();
+  const { learningLangMeta, interfaceLangMeta, t } = useLanguage();
 
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isAccessMenuOpen, setIsAccessMenuOpen] = useState(false);
@@ -82,20 +82,8 @@ export const Navbar = ({ onToggleSidebar }) => {
             </Link>
           </div>
 
-          {/* Right: AI Agent Progress, Dual Language, Accessibility, Auth */}
+          {/* Right: Dual Language, Accessibility, Auth */}
           <div className="flex items-center gap-2 sm:gap-3">
-            {/* AI AGENT PROGRESS QUICK LAUNCHER BUTTON */}
-            <button
-              type="button"
-              onClick={openAgentModal}
-              className="px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-2xl bg-gradient-to-r from-amber-400/20 via-brand-500/20 to-indigo-500/20 hover:from-amber-400/30 hover:to-indigo-500/30 border border-amber-300/50 dark:border-amber-400/30 text-slate-900 dark:text-amber-300 flex items-center gap-1.5 text-xs font-black transition-all shadow-sm active:scale-95 cursor-pointer"
-              title="View AI Learning Agent Progress"
-            >
-              <span className="text-base animate-bounce">🦉</span>
-              <span className="hidden md:inline">{t('aiAgent', 'AI Agent Progress')}</span>
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            </button>
-
             {/* Global Dual-Language Switcher (Target Learn vs Interface) */}
             <DualLanguageSwitcher />
 

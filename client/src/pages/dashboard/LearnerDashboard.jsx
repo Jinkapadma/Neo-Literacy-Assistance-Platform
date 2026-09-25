@@ -37,7 +37,6 @@ export const LearnerDashboard = () => {
     learningLangMeta,
     interfaceLangMeta,
     t,
-    openAgentModal,
     speakInInterfaceLang,
   } = useLanguage();
 
@@ -155,42 +154,7 @@ export const LearnerDashboard = () => {
         </div>
       </div>
 
-      {/* 2. PROMINENT AI LEARNING AGENT PROGRESS SHOWCASE CARD */}
-      <div className="p-6 rounded-3xl bg-gradient-to-r from-amber-500/15 via-brand-500/15 to-indigo-500/15 border-2 border-amber-300/70 backdrop-blur-md shadow-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-5 animate-fadeIn">
-        <div className="flex items-start sm:items-center gap-4">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-amber-400 via-brand-500 to-indigo-600 flex items-center justify-center text-3xl shadow-md shrink-0">
-            🦉
-          </div>
-          <div className="space-y-1">
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-black uppercase tracking-wider text-amber-700 bg-amber-100 px-2.5 py-0.5 rounded-full">
-                AI Progress Agent
-              </span>
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            </div>
-            <h3 className="text-base sm:text-lg font-black text-slate-900">
-              {learningLangMeta.name} Literacy Progress by NeoAgent
-            </h3>
-            <p className="text-xs sm:text-sm text-slate-600 font-medium max-w-xl">
-              I've synthesized your phonetics, vocabulary recall, and speech pronunciation milestones in {learningLangMeta.nativeName}.
-            </p>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-3 w-full md:w-auto shrink-0">
-          <Button
-            variant="primary"
-            size="md"
-            onClick={openAgentModal}
-            className="w-full md:w-auto bg-gradient-to-r from-amber-500 to-brand-600 hover:from-amber-600 hover:to-brand-700 text-white font-black shadow-md shadow-amber-500/20"
-            icon={Sparkles}
-          >
-            Show Me Progress by Agent
-          </Button>
-        </div>
-      </div>
-
-      {/* 3. UNASSESSED CALLOUT (If user has not completed diagnostic test) */}
+      {/* 2. UNASSESSED CALLOUT (If user has not completed diagnostic test) */}
       {isUnassessed && (
         <div className="p-6 rounded-3xl bg-gradient-to-r from-amber-500/20 via-orange-500/20 to-brand-500/20 border-2 border-amber-300/60 backdrop-blur-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-lg animate-fadeIn">
           <div className="flex items-center gap-4">

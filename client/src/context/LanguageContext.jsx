@@ -230,7 +230,6 @@ export const LanguageProvider = ({ children }) => {
     return LOCAL_UI_DICTIONARY[interfaceLanguage] || LOCAL_UI_DICTIONARY.en;
   });
 
-  const [isAgentModalOpen, setIsAgentModalOpen] = useState(false);
   const [isTranslating, setIsTranslating] = useState(false);
 
   // Sync with user profile on login
@@ -397,10 +396,6 @@ export const LanguageProvider = ({ children }) => {
     speakText,
     speakInInterfaceLang,
     speakInLearningLang,
-    isAgentModalOpen,
-    setIsAgentModalOpen,
-    openAgentModal: () => setIsAgentModalOpen(true),
-    closeAgentModal: () => setIsAgentModalOpen(false),
   };
 
   return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>;

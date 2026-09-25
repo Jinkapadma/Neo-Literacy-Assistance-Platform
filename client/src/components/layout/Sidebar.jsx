@@ -23,7 +23,7 @@ import { useLanguage } from '../../hooks/useLanguage.js';
 
 export const Sidebar = ({ isOpen, onClose }) => {
   const { user, isAuthenticated } = useAuth();
-  const { t, learningLangMeta, interfaceLangMeta, openAgentModal } = useLanguage();
+  const { t, learningLangMeta, interfaceLangMeta } = useLanguage();
 
   const coreNavItems = [
     ...(isAuthenticated
@@ -126,30 +126,6 @@ export const Sidebar = ({ isOpen, onClose }) => {
               <X className="w-6 h-6" />
             </button>
           </div>
-
-          {/* AI AGENT BANNER TRIGGER */}
-          <button
-            onClick={() => {
-              openAgentModal();
-              onClose && onClose();
-            }}
-            className="w-full p-3.5 rounded-2xl bg-gradient-to-r from-amber-400/20 via-brand-500/20 to-indigo-500/20 border border-amber-300/40 text-left hover:scale-[1.02] transition-all shadow-sm flex items-center justify-between cursor-pointer"
-          >
-            <div className="flex items-center gap-2.5">
-              <span className="text-2xl animate-bounce">🦉</span>
-              <div>
-                <p className="text-xs font-black text-slate-900 dark:text-white">
-                  {t('aiAgent', 'AI Agent Progress')}
-                </p>
-                <p className="text-[10px] text-amber-700 dark:text-amber-300 font-bold">
-                  {learningLangMeta.name} Track Report
-                </p>
-              </div>
-            </div>
-            <span className="px-1.5 py-0.5 rounded bg-brand-600 text-white text-[9px] font-black uppercase">
-              Live
-            </span>
-          </button>
 
           {/* Core Navigation Links */}
           <nav className="space-y-1.5">
