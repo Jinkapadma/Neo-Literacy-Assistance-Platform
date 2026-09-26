@@ -244,16 +244,16 @@ export const VoicePracticeLab = () => {
   };
 
   return (
-    <div className="space-y-8 pb-12">
+    <div className="space-y-8 pb-12 text-white">
       {/* Top Banner */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-teal-900 via-emerald-950 to-slate-900 p-8 text-white shadow-xl">
+      <div className="relative overflow-hidden rounded-3xl bg-slate-900/65 border border-white/20 backdrop-blur-2xl p-8 text-white shadow-2xl">
         <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/30 border border-emerald-400/30 text-emerald-200 text-xs font-bold">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 text-xs font-bold">
               <Mic className="w-4 h-4 text-emerald-300" />
               <span>PHASE 3: ACOUSTIC PHONETIC EVALUATION ENGINE</span>
             </div>
-            <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl text-white">
+            <h1 className="text-3xl font-black tracking-tight sm:text-4xl text-white">
               Voice & Pronunciation Lab
             </h1>
             <p className="text-slate-300 max-w-2xl text-xs sm:text-sm leading-relaxed">
@@ -267,7 +267,7 @@ export const VoicePracticeLab = () => {
             <select
               value={language}
               onChange={e => setLanguage(e.target.value)}
-              className="text-xs font-bold px-3 py-2.5 rounded-xl bg-white/10 text-white border border-white/20 focus:outline-none focus:ring-2 focus:ring-emerald-400"
+              className="text-xs font-bold px-3.5 py-2.5 rounded-xl bg-slate-950/60 text-white border border-white/20 focus:outline-none focus:ring-2 focus:ring-brand-400 backdrop-blur-md"
             >
               <option value="te" className="text-slate-900">Telugu (తెలుగు)</option>
               <option value="ta" className="text-slate-900">Tamil (தமிழ்)</option>
@@ -282,7 +282,7 @@ export const VoicePracticeLab = () => {
             <select
               value={difficulty}
               onChange={e => setDifficulty(e.target.value)}
-              className="text-xs font-bold px-3 py-2.5 rounded-xl bg-white/10 text-white border border-white/20 focus:outline-none focus:ring-2 focus:ring-emerald-400"
+              className="text-xs font-bold px-3.5 py-2.5 rounded-xl bg-slate-950/60 text-white border border-white/20 focus:outline-none focus:ring-2 focus:ring-brand-400 backdrop-blur-md"
             >
               <option value="beginner" className="text-slate-900">Beginner</option>
               <option value="intermediate" className="text-slate-900">Intermediate</option>
@@ -297,10 +297,10 @@ export const VoicePracticeLab = () => {
         {/* Left Col: Drill List */}
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="font-bold text-slate-900 text-sm uppercase tracking-wider">
+            <h3 className="font-bold text-white text-sm uppercase tracking-wider">
               Acoustic Drills ({phrases.length})
             </h3>
-            <span className="text-xs text-slate-400">Select to practice</span>
+            <span className="text-xs text-slate-300 font-medium">Select to practice</span>
           </div>
 
           <div className="space-y-3">
@@ -314,17 +314,17 @@ export const VoicePracticeLab = () => {
                     setEvalResult(null);
                     setTranscript('');
                   }}
-                  className={`p-4 rounded-2xl border-2 transition-all cursor-pointer ${
+                  className={`p-4 rounded-2xl border transition-all cursor-pointer backdrop-blur-xl ${
                     isSelected
-                      ? 'bg-emerald-50/60 border-emerald-500 shadow-md ring-4 ring-emerald-50'
-                      : 'bg-white border-slate-200 hover:border-emerald-300'
+                      ? 'bg-brand-500/25 border-brand-400/60 shadow-xl ring-2 ring-brand-400/30'
+                      : 'bg-slate-900/65 border-white/20 text-slate-200 hover:bg-slate-900/80 hover:border-white/30'
                   }`}
                 >
                   <div className="flex items-start justify-between gap-2">
                     <div>
-                      <h4 className="font-bold text-slate-900 text-lg">{phrase.text}</h4>
-                      <p className="text-xs text-slate-500 mt-0.5">{phrase.romanization}</p>
-                      <p className="text-[11px] font-mono text-emerald-600 mt-1">{phrase.phonetic}</p>
+                      <h4 className="font-bold text-white text-lg">{phrase.text}</h4>
+                      <p className="text-xs text-slate-300 mt-0.5">{phrase.romanization}</p>
+                      <p className="text-[11px] font-mono text-emerald-300 mt-1">{phrase.phonetic}</p>
                     </div>
                     <Badge variant={isSelected ? 'success' : 'outline'} size="sm">
                       {phrase.category || 'Drill'}
@@ -339,19 +339,19 @@ export const VoicePracticeLab = () => {
         {/* Middle & Right Col: Active Articulation Arena */}
         <div className="lg:col-span-2 space-y-6">
           {selectedPhrase ? (
-            <Card className="p-8 border-slate-200 shadow-md space-y-8">
+            <Card className="p-8 bg-slate-900/65 border-white/20 backdrop-blur-2xl shadow-2xl space-y-8 rounded-3xl text-white">
               {/* Target Prompt Card */}
-              <div className="text-center space-y-4 pb-6 border-b border-slate-100">
-                <span className="text-xs font-bold uppercase tracking-widest text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full">
+              <div className="text-center space-y-4 pb-6 border-b border-white/10">
+                <span className="text-xs font-bold uppercase tracking-widest text-emerald-300 bg-emerald-500/20 border border-emerald-400/30 px-3.5 py-1 rounded-full inline-block">
                   Pronunciation Target
                 </span>
-                <h2 className="text-4xl sm:text-5xl font-black text-slate-900 tracking-wide">
+                <h2 className="text-4xl sm:text-5xl font-black text-white tracking-wide">
                   {selectedPhrase.text}
                 </h2>
-                <div className="flex items-center justify-center gap-4 text-xs font-semibold text-slate-500">
+                <div className="flex items-center justify-center gap-4 text-xs font-semibold text-slate-300">
                   <span>{selectedPhrase.romanization}</span>
                   <span>•</span>
-                  <span className="font-mono text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md">
+                  <span className="font-mono text-emerald-300 bg-emerald-950/60 border border-emerald-500/30 px-2.5 py-0.5 rounded-md">
                     {selectedPhrase.phonetic}
                   </span>
                 </div>
@@ -360,17 +360,17 @@ export const VoicePracticeLab = () => {
                 <div className="flex items-center justify-center gap-3 pt-2">
                   <button
                     onClick={() => speakTarget(1.0)}
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-100 text-slate-700 font-bold text-xs hover:bg-slate-200 transition-colors shadow-xs"
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 text-white border border-white/20 font-bold text-xs hover:bg-white/20 transition-all shadow-md"
                   >
-                    <Volume2 className="w-4 h-4 text-brand-600" />
+                    <Volume2 className="w-4 h-4 text-brand-300" />
                     <span>Native Audio (1.0x)</span>
                   </button>
 
                   <button
                     onClick={() => speakTarget(0.75)}
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-100 text-slate-700 font-bold text-xs hover:bg-slate-200 transition-colors shadow-xs"
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 text-white border border-white/20 font-bold text-xs hover:bg-white/20 transition-all shadow-md"
                   >
-                    <Activity className="w-4 h-4 text-emerald-600" />
+                    <Activity className="w-4 h-4 text-emerald-300" />
                     <span>Slow Speed (0.75x)</span>
                   </button>
                 </div>
@@ -385,7 +385,7 @@ export const VoicePracticeLab = () => {
                       {[12, 28, 40, 20, 36, 16, 48, 24, 32, 18, 44, 20].map((h, i) => (
                         <div
                           key={i}
-                          className="w-1.5 bg-emerald-500 rounded-full animate-voice-bar"
+                          className="w-1.5 bg-emerald-400 rounded-full animate-voice-bar shadow-sm shadow-emerald-500/50"
                           style={{
                             animationDelay: `${i * 0.1}s`,
                             height: `${h}px`,
@@ -394,23 +394,23 @@ export const VoicePracticeLab = () => {
                       ))}
                     </div>
 
-                    <div className="flex items-center gap-2 text-rose-600 font-bold text-xs animate-pulse">
-                      <div className="w-2.5 h-2.5 rounded-full bg-rose-600" />
+                    <div className="flex items-center gap-2 text-rose-300 font-bold text-xs animate-pulse bg-rose-950/40 border border-rose-500/30 px-3 py-1 rounded-full">
+                      <div className="w-2.5 h-2.5 rounded-full bg-rose-400" />
                       <span>Recording: {recordingTime}s (Speak clearly into microphone)</span>
                     </div>
 
                     <button
                       onClick={stopRecording}
-                      className="p-6 rounded-full bg-rose-600 text-white shadow-xl hover:bg-rose-700 transition-all transform hover:scale-105 active:scale-95 ring-8 ring-rose-100"
+                      className="p-6 rounded-full bg-rose-600 text-white shadow-2xl hover:bg-rose-700 transition-all transform hover:scale-105 active:scale-95 ring-8 ring-rose-500/30"
                     >
                       <MicOff className="w-8 h-8" />
                     </button>
-                    <span className="text-xs text-slate-500 font-medium">Click to Finish & Evaluate</span>
+                    <span className="text-xs text-slate-300 font-medium">Click to Finish & Evaluate</span>
                   </div>
                 ) : evaluating ? (
                   <div className="flex flex-col items-center gap-3 py-6">
                     <Loader size="lg" />
-                    <p className="text-sm font-bold text-slate-700">
+                    <p className="text-sm font-bold text-slate-200">
                       Deconstructing Acoustic Waveforms & Calculating Phoneme Distances...
                     </p>
                   </div>
@@ -418,18 +418,18 @@ export const VoicePracticeLab = () => {
                   <div className="flex flex-col items-center gap-4">
                     <button
                       onClick={startRecording}
-                      className="p-6 rounded-full bg-emerald-600 text-white shadow-xl hover:bg-emerald-700 transition-all transform hover:scale-105 active:scale-95 ring-8 ring-emerald-100"
+                      className="p-6 rounded-full bg-emerald-500 text-slate-950 font-black shadow-2xl hover:bg-emerald-400 transition-all transform hover:scale-105 active:scale-95 ring-8 ring-emerald-500/20"
                     >
                       <Mic className="w-8 h-8" />
                     </button>
-                    <span className="text-xs text-slate-600 font-bold">
+                    <span className="text-xs text-slate-200 font-bold">
                       Click to Record Your Voice
                     </span>
                   </div>
                 )}
 
                 {transcript && (
-                  <div className="w-full p-3 rounded-2xl bg-slate-50 border border-slate-200 text-center text-xs text-slate-700">
+                  <div className="w-full p-3.5 rounded-2xl bg-slate-950/50 border border-white/15 text-center text-xs text-slate-200 backdrop-blur-md">
                     <span className="font-semibold text-slate-400 uppercase tracking-wider text-[10px] block mb-1">
                       Detected Acoustic Stream
                     </span>
@@ -440,42 +440,42 @@ export const VoicePracticeLab = () => {
 
               {/* Evaluation Results & Phoneme Heatmap */}
               {evalResult && (
-                <div className="space-y-6 pt-6 border-t border-slate-100 animate-fadeIn">
+                <div className="space-y-6 pt-6 border-t border-white/10 animate-fadeIn">
                   {/* Scores Ribbon */}
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                    <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-center">
-                      <p className="text-[11px] font-bold text-emerald-800 uppercase">Overall Match</p>
-                      <p className="text-2xl font-black text-emerald-700 mt-1">
+                    <div className="p-4 rounded-2xl bg-emerald-950/40 border border-emerald-500/30 text-center backdrop-blur-md">
+                      <p className="text-[11px] font-bold text-emerald-300 uppercase">Overall Match</p>
+                      <p className="text-2xl font-black text-emerald-400 mt-1">
                         {evalResult.overallScore}%
                       </p>
                     </div>
 
-                    <div className="p-4 rounded-2xl bg-indigo-50 border border-indigo-200 text-center">
-                      <p className="text-[11px] font-bold text-indigo-800 uppercase">Acoustic Accuracy</p>
-                      <p className="text-2xl font-black text-indigo-700 mt-1">
+                    <div className="p-4 rounded-2xl bg-indigo-950/40 border border-indigo-500/30 text-center backdrop-blur-md">
+                      <p className="text-[11px] font-bold text-indigo-300 uppercase">Acoustic Accuracy</p>
+                      <p className="text-2xl font-black text-indigo-400 mt-1">
                         {evalResult.accuracyScore}%
                       </p>
                     </div>
 
-                    <div className="p-4 rounded-2xl bg-purple-50 border border-purple-200 text-center">
-                      <p className="text-[11px] font-bold text-purple-800 uppercase">Speech Rate (WPM)</p>
-                      <p className="text-2xl font-black text-purple-700 mt-1">
+                    <div className="p-4 rounded-2xl bg-purple-950/40 border border-purple-500/30 text-center backdrop-blur-md">
+                      <p className="text-[11px] font-bold text-purple-300 uppercase">Speech Rate (WPM)</p>
+                      <p className="text-2xl font-black text-purple-400 mt-1">
                         {evalResult.wordsPerMinute || 60}
                       </p>
                     </div>
 
-                    <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-center">
-                      <p className="text-[11px] font-bold text-amber-800 uppercase">Fluency Rating</p>
-                      <p className="text-2xl font-black text-amber-700 mt-1">
+                    <div className="p-4 rounded-2xl bg-amber-950/40 border border-amber-500/30 text-center backdrop-blur-md">
+                      <p className="text-[11px] font-bold text-amber-300 uppercase">Fluency Rating</p>
+                      <p className="text-2xl font-black text-amber-400 mt-1">
                         {evalResult.fluencyScore}%
                       </p>
                     </div>
                   </div>
 
                   {/* Phoneme Accuracy Heatmap */}
-                  <div className="p-5 rounded-2xl bg-slate-900 text-white space-y-3">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                  <div className="p-5 rounded-2xl bg-slate-950/60 border border-white/20 text-white space-y-3 backdrop-blur-xl">
+                    <div className="flex items-center justify-between flex-wrap gap-2">
+                      <span className="text-xs font-bold uppercase tracking-wider text-slate-300">
                         Phoneme Accuracy Heatmap
                       </span>
                       <div className="flex items-center gap-3 text-[10px] font-bold">
@@ -512,18 +512,18 @@ export const VoicePracticeLab = () => {
 
                   {/* Articulatory Guidance */}
                   {evalResult.articulatoryFeedback && evalResult.articulatoryFeedback.length > 0 && (
-                    <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
-                      <div className="flex items-center gap-2 text-slate-800 font-bold text-xs uppercase tracking-wider">
-                        <Sparkles className="w-4 h-4 text-emerald-600" />
+                    <div className="p-4 rounded-2xl bg-slate-950/40 border border-white/15 space-y-2 backdrop-blur-md">
+                      <div className="flex items-center gap-2 text-white font-bold text-xs uppercase tracking-wider">
+                        <Sparkles className="w-4 h-4 text-emerald-400" />
                         <span>AI Articulatory Recommendations</span>
                       </div>
-                      <ul className="space-y-1 text-xs text-slate-600 list-disc list-inside">
+                      <ul className="space-y-1 text-xs text-slate-300 list-disc list-inside">
                         {evalResult.articulatoryFeedback.map((tip, i) => (
                           <li key={i}>{tip}</li>
                         ))}
                       </ul>
                       {evalResult.acousticTip && (
-                        <p className="text-xs text-emerald-800 bg-emerald-50 p-2.5 rounded-xl border border-emerald-200 mt-2 font-medium">
+                        <p className="text-xs text-emerald-300 bg-emerald-950/50 p-2.5 rounded-xl border border-emerald-500/30 mt-2 font-medium">
                           💡 Phonetic Tip: {evalResult.acousticTip}
                         </p>
                       )}
@@ -533,7 +533,7 @@ export const VoicePracticeLab = () => {
               )}
             </Card>
           ) : (
-            <p className="text-slate-500 text-sm">Select an acoustic drill to begin practice.</p>
+            <p className="text-slate-300 text-sm">Select an acoustic drill to begin practice.</p>
           )}
         </div>
       </div>

@@ -19,19 +19,19 @@ export const Button = ({
 
   const variants = {
     primary:
-      'bg-brand-600 hover:bg-brand-700 text-white shadow-brand-500/25 hover:shadow-brand-500/40 border border-transparent',
+      'bg-brand-500 hover:bg-brand-400 text-slate-950 font-black shadow-lg shadow-brand-500/25 border border-transparent',
     secondary:
-      'bg-slate-800 hover:bg-slate-900 text-white shadow-slate-900/10 border border-transparent',
+      'bg-slate-800 hover:bg-slate-700 text-white shadow-slate-900/20 border border-white/10',
     outline:
-      'bg-white hover:bg-slate-50 text-slate-800 border-2 border-slate-200 hover:border-brand-500',
+      'bg-white/10 hover:bg-white/20 text-white border border-white/20 backdrop-blur-md',
     ghost:
-      'bg-transparent hover:bg-slate-100 text-slate-700 hover:text-slate-900 shadow-none',
+      'bg-transparent hover:bg-white/10 text-slate-200 hover:text-white shadow-none',
     danger:
       'bg-rose-600 hover:bg-rose-700 text-white shadow-rose-500/20 border border-transparent',
     success:
-      'bg-emerald-600 hover:bg-emerald-700 text-white shadow-emerald-500/20 border border-transparent',
+      'bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black shadow-emerald-500/20 border border-transparent',
     audio:
-      'bg-amber-500 hover:bg-amber-600 text-white shadow-amber-500/25 border border-transparent',
+      'bg-amber-400 hover:bg-amber-500 text-slate-950 font-black shadow-amber-400/25 border border-transparent',
   };
 
   const sizes = {

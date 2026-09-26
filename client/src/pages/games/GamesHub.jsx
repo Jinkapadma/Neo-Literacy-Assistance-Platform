@@ -230,19 +230,19 @@ export const GamesHub = () => {
   };
 
   return (
-    <div className="space-y-8 pb-12">
+    <div className="space-y-8 pb-12 text-white">
       {/* Top Banner */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-violet-900 via-indigo-900 to-purple-900 p-8 text-white shadow-xl">
+      <div className="relative overflow-hidden rounded-3xl bg-slate-900/70 border border-white/20 p-8 text-white shadow-2xl backdrop-blur-2xl">
         <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-500/30 border border-violet-400/30 text-violet-200 text-xs font-bold">
-              <Gamepad2 className="w-4 h-4 text-violet-300" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/30 border border-brand-400/30 text-brand-200 text-xs font-bold">
+              <Gamepad2 className="w-4 h-4 text-brand-300" />
               <span>MULTILINGUAL LITERACY GAMES & PUZZLES</span>
             </div>
             <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl text-white">
               Language Play Arena
             </h1>
-            <p className="text-slate-300 max-w-2xl text-xs sm:text-sm leading-relaxed">
+            <p className="text-slate-200 max-w-2xl text-xs sm:text-sm leading-relaxed">
               Reinforce orthographic spelling, sentence syntax, and memory retention through interactive
               multilingual games across 8 Indian languages.
             </p>
@@ -253,7 +253,7 @@ export const GamesHub = () => {
             <select
               value={selectedLanguage}
               onChange={e => setSelectedLanguage(e.target.value)}
-              className="text-xs font-bold px-3 py-2.5 rounded-xl bg-white/10 text-white border border-white/20 focus:outline-none focus:ring-2 focus:ring-violet-400"
+              className="text-xs font-bold px-3 py-2.5 rounded-xl bg-slate-950/80 text-white border border-white/20 focus:outline-none focus:ring-2 focus:ring-brand-400 cursor-pointer"
             >
               {SUPPORTED_LANGUAGES.map(l => (
                 <option key={l.code} value={l.code} className="text-slate-900">
@@ -262,7 +262,7 @@ export const GamesHub = () => {
               ))}
             </select>
 
-            <div className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-amber-400/20 border border-amber-300/30 text-amber-300 text-xs font-bold">
+            <div className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-amber-400/20 border border-amber-300/30 text-amber-300 text-xs font-bold shadow-sm">
               <Flame className="w-4 h-4 text-amber-400" />
               <span>{progress.totalXp} XP</span>
             </div>
@@ -282,8 +282,8 @@ export const GamesHub = () => {
               onClick={() => setActiveTab(tab.id)}
               className={`px-4 py-2.5 rounded-2xl font-bold text-xs sm:text-sm transition-all flex items-center gap-2 cursor-pointer ${
                 activeTab === tab.id
-                  ? 'bg-white text-indigo-900 shadow-md scale-[1.02]'
-                  : 'bg-white/10 text-slate-200 hover:bg-white/20'
+                  ? 'bg-gradient-to-r from-brand-600 to-indigo-600 text-white shadow-lg shadow-brand-500/30 scale-[1.02] border border-white/20'
+                  : 'bg-white/10 text-slate-200 hover:bg-white/20 border border-white/10'
               }`}
             >
               <span>{tab.label}</span>
@@ -295,7 +295,7 @@ export const GamesHub = () => {
       {loading ? (
         <div className="min-h-[40vh] flex flex-col items-center justify-center gap-3">
           <Loader size="lg" />
-          <p className="text-slate-600 font-bold text-sm">Loading Multilingual Game Arena...</p>
+          <p className="text-white font-bold text-sm">Loading Multilingual Game Arena...</p>
         </div>
       ) : (
         /* GAME ARENA CONTAINER */
@@ -304,34 +304,34 @@ export const GamesHub = () => {
           {/* 1. WORD SCRAMBLE / GLYPH PUZZLE */}
           {/* ==================================================== */}
           {activeTab === 'scramble' && currentScramble && (
-            <Card className="p-8 border-slate-200 shadow-md space-y-8 text-center bg-white rounded-3xl">
-              <div className="flex items-center justify-between border-b border-slate-100 pb-4">
+            <Card className="p-8 border border-white/20 shadow-2xl space-y-8 text-center bg-slate-900/70 backdrop-blur-2xl rounded-3xl text-white">
+              <div className="flex items-center justify-between border-b border-white/10 pb-4">
                 <Badge variant="primary">Word Scramble</Badge>
-                <span className="text-xs font-bold text-slate-400">
+                <span className="text-xs font-bold text-amber-300">
                   Puzzle {currentScrambleIdx + 1} of {scramblePuzzles.length}
                 </span>
               </div>
 
               <div className="space-y-3">
-                <p className="text-xs font-bold uppercase tracking-wider text-slate-400">Target Meaning</p>
-                <h3 className="text-2xl font-black text-slate-900">{currentScramble.meaning}</h3>
-                <p className="text-xs text-indigo-600 font-semibold">💡 Hint: {currentScramble.hint}</p>
+                <p className="text-xs font-bold uppercase tracking-wider text-slate-300">Target Meaning</p>
+                <h3 className="text-2xl font-black text-white">{currentScramble.meaning}</h3>
+                <p className="text-xs text-brand-300 font-semibold">💡 Hint: {currentScramble.hint}</p>
               </div>
 
               {/* Formed Word Stage */}
-              <div className="p-6 rounded-3xl bg-slate-50 border-2 border-dashed border-slate-300 min-h-[90px] flex items-center justify-center gap-3 flex-wrap">
+              <div className="p-6 rounded-3xl bg-white/5 border-2 border-dashed border-white/20 min-h-[90px] flex items-center justify-center gap-3 flex-wrap backdrop-blur-md">
                 {scrambleSelectedLetters.length > 0 ? (
                   scrambleSelectedLetters.map((char, i) => (
                     <button
                       key={i}
                       onClick={() => handleTileClick(char)}
-                      className="px-5 py-3 rounded-2xl bg-indigo-600 text-white text-2xl font-black shadow-lg cursor-pointer transform hover:scale-105 active:scale-95 transition-all"
+                      className="px-5 py-3 rounded-2xl bg-gradient-to-r from-brand-600 to-indigo-600 text-white text-2xl font-black shadow-lg cursor-pointer transform hover:scale-105 active:scale-95 transition-all border border-white/20"
                     >
                       {char}
                     </button>
                   ))
                 ) : (
-                  <span className="text-sm font-semibold text-slate-400">
+                  <span className="text-sm font-semibold text-slate-300">
                     Click the scrambled glyph tiles below to assemble the word in order
                   </span>
                 )}
@@ -346,10 +346,10 @@ export const GamesHub = () => {
                       key={i}
                       disabled={isUsed}
                       onClick={() => handleTileClick(char)}
-                      className={`px-6 py-4 rounded-2xl text-2xl font-black border-2 transition-all cursor-pointer ${
+                      className={`px-6 py-4 rounded-2xl text-2xl font-black border transition-all cursor-pointer ${
                         isUsed
-                          ? 'bg-slate-100 border-slate-200 text-slate-300 opacity-40 cursor-not-allowed'
-                          : 'bg-white border-indigo-200 text-indigo-900 shadow-md hover:border-indigo-500 hover:shadow-indigo-500/20 active:scale-95'
+                          ? 'bg-white/5 border-white/10 text-slate-500 opacity-40 cursor-not-allowed'
+                          : 'bg-white/15 hover:bg-white/25 border-white/20 text-white shadow-lg hover:border-brand-400 active:scale-95'
                       }`}
                     >
                       {char}
@@ -359,13 +359,14 @@ export const GamesHub = () => {
               </div>
 
               {/* Action Controls */}
-              <div className="flex items-center justify-center gap-4 pt-4 border-t border-slate-100">
+              <div className="flex items-center justify-center gap-4 pt-4 border-t border-white/10">
                 <Button
                   variant="outline"
                   size="sm"
+                  className="bg-white/10 text-white border-white/20 hover:bg-white/20"
                   onClick={() => speakText(currentScramble.audioText, selectedLanguage)}
                 >
-                  <Volume2 className="w-4 h-4 mr-1.5 text-brand-600" />
+                  <Volume2 className="w-4 h-4 mr-1.5 text-brand-300" />
                   Listen Pronunciation
                 </Button>
 
@@ -382,12 +383,12 @@ export const GamesHub = () => {
           {/* 2. MEMORY MATCH CARDS */}
           {/* ==================================================== */}
           {activeTab === 'memory' && (
-            <Card className="p-8 border-slate-200 shadow-md space-y-6 bg-white rounded-3xl">
-              <div className="flex items-center justify-between border-b border-slate-100 pb-4">
+            <Card className="p-8 border border-white/20 shadow-2xl space-y-6 bg-slate-900/70 backdrop-blur-2xl rounded-3xl text-white">
+              <div className="flex items-center justify-between border-b border-white/10 pb-4">
                 <Badge variant="primary">Memory Match</Badge>
-                <div className="flex items-center gap-4 text-xs font-bold text-slate-500">
+                <div className="flex items-center gap-4 text-xs font-bold text-slate-200">
                   <span>Moves: {movesCount}</span>
-                  <span className="text-emerald-600">
+                  <span className="text-emerald-300 font-extrabold">
                     Matched: {matchedPairs.length / 2} / {memoryCards.length / 2}
                   </span>
                 </div>
@@ -402,23 +403,23 @@ export const GamesHub = () => {
                     <div
                       key={card.id}
                       onClick={() => handleMemoryCardClick(card)}
-                      className={`h-32 rounded-2xl border-2 flex items-center justify-center text-center p-3 font-bold transition-all duration-300 cursor-pointer select-none ${
+                      className={`h-32 rounded-2xl border-2 flex items-center justify-center text-center p-3 font-bold transition-all duration-300 cursor-pointer select-none backdrop-blur-md ${
                         isMatched
-                          ? 'bg-emerald-50 border-emerald-400 text-emerald-900 shadow-sm opacity-90'
+                          ? 'bg-emerald-600/40 border-emerald-400 text-white shadow-lg opacity-90'
                           : isFlipped
-                          ? 'bg-indigo-600 border-indigo-700 text-white shadow-lg scale-105'
-                          : 'bg-slate-100 border-slate-200 text-transparent hover:border-indigo-300 hover:bg-slate-50'
+                          ? 'bg-gradient-to-r from-brand-600 to-indigo-600 border-white/40 text-white shadow-xl scale-105'
+                          : 'bg-white/10 border-white/15 text-transparent hover:border-white/30 hover:bg-white/15'
                       }`}
                     >
                       {isFlipped || isMatched ? (
                         <div className="space-y-1">
-                          <p className={`text-base sm:text-lg font-black ${isMatched ? 'text-emerald-900' : 'text-white'}`}>
+                          <p className="text-base sm:text-lg font-black text-white">
                             {card.text}
                           </p>
-                          {isMatched && <CheckCircle2 className="w-4 h-4 text-emerald-600 mx-auto" />}
+                          {isMatched && <CheckCircle2 className="w-4 h-4 text-emerald-300 mx-auto" />}
                         </div>
                       ) : (
-                        <Sparkles className="w-6 h-6 text-slate-300" />
+                        <Sparkles className="w-6 h-6 text-amber-300/60" />
                       )}
                     </div>
                   );
@@ -426,7 +427,7 @@ export const GamesHub = () => {
               </div>
 
               <div className="text-center pt-4">
-                <Button variant="outline" size="sm" onClick={loadGameData}>
+                <Button variant="outline" size="sm" className="bg-white/10 text-white border-white/20 hover:bg-white/20" onClick={loadGameData}>
                   <RotateCcw className="w-4 h-4 mr-1.5" />
                   Restart Game Deck
                 </Button>
@@ -438,24 +439,24 @@ export const GamesHub = () => {
           {/* 3. SPEED LITERACY QUIZ */}
           {/* ==================================================== */}
           {activeTab === 'quiz' && currentQuiz && !quizFinished && (
-            <Card className="p-8 border-slate-200 shadow-md space-y-6 bg-white rounded-3xl">
-              <div className="flex items-center justify-between border-b border-slate-100 pb-4">
+            <Card className="p-8 border border-white/20 shadow-2xl space-y-6 bg-slate-900/70 backdrop-blur-2xl rounded-3xl text-white">
+              <div className="flex items-center justify-between border-b border-white/10 pb-4">
                 <Badge variant="primary">Speed Literacy Quiz</Badge>
                 <div className="flex items-center gap-3 text-xs font-bold">
-                  <span className="text-slate-400">Q {currentQuizIdx + 1}/{quizQuestions.length}</span>
-                  <span className="text-amber-500 font-extrabold flex items-center gap-1">
+                  <span className="text-slate-300">Q {currentQuizIdx + 1}/{quizQuestions.length}</span>
+                  <span className="text-amber-300 font-extrabold flex items-center gap-1">
                     <Flame className="w-4 h-4" /> {quizScore} pts
                   </span>
                 </div>
               </div>
 
               <div className="space-y-3 text-center py-4">
-                <h3 className="text-2xl font-black text-slate-900 leading-snug">{currentQuiz.prompt}</h3>
+                <h3 className="text-2xl font-black text-white leading-snug">{currentQuiz.prompt}</h3>
                 <button
                   onClick={() => speakText(currentQuiz.audioText, selectedLanguage)}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 text-xs font-bold text-slate-700 hover:bg-slate-200 transition-colors"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 text-xs font-bold text-amber-300 hover:text-white border border-white/15 transition-colors cursor-pointer"
                 >
-                  <Volume2 className="w-4 h-4 text-brand-600" />
+                  <Volume2 className="w-4 h-4 text-brand-300" />
                   <span>Audio Prompt</span>
                 </button>
               </div>
@@ -465,9 +466,9 @@ export const GamesHub = () => {
                   <button
                     key={idx}
                     onClick={() => handleQuizAnswer(opt)}
-                    className="p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-indigo-500 hover:bg-indigo-50/50 font-bold text-base sm:text-lg text-slate-800 text-left transition-all active:scale-98 cursor-pointer flex items-center gap-3"
+                    className="p-4 rounded-2xl border border-white/15 bg-white/10 hover:bg-brand-600/40 hover:border-brand-400 font-bold text-base sm:text-lg text-white text-left transition-all active:scale-98 cursor-pointer flex items-center gap-3 backdrop-blur-md"
                   >
-                    <span className="w-7 h-7 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center text-xs font-bold">
+                    <span className="w-7 h-7 rounded-xl bg-white/15 text-white flex items-center justify-center text-xs font-bold">
                       {String.fromCharCode(65 + idx)}
                     </span>
                     <span>{opt}</span>
@@ -478,17 +479,17 @@ export const GamesHub = () => {
           )}
 
           {activeTab === 'quiz' && quizFinished && (
-            <Card className="p-10 text-center space-y-6 border-slate-200 shadow-xl max-w-lg mx-auto bg-white rounded-3xl">
-              <div className="w-20 h-20 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center mx-auto shadow-inner">
+            <Card className="p-10 text-center space-y-6 border border-white/20 shadow-2xl max-w-lg mx-auto bg-slate-900/80 backdrop-blur-2xl rounded-3xl text-white">
+              <div className="w-20 h-20 rounded-full bg-amber-400/20 border border-amber-400/30 text-amber-300 flex items-center justify-center mx-auto shadow-inner">
                 <Award className="w-10 h-10" />
               </div>
               <div className="space-y-2">
-                <h2 className="text-2xl font-black text-slate-900">Speed Quiz Completed!</h2>
-                <p className="text-sm text-slate-600">
-                  You earned <span className="font-bold text-amber-600">{quizScore * 2} XP</span> across {quizQuestions.length} vocabulary rounds.
+                <h2 className="text-2xl font-black text-white">Speed Quiz Completed!</h2>
+                <p className="text-sm text-slate-200">
+                  You earned <span className="font-bold text-amber-300">{quizScore * 2} XP</span> across {quizQuestions.length} vocabulary rounds.
                 </p>
               </div>
-              <Button variant="primary" onClick={loadGameData} className="w-full">
+              <Button variant="primary" onClick={loadGameData} className="w-full font-bold">
                 <RotateCcw className="w-4 h-4 mr-2" />
                 Play Another Round
               </Button>
@@ -499,34 +500,34 @@ export const GamesHub = () => {
           {/* 4. SENTENCE BUILDER PUZZLE */}
           {/* ==================================================== */}
           {activeTab === 'builder' && currentBuilder && (
-            <Card className="p-8 border-slate-200 shadow-md space-y-8 bg-white rounded-3xl">
-              <div className="flex items-center justify-between border-b border-slate-100 pb-4">
+            <Card className="p-8 border border-white/20 shadow-2xl space-y-8 bg-slate-900/70 backdrop-blur-2xl rounded-3xl text-white">
+              <div className="flex items-center justify-between border-b border-white/10 pb-4">
                 <Badge variant="primary">Sentence Builder</Badge>
-                <span className="text-xs font-bold text-slate-400">
+                <span className="text-xs font-bold text-amber-300">
                   Puzzle {currentBuilderIdx + 1} of {builderPuzzles.length}
                 </span>
               </div>
 
               <div className="space-y-2 text-center">
-                <p className="text-xs font-bold uppercase tracking-wider text-slate-400">English Translation</p>
-                <h3 className="text-xl font-bold text-slate-900">"{currentBuilder.translation}"</h3>
-                <p className="text-xs text-indigo-600 font-semibold">💡 Clue: {currentBuilder.hint}</p>
+                <p className="text-xs font-bold uppercase tracking-wider text-slate-300">English Translation</p>
+                <h3 className="text-xl font-bold text-white">"{currentBuilder.translation}"</h3>
+                <p className="text-xs text-brand-300 font-semibold">💡 Clue: {currentBuilder.hint}</p>
               </div>
 
               {/* Drop/Constructed Sentence Stage */}
-              <div className="p-6 rounded-3xl bg-slate-50 border-2 border-dashed border-slate-300 min-h-[90px] flex items-center justify-center gap-3 flex-wrap">
+              <div className="p-6 rounded-3xl bg-white/5 border-2 border-dashed border-white/20 min-h-[90px] flex items-center justify-center gap-3 flex-wrap backdrop-blur-md">
                 {selectedBuilderTiles.length > 0 ? (
                   selectedBuilderTiles.map((tile, i) => (
                     <button
                       key={i}
                       onClick={() => handleBuilderTileClick(tile)}
-                      className="px-5 py-3 rounded-2xl bg-indigo-600 text-white text-lg font-bold shadow-md cursor-pointer hover:bg-indigo-700 transition-colors"
+                      className="px-5 py-3 rounded-2xl bg-indigo-600 text-white text-lg font-bold shadow-md cursor-pointer hover:bg-indigo-700 transition-colors border border-white/20"
                     >
                       {tile}
                     </button>
                   ))
                 ) : (
-                  <span className="text-sm font-semibold text-slate-400">
+                  <span className="text-sm font-semibold text-slate-300">
                     Click word tiles below in the correct sentence order
                   </span>
                 )}
@@ -541,10 +542,10 @@ export const GamesHub = () => {
                       key={i}
                       disabled={isUsed}
                       onClick={() => handleBuilderTileClick(tile)}
-                      className={`px-5 py-3 rounded-2xl text-lg font-bold border-2 transition-all cursor-pointer ${
+                      className={`px-5 py-3 rounded-2xl text-lg font-bold border transition-all cursor-pointer ${
                         isUsed
-                          ? 'bg-slate-100 border-slate-200 text-slate-300 opacity-40 cursor-not-allowed'
-                          : 'bg-white border-indigo-200 text-indigo-900 shadow-sm hover:border-indigo-500 active:scale-95'
+                          ? 'bg-white/5 border-white/10 text-slate-500 opacity-40 cursor-not-allowed'
+                          : 'bg-white/15 hover:bg-white/25 border-white/20 text-white shadow-sm hover:border-brand-400 active:scale-95'
                       }`}
                     >
                       {tile}
@@ -557,15 +558,15 @@ export const GamesHub = () => {
                 <div
                   className={`p-4 rounded-2xl text-xs font-bold text-center ${
                     builderFeedback.correct
-                      ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
-                      : 'bg-rose-50 text-rose-800 border border-rose-200'
+                      ? 'bg-emerald-600/30 text-emerald-200 border border-emerald-400/40'
+                      : 'bg-rose-600/30 text-rose-200 border border-rose-400/40'
                   }`}
                 >
                   {builderFeedback.message}
                 </div>
               )}
 
-              <div className="flex items-center justify-center gap-4 pt-4 border-t border-slate-100">
+              <div className="flex items-center justify-center gap-4 pt-4 border-t border-white/10">
                 <Button variant="primary" size="md" onClick={handleCheckSentence}>
                   <CheckCircle2 className="w-4 h-4 mr-2" />
                   Check Sentence
@@ -575,6 +576,7 @@ export const GamesHub = () => {
                   <Button
                     variant="outline"
                     size="md"
+                    className="bg-white/10 text-white border-white/20 hover:bg-white/20"
                     onClick={() => {
                       setCurrentBuilderIdx(prev => prev + 1);
                       setSelectedBuilderTiles([]);

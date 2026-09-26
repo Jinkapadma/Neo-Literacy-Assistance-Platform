@@ -23,24 +23,24 @@ export const QuestionRenderer = ({
   const getSkillIcon = skill => {
     switch (skill) {
       case 'writing':
-        return <PenTool className="w-4 h-4 text-emerald-600" />;
+        return <PenTool className="w-4 h-4 text-emerald-400" />;
       case 'comprehension':
       case 'reading':
-        return <BookOpen className="w-4 h-4 text-indigo-600" />;
+        return <BookOpen className="w-4 h-4 text-indigo-400" />;
       default:
-        return <Sparkles className="w-4 h-4 text-amber-600" />;
+        return <Sparkles className="w-4 h-4 text-amber-400" />;
     }
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 text-white">
       {/* Header Info */}
-      <div className="flex items-center justify-between flex-wrap gap-2 pb-4 border-b border-slate-200">
+      <div className="flex items-center justify-between flex-wrap gap-2 pb-4 border-b border-white/10">
         <div className="flex items-center gap-2">
-          <span className="px-3 py-1 bg-brand-100 text-brand-800 text-xs font-bold rounded-lg">
+          <span className="px-3 py-1 bg-brand-500/25 border border-brand-400/30 text-brand-300 text-xs font-bold rounded-lg">
             Question {index + 1} of {total}
           </span>
-          <span className="flex items-center gap-1.5 px-3 py-1 bg-slate-100 text-slate-700 text-xs font-semibold rounded-lg capitalize">
+          <span className="flex items-center gap-1.5 px-3 py-1 bg-white/10 border border-white/10 text-slate-200 text-xs font-semibold rounded-lg capitalize">
             {getSkillIcon(question.skillCategory)}
             {question.skillCategory}
           </span>
@@ -50,21 +50,21 @@ export const QuestionRenderer = ({
         <button
           onClick={handleReadAloud}
           type="button"
-          className="flex items-center gap-1.5 px-3 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 rounded-xl text-xs font-bold transition-colors"
+          className="flex items-center gap-1.5 px-3 py-1.5 bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 border border-amber-400/30 rounded-xl text-xs font-bold transition-all shadow-md backdrop-blur-md"
           title="Listen to question audio narration"
         >
-          <Volume2 className="w-4 h-4 text-amber-600" />
+          <Volume2 className="w-4 h-4 text-amber-300" />
           <span>Listen Aloud</span>
         </button>
       </div>
 
       {/* Reading Passage if present */}
       {question.passage && (
-        <div className="p-5 rounded-2xl bg-indigo-50/60 border border-indigo-100 space-y-2">
-          <p className="text-xs font-bold uppercase tracking-wider text-indigo-600 flex items-center gap-1.5">
+        <div className="p-5 rounded-2xl bg-indigo-950/40 border border-indigo-500/30 space-y-2 backdrop-blur-md">
+          <p className="text-xs font-bold uppercase tracking-wider text-indigo-300 flex items-center gap-1.5">
             <BookOpen className="w-4 h-4" /> Reading Passage
           </p>
-          <p className="text-base sm:text-lg text-slate-800 leading-relaxed font-medium">
+          <p className="text-base sm:text-lg text-slate-200 leading-relaxed font-medium">
             "{question.passage}"
           </p>
         </div>
@@ -72,7 +72,7 @@ export const QuestionRenderer = ({
 
       {/* Main Prompt */}
       <div className="space-y-2">
-        <h4 className="text-lg sm:text-xl font-bold text-slate-900 leading-snug">
+        <h4 className="text-lg sm:text-xl font-bold text-white leading-snug">
           {question.prompt}
         </h4>
       </div>
@@ -89,25 +89,25 @@ export const QuestionRenderer = ({
                 key={optIdx}
                 type="button"
                 onClick={() => onSelectAnswer(option)}
-                className={`w-full flex items-center justify-between p-4 sm:p-5 rounded-2xl text-left border-2 transition-all duration-200 ${
+                className={`w-full flex items-center justify-between p-4 sm:p-5 rounded-2xl text-left border transition-all duration-200 backdrop-blur-xl ${
                   isSelected
-                    ? 'border-brand-600 bg-brand-50/80 text-brand-950 shadow-md ring-2 ring-brand-500/20'
-                    : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50/70 text-slate-800'
+                    ? 'border-brand-400 bg-brand-500/25 text-white shadow-xl ring-2 ring-brand-400/30'
+                    : 'border-white/15 bg-white/5 hover:border-white/30 hover:bg-white/10 text-slate-200'
                 }`}
               >
                 <div className="flex items-center gap-4">
                   <span
                     className={`w-8 h-8 rounded-xl flex items-center justify-center font-bold text-sm ${
                       isSelected
-                        ? 'bg-brand-600 text-white'
-                        : 'bg-slate-100 text-slate-700'
+                        ? 'bg-brand-500 text-slate-950'
+                        : 'bg-white/10 text-slate-300 border border-white/10'
                     }`}
                   >
                     {letterLabel}
                   </span>
                   <span className="text-base sm:text-lg font-semibold">{option}</span>
                 </div>
-                {isSelected && <CheckCircle2 className="w-6 h-6 text-brand-600 flex-shrink-0" />}
+                {isSelected && <CheckCircle2 className="w-6 h-6 text-brand-400 flex-shrink-0" />}
               </button>
             );
           })
@@ -118,7 +118,7 @@ export const QuestionRenderer = ({
               value={selectedAnswer || ''}
               onChange={e => onSelectAnswer(e.target.value)}
               placeholder="Type your answer here..."
-              className="w-full p-4 text-lg border-2 border-slate-300 rounded-2xl focus:border-brand-500 focus:outline-none"
+              className="w-full p-4 text-lg bg-slate-950/60 border border-white/20 text-white rounded-2xl focus:border-brand-400 focus:outline-none backdrop-blur-md"
             />
           </div>
         )}

@@ -18,6 +18,7 @@ const IGNORED_TAGS = new Set([
 export const GlobalAutoTranslator = () => {
   const { interfaceLanguage, uiBundle } = useLanguage();
   const location = useLocation();
+  const isLandingPage = location.pathname === '/';
 
   // In-memory cache per language
   const cacheRef = useRef({});
@@ -49,14 +50,20 @@ export const GlobalAutoTranslator = () => {
     }
   }, [interfaceLanguage]);
 
-  // Helper to check if element is marked not to be translated (e.g. learning content)
+  // Helper to check if element is marked not to be translated (e.g. learning content or landing page)
   const isExcludedNode = (node) => {
     if (!node) return true;
+    if (isLandingPage) return true; // Rule: Landing page content must always remain in English only
     const parent = node.parentElement;
     if (!parent) return true;
 
     if (IGNORED_TAGS.has(parent.tagName)) return true;
-    if (parent.closest('[data-no-translate="true"]') || parent.closest('[translate="no"]') || parent.closest('.notranslate')) {
+    if (
+      parent.closest('[data-no-translate="true"]') ||
+      parent.closest('[translate="no"]') ||
+      parent.closest('.notranslate') ||
+      parent.closest('.landing-page-root')
+    ) {
       return true;
     }
     return false;
@@ -64,7 +71,12 @@ export const GlobalAutoTranslator = () => {
 
   // Process batch of untranslated strings via Bhashini API
   const flushBatchQueue = useCallback(async () => {
-    if (pendingBatchRef.current.size === 0 || interfaceLanguage === 'en' || isTranslatingRef.current) {
+    if (
+      pendingBatchRef.current.size === 0 ||
+      interfaceLanguage === 'en' ||
+      isLandingPage ||
+      isTranslatingRef.current
+    ) {
       return;
     }
 
@@ -93,29 +105,30 @@ export const GlobalAutoTranslator = () => {
       // Ignore batch error
     } finally {
       isTranslatingRef.current = false;
-      if (pendingBatchRef.current.size > 0) {
+      if (pendingBatchRef.current.size > 0 && !isLandingPage) {
         batchTimerRef.current = setTimeout(flushBatchQueue, 200);
       }
     }
-  }, [interfaceLanguage, saveCache]);
+  }, [interfaceLanguage, isLandingPage, saveCache]);
 
   // Schedule a translation batch request
   const scheduleBatch = useCallback(() => {
+    if (isLandingPage) return;
     if (batchTimerRef.current) clearTimeout(batchTimerRef.current);
     batchTimerRef.current = setTimeout(flushBatchQueue, 80);
-  }, [flushBatchQueue]);
+  }, [flushBatchQueue, isLandingPage]);
 
   // Translate visible text nodes in the DOM
   const translateVisibleDOM = useCallback(() => {
     const rootEl = document.getElementById('root');
     if (!rootEl) return;
 
-    if (interfaceLanguage === 'en') {
-      // Restore original English texts
+    // If English OR currently on the Landing Page, restore original English text for all nodes
+    if (interfaceLanguage === 'en' || isLandingPage) {
       const walker = document.createTreeWalker(rootEl, NodeFilter.SHOW_TEXT, null);
       let currentNode = walker.nextNode();
       while (currentNode) {
-        if (currentNode._neoreadOrigText !== undefined) {
+        if (currentNode._neoreadOrigText !== undefined && currentNode.nodeValue !== currentNode._neoreadOrigText) {
           currentNode.nodeValue = currentNode._neoreadOrigText;
         }
         currentNode = walker.nextNode();
@@ -163,10 +176,10 @@ export const GlobalAutoTranslator = () => {
       currentNode = walker.nextNode();
     }
 
-    if (hasQueuedNew) {
+    if (hasQueuedNew && !isLandingPage) {
       scheduleBatch();
     }
-  }, [interfaceLanguage, uiBundle, scheduleBatch]);
+  }, [interfaceLanguage, isLandingPage, uiBundle, scheduleBatch]);
 
   // Translate on mount, interface language change, or route change
   useEffect(() => {
@@ -203,3 +216,4 @@ export const GlobalAutoTranslator = () => {
 
   return null;
 };
+

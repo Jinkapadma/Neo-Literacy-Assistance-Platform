@@ -51,7 +51,11 @@ export const LandingPage = () => {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#407c93] text-slate-100 selection:bg-brand-500 selection:text-white font-sans antialiased overflow-x-hidden">
+    <div
+      translate="no"
+      data-no-translate="true"
+      className="landing-page-root notranslate relative min-h-screen bg-[#407c93] text-slate-100 selection:bg-brand-500 selection:text-white font-sans antialiased overflow-x-hidden"
+    >
       {/* 1. STICKY DYNAMIC NAVBAR */}
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${

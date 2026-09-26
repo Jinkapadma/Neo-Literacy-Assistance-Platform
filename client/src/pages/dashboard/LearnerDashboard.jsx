@@ -156,23 +156,23 @@ export const LearnerDashboard = () => {
 
       {/* 2. UNASSESSED CALLOUT (If user has not completed diagnostic test) */}
       {isUnassessed && (
-        <div className="p-6 rounded-3xl bg-gradient-to-r from-amber-500/20 via-orange-500/20 to-brand-500/20 border-2 border-amber-300/60 backdrop-blur-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-lg animate-fadeIn">
+        <div className="p-6 rounded-3xl bg-slate-900/70 border-2 border-amber-400/40 backdrop-blur-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-2xl animate-fadeIn text-white">
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 rounded-2xl bg-amber-400 text-slate-900 flex items-center justify-center text-2xl shadow-md shrink-0 font-bold">
               🎯
             </div>
             <div>
-              <h3 className="text-base sm:text-lg font-black text-slate-900">
+              <h3 className="text-base sm:text-lg font-black text-white">
                 Initial Diagnostic Assessment Needed
               </h3>
-              <p className="text-xs sm:text-sm text-slate-600 font-medium">
+              <p className="text-xs sm:text-sm text-slate-200 font-medium">
                 Take our 3-minute voice-guided test in {learningLangMeta.name} to unlock your personalized curriculum!
               </p>
             </div>
           </div>
 
           <Link to="/initial-assessment" className="shrink-0 w-full sm:w-auto">
-            <Button variant="primary" size="md" className="w-full sm:w-auto shadow-md" icon={ArrowRight} iconPosition="right">
+            <Button variant="primary" size="md" className="w-full sm:w-auto shadow-md font-bold" icon={ArrowRight} iconPosition="right">
               Take Diagnostic Test
             </Button>
           </Link>
@@ -182,17 +182,17 @@ export const LearnerDashboard = () => {
       {/* 4. CURRENT ACTIVE MODULE & RECOMMENDED LESSON */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Active Curriculum Track (2 cols) */}
-        <Card className="lg:col-span-2 p-6 sm:p-8 space-y-6 border border-slate-200 shadow-sm hover:shadow-md transition-shadow bg-white rounded-3xl">
-          <div className="flex items-center justify-between gap-2 border-b border-slate-100 pb-4">
+        <Card className="lg:col-span-2 p-6 sm:p-8 space-y-6 border border-white/20 shadow-2xl bg-slate-900/65 backdrop-blur-2xl rounded-3xl text-white">
+          <div className="flex items-center justify-between gap-2 border-b border-white/10 pb-4">
             <div className="flex items-center gap-2.5">
-              <div className="w-10 h-10 rounded-2xl bg-brand-100 text-brand-700 flex items-center justify-center font-bold">
-                <Target className="w-5 h-5 text-brand-600" />
+              <div className="w-10 h-10 rounded-2xl bg-brand-500/20 border border-brand-400/30 text-brand-300 flex items-center justify-center font-bold">
+                <Target className="w-5 h-5 text-brand-400" />
               </div>
               <div>
-                <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-slate-300">
                   {learningLangMeta.name} Curriculum Path
                 </span>
-                <h3 className="text-base sm:text-lg font-black text-slate-900">
+                <h3 className="text-base sm:text-lg font-black text-white">
                   {savedPlan?.startingModule?.title ||
                     (proficiency === 'advanced'
                       ? `Module 4: ${learningLangMeta.name} Real-World Reading & Fluency`
@@ -210,31 +210,31 @@ export const LearnerDashboard = () => {
 
           {/* Module Progress Bar */}
           <div className="space-y-2">
-            <div className="flex items-center justify-between text-xs font-bold text-slate-600">
+            <div className="flex items-center justify-between text-xs font-bold text-slate-200">
               <span>{t('curriculumProgress', 'Curriculum Progress')}</span>
-              <span className="text-brand-600 font-black">
+              <span className="text-amber-300 font-black">
                 {progress.completedLessonsCount} of {progress.totalLessonsCount || 20} Lessons Completed ({curriculumPercentage}%)
               </span>
             </div>
-            <div className="w-full bg-slate-100 rounded-full h-3 overflow-hidden p-0.5 border border-slate-200/60">
+            <div className="w-full bg-slate-950/60 rounded-full h-3 overflow-hidden p-0.5 border border-white/15">
               <div
-                className="h-full rounded-full bg-gradient-to-r from-brand-500 to-indigo-600 transition-all duration-500"
+                className="h-full rounded-full bg-gradient-to-r from-emerald-400 via-teal-300 to-amber-300 transition-all duration-500"
                 style={{ width: `${curriculumPercentage}%` }}
               />
             </div>
           </div>
 
           {/* Next Lesson Card Preview */}
-          <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-slate-50 to-indigo-50/50 border border-slate-200/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="p-4 sm:p-5 rounded-2xl bg-white/10 border border-white/15 backdrop-blur-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="space-y-1">
-              <span className="text-[10px] font-black uppercase tracking-wider text-indigo-600 flex items-center gap-1">
-                <Zap className="w-3.5 h-3.5 text-amber-500 fill-amber-400" />
+              <span className="text-[10px] font-black uppercase tracking-wider text-amber-300 flex items-center gap-1">
+                <Zap className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
                 <span>{t('nextLesson', 'Next Up')} &bull; Lesson {progress.completedLessonsCount + 1}</span>
               </span>
-              <h4 className="text-sm sm:text-base font-bold text-slate-900">
+              <h4 className="text-sm sm:text-base font-bold text-white">
                 {learningLangMeta.name} Acoustic Blends & Sight Words
               </h4>
-              <p className="text-xs text-slate-500 font-medium">
+              <p className="text-xs text-slate-300 font-medium">
                 Practice vocabulary flashcards with Bhashini voice narration in {learningLangMeta.nativeName}
               </p>
             </div>
@@ -248,14 +248,14 @@ export const LearnerDashboard = () => {
         </Card>
 
         {/* Diagnostic Scorecard & Skill Summary (1 col) */}
-        <Card className="p-6 sm:p-8 space-y-5 border border-slate-200 shadow-sm bg-white rounded-3xl flex flex-col justify-between">
+        <Card className="p-6 sm:p-8 space-y-5 border border-white/20 shadow-2xl bg-slate-900/65 backdrop-blur-2xl rounded-3xl flex flex-col justify-between text-white">
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className="text-base font-black text-slate-900 flex items-center gap-2">
-                <Award className="w-5 h-5 text-amber-500" />
+              <h3 className="text-base font-black text-white flex items-center gap-2">
+                <Award className="w-5 h-5 text-amber-400" />
                 <span>{t('skillMastery', 'Skill Mastery')}</span>
               </h3>
-              <span className="text-xs font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-lg border border-amber-200">
+              <span className="text-xs font-bold text-amber-300 bg-amber-400/20 px-2 py-0.5 rounded-lg border border-amber-400/30">
                 {latestScore}% Overall
               </span>
             </div>
@@ -263,40 +263,40 @@ export const LearnerDashboard = () => {
             {/* Mastery Meters */}
             <div className="space-y-3 pt-1">
               <div className="space-y-1">
-                <div className="flex items-center justify-between text-xs font-semibold text-slate-600">
+                <div className="flex items-center justify-between text-xs font-semibold text-slate-200">
                   <span>{t('readingFluency', 'Reading Fluency')}</span>
-                  <span className="font-bold text-slate-900">{readingScore}%</span>
+                  <span className="font-bold text-emerald-300">{readingScore}%</span>
                 </div>
-                <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
-                  <div className="h-full rounded-full bg-emerald-500" style={{ width: `${readingScore}%` }} />
+                <div className="w-full bg-slate-950/60 rounded-full h-2 overflow-hidden border border-white/10">
+                  <div className="h-full rounded-full bg-emerald-400" style={{ width: `${readingScore}%` }} />
                 </div>
               </div>
 
               <div className="space-y-1">
-                <div className="flex items-center justify-between text-xs font-semibold text-slate-600">
+                <div className="flex items-center justify-between text-xs font-semibold text-slate-200">
                   <span>{t('sentenceConstruction', 'Sentence Construction')}</span>
-                  <span className="font-bold text-slate-900">{writingScore}%</span>
+                  <span className="font-bold text-sky-300">{writingScore}%</span>
                 </div>
-                <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
-                  <div className="h-full rounded-full bg-sky-500" style={{ width: `${writingScore}%` }} />
+                <div className="w-full bg-slate-950/60 rounded-full h-2 overflow-hidden border border-white/10">
+                  <div className="h-full rounded-full bg-sky-400" style={{ width: `${writingScore}%` }} />
                 </div>
               </div>
 
               <div className="space-y-1">
-                <div className="flex items-center justify-between text-xs font-semibold text-slate-600">
+                <div className="flex items-center justify-between text-xs font-semibold text-slate-200">
                   <span>{t('passageComprehension', 'Passage Comprehension')}</span>
-                  <span className="font-bold text-slate-900">{comprehensionScore}%</span>
+                  <span className="font-bold text-indigo-300">{comprehensionScore}%</span>
                 </div>
-                <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
-                  <div className="h-full rounded-full bg-indigo-500" style={{ width: `${comprehensionScore}%` }} />
+                <div className="w-full bg-slate-950/60 rounded-full h-2 overflow-hidden border border-white/10">
+                  <div className="h-full rounded-full bg-indigo-400" style={{ width: `${comprehensionScore}%` }} />
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="pt-4 border-t border-slate-100">
+          <div className="pt-4 border-t border-white/10">
             <Link to="/initial-assessment" className="w-full block">
-              <Button variant="outline" size="sm" className="w-full justify-center" icon={RotateCcw}>
+              <Button variant="outline" size="sm" className="w-full justify-center bg-white/10 text-white border-white/20 hover:bg-white/20" icon={RotateCcw}>
                 Retake Diagnostic Test
               </Button>
             </Link>
@@ -306,52 +306,52 @@ export const LearnerDashboard = () => {
 
       {/* 5. QUICK PRACTICE HUBS */}
       <div className="space-y-3">
-        <h3 className="text-lg font-black text-slate-900">
+        <h3 className="text-lg font-black text-white">
           {learningLangMeta.name} Recommended Activities
         </h3>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <Link
             to="/curriculum"
-            className="p-5 rounded-2xl bg-white border border-slate-200 hover:border-brand-300 hover:shadow-md transition-all group"
+            className="p-5 rounded-3xl bg-slate-900/65 border border-white/20 backdrop-blur-2xl hover:border-brand-400 hover:bg-slate-900/80 shadow-2xl transition-all group text-white"
           >
-            <div className="w-10 h-10 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center font-bold mb-3 group-hover:scale-105 transition-transform">
+            <div className="w-10 h-10 rounded-2xl bg-purple-500/20 border border-purple-400/30 text-purple-300 flex items-center justify-center font-bold mb-3 group-hover:scale-105 transition-transform">
               <GraduationCap className="w-5 h-5" />
             </div>
-            <h4 className="text-base font-bold text-slate-900 group-hover:text-brand-600 transition-colors">
+            <h4 className="text-base font-bold text-white group-hover:text-brand-300 transition-colors">
               {t('curriculum', 'Structured Modules')}
             </h4>
-            <p className="text-xs text-slate-500 mt-1 leading-relaxed">
+            <p className="text-xs text-slate-300 mt-1 leading-relaxed">
               Step-by-step curriculum sequenced for {learningLangMeta.name} phonics and reading fluency.
             </p>
           </Link>
 
           <Link
             to="/content"
-            className="p-5 rounded-2xl bg-white border border-slate-200 hover:border-brand-300 hover:shadow-md transition-all group"
+            className="p-5 rounded-3xl bg-slate-900/65 border border-white/20 backdrop-blur-2xl hover:border-brand-400 hover:bg-slate-900/80 shadow-2xl transition-all group text-white"
           >
-            <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold mb-3 group-hover:scale-105 transition-transform">
+            <div className="w-10 h-10 rounded-2xl bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 flex items-center justify-center font-bold mb-3 group-hover:scale-105 transition-transform">
               <BookOpen className="w-5 h-5" />
             </div>
-            <h4 className="text-base font-bold text-slate-900 group-hover:text-brand-600 transition-colors">
+            <h4 className="text-base font-bold text-white group-hover:text-brand-300 transition-colors">
               {t('library', 'Multilingual Library')}
             </h4>
-            <p className="text-xs text-slate-500 mt-1 leading-relaxed">
+            <p className="text-xs text-slate-300 mt-1 leading-relaxed">
               Read illustrated stories with native TTS pronunciation in {learningLangMeta.nativeName}.
             </p>
           </Link>
 
           <Link
             to="/games"
-            className="p-5 rounded-2xl bg-white border border-slate-200 hover:border-brand-300 hover:shadow-md transition-all group"
+            className="p-5 rounded-3xl bg-slate-900/65 border border-white/20 backdrop-blur-2xl hover:border-brand-400 hover:bg-slate-900/80 shadow-2xl transition-all group text-white"
           >
-            <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center font-bold mb-3 group-hover:scale-105 transition-transform">
+            <div className="w-10 h-10 rounded-2xl bg-amber-500/20 border border-amber-400/30 text-amber-300 flex items-center justify-center font-bold mb-3 group-hover:scale-105 transition-transform">
               <Award className="w-5 h-5" />
             </div>
-            <h4 className="text-base font-bold text-slate-900 group-hover:text-brand-600 transition-colors">
+            <h4 className="text-base font-bold text-white group-hover:text-brand-300 transition-colors">
               {t('games', 'Games & Puzzles')}
             </h4>
-            <p className="text-xs text-slate-500 mt-1 leading-relaxed">
+            <p className="text-xs text-slate-300 mt-1 leading-relaxed">
               Play Word Scramble, Sentence Builder, and Memory Cards in {learningLangMeta.nativeName}.
             </p>
           </Link>

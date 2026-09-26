@@ -181,15 +181,15 @@ export const ContentLibrary = () => {
   };
 
   return (
-    <div className="space-y-8 pb-12">
+    <div className="space-y-8 pb-12 text-white">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 flex items-center gap-2.5">
-            <BookOpen className="w-8 h-8 text-emerald-600" />
+          <h1 className="text-2xl sm:text-3xl font-black text-white flex items-center gap-2.5">
+            <BookOpen className="w-8 h-8 text-emerald-400" />
             Multilingual Content Repository
           </h1>
-          <p className="text-sm text-slate-500 mt-1">
+          <p className="text-sm text-slate-200 mt-1">
             Explore illustrated stories, phonics cards, and practical reading aids in your preferred language.
           </p>
         </div>
@@ -209,10 +209,10 @@ export const ContentLibrary = () => {
             <button
               key={type.id}
               onClick={() => setSelectedType(type.id)}
-              className={`px-4 py-2 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all ${
+              className={`px-4 py-2 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all cursor-pointer ${
                 selectedType === type.id
-                  ? 'bg-emerald-600 text-white shadow-md shadow-emerald-500/20'
-                  : 'bg-white text-slate-700 hover:bg-slate-100 border border-slate-200/80'
+                  ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/30'
+                  : 'bg-slate-900/65 text-slate-200 hover:bg-slate-900/85 border border-white/20 backdrop-blur-md'
               }`}
             >
               {type.label}
@@ -221,7 +221,7 @@ export const ContentLibrary = () => {
         </div>
 
         {/* Search & Difficulty Filter */}
-        <div className="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-card flex flex-col md:flex-row gap-4 items-center justify-between">
+        <div className="bg-slate-900/65 rounded-3xl p-4 border border-white/20 backdrop-blur-2xl shadow-2xl flex flex-col md:flex-row gap-4 items-center justify-between">
           <div className="relative w-full md:w-80">
             <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
@@ -230,7 +230,7 @@ export const ContentLibrary = () => {
               onChange={e => setSearchQuery(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && fetchContent()}
               placeholder="Search words, stories, tags..."
-              className="w-full pl-10 pr-4 py-2 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-emerald-500 focus:outline-none"
+              className="w-full pl-10 pr-4 py-2 text-sm bg-slate-950/60 border border-white/20 text-white placeholder:text-slate-400 rounded-xl focus:border-emerald-400 focus:outline-none"
             />
           </div>
 
@@ -238,13 +238,13 @@ export const ContentLibrary = () => {
             <select
               value={selectedDifficulty}
               onChange={e => setSelectedDifficulty(e.target.value)}
-              className="p-2 text-xs font-bold bg-slate-50 border border-slate-200 rounded-xl focus:border-emerald-500 focus:outline-none"
+              className="p-2 text-xs font-bold bg-slate-950/60 border border-white/20 text-white rounded-xl focus:border-emerald-400 focus:outline-none"
             >
-              <option value="">All Difficulty Levels</option>
-              <option value="beginner">Beginner (Level 1)</option>
-              <option value="elementary">Elementary (Level 2)</option>
-              <option value="intermediate">Intermediate (Level 3)</option>
-              <option value="advanced">Advanced (Level 4)</option>
+              <option value="" className="text-slate-900">All Difficulty Levels</option>
+              <option value="beginner" className="text-slate-900">Beginner (Level 1)</option>
+              <option value="elementary" className="text-slate-900">Elementary (Level 2)</option>
+              <option value="intermediate" className="text-slate-900">Intermediate (Level 3)</option>
+              <option value="advanced" className="text-slate-900">Advanced (Level 4)</option>
             </select>
           </div>
         </div>
@@ -264,12 +264,12 @@ export const ContentLibrary = () => {
             return (
               <Card
                 key={item._id}
-                className="flex flex-col justify-between border-2 border-slate-200/80 hover:border-emerald-500 group"
+                className="flex flex-col justify-between border border-white/20 hover:border-emerald-400 bg-slate-900/65 backdrop-blur-2xl shadow-2xl rounded-3xl text-white group transition-all"
               >
                 <div className="space-y-4">
                   {/* Visual Header Image if available */}
                   {item.imageUrl && (
-                    <div className="h-44 -mx-6 -mt-6 mb-4 rounded-t-2xl overflow-hidden bg-slate-100 relative">
+                    <div className="h-44 -mx-6 -mt-6 mb-4 rounded-t-2xl overflow-hidden bg-slate-950/50 relative">
                       <img
                         src={item.imageUrl}
                         alt={item.title}
@@ -277,7 +277,7 @@ export const ContentLibrary = () => {
                         loading="lazy"
                       />
                       <div className="absolute top-3 left-3">
-                        <span className="px-2.5 py-1 bg-white/90 backdrop-blur-md rounded-full text-xs font-bold text-slate-800 shadow-sm flex items-center gap-1">
+                        <span className="px-2.5 py-1 bg-slate-900/80 backdrop-blur-md rounded-full text-xs font-bold text-white border border-white/20 shadow-md flex items-center gap-1">
                           <span>{langMeta.flag}</span>
                           <span>{langMeta.nativeName}</span>
                         </span>
@@ -287,7 +287,7 @@ export const ContentLibrary = () => {
 
                   {!item.imageUrl && (
                     <div className="flex items-center justify-between">
-                      <span className="px-2.5 py-1 bg-slate-100 rounded-full text-xs font-bold text-slate-800 flex items-center gap-1">
+                      <span className="px-2.5 py-1 bg-white/10 border border-white/15 rounded-full text-xs font-bold text-slate-200 flex items-center gap-1">
                         <span>{langMeta.flag}</span>
                         <span>{langMeta.nativeName}</span>
                       </span>
@@ -296,10 +296,10 @@ export const ContentLibrary = () => {
                   )}
 
                   <div>
-                    <h3 className="text-lg font-bold text-slate-900 line-clamp-2 leading-snug">
+                    <h3 className="text-lg font-bold text-white line-clamp-2 leading-snug">
                       {item.title}
                     </h3>
-                    <p className="text-sm text-slate-600 mt-2 line-clamp-3 leading-relaxed">
+                    <p className="text-sm text-slate-300 mt-2 line-clamp-3 leading-relaxed font-normal">
                       {item.summary || item.textContent}
                     </p>
                   </div>
@@ -310,7 +310,7 @@ export const ContentLibrary = () => {
                       {item.tags.slice(0, 3).map((t, idx) => (
                         <span
                           key={idx}
-                          className="text-[11px] font-semibold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200"
+                          className="text-[11px] font-semibold text-emerald-300 bg-emerald-500/20 px-2 py-0.5 rounded-md border border-emerald-400/30"
                         >
                           #{t}
                         </span>
@@ -319,10 +319,10 @@ export const ContentLibrary = () => {
                   )}
                 </div>
 
-                <div className="pt-6 mt-4 border-t border-slate-100">
+                <div className="pt-6 mt-4 border-t border-white/10">
                   <Button
                     variant="primary"
-                    className="w-full bg-emerald-600 hover:bg-emerald-700 shadow-emerald-500/20"
+                    className="w-full bg-emerald-600 hover:bg-emerald-700 shadow-emerald-500/20 font-bold"
                     onClick={() => openReader(item)}
                     icon={BookOpen}
                   >
@@ -334,10 +334,10 @@ export const ContentLibrary = () => {
           })}
         </div>
       ) : (
-        <Card className="p-12 text-center space-y-4 border-dashed border-2 border-slate-300">
+        <Card className="p-12 text-center space-y-4 border-dashed border-2 border-white/20 bg-slate-900/65 backdrop-blur-2xl rounded-3xl text-white">
           <BookMarked className="w-12 h-12 text-slate-400 mx-auto" />
-          <h3 className="text-lg font-bold text-slate-900">No Content Found</h3>
-          <p className="text-sm text-slate-500 max-w-sm mx-auto">
+          <h3 className="text-lg font-bold text-white">No Content Found</h3>
+          <p className="text-sm text-slate-300 max-w-sm mx-auto">
             No learning materials match this language or category yet. Try selecting another language or clear your filters.
           </p>
         </Card>
@@ -351,9 +351,9 @@ export const ContentLibrary = () => {
         maxWidth="max-w-3xl"
       >
         {activeContent && (
-          <div className="space-y-6 max-h-[75vh] overflow-y-auto pr-1">
+          <div className="space-y-6 max-h-[75vh] overflow-y-auto pr-1 text-white">
             {/* Audio narration & Bhashini Translation switcher controls */}
-            <div className="flex items-center justify-between flex-wrap gap-3 p-4 rounded-2xl bg-slate-50 border border-slate-200">
+            <div className="flex items-center justify-between flex-wrap gap-3 p-4 rounded-2xl bg-white/5 border border-white/15">
               <button
                 onClick={() =>
                   speakText(
@@ -361,7 +361,7 @@ export const ContentLibrary = () => {
                     activeTranslationLang || activeContent.language
                   )
                 }
-                className="flex items-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl text-sm shadow-sm transition-colors"
+                className="flex items-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-600 text-slate-950 font-black rounded-xl text-sm shadow-md transition-colors cursor-pointer"
               >
                 <Volume2 className="w-4 h-4" />
                 <span>Listen Aloud (Audio Aid)</span>
@@ -369,40 +369,40 @@ export const ContentLibrary = () => {
 
               {/* Bhashini Dynamic Translation Switcher */}
               <div className="flex items-center gap-2">
-                <Languages className="w-4 h-4 text-emerald-600" />
-                <span className="text-xs font-bold text-slate-700">Bhashini AI:</span>
+                <Languages className="w-4 h-4 text-emerald-400" />
+                <span className="text-xs font-bold text-slate-200">Bhashini AI:</span>
                 <select
                   value={activeTranslationLang || ''}
                   onChange={e => handleTranslationChange(e.target.value)}
                   disabled={translating}
-                  className="text-xs font-bold p-2 bg-white border border-slate-300 rounded-xl focus:border-emerald-500 focus:outline-none cursor-pointer"
+                  className="text-xs font-bold p-2 bg-slate-950/80 text-white border border-white/20 rounded-xl focus:border-emerald-400 focus:outline-none cursor-pointer"
                 >
-                  <option value="">Original ({activeContent.language?.toUpperCase()})</option>
+                  <option value="" className="text-slate-900">Original ({activeContent.language?.toUpperCase()})</option>
                   {SUPPORTED_LANGUAGES.map(lang => (
-                    <option key={lang.code} value={lang.code}>
+                    <option key={lang.code} value={lang.code} className="text-slate-900">
                       {lang.flag} {lang.nativeName} ({lang.code.toUpperCase()})
                     </option>
                   ))}
                 </select>
-                {translating && <span className="text-xs text-brand-600 font-bold animate-pulse">Translating...</span>}
+                {translating && <span className="text-xs text-amber-300 font-bold animate-pulse">Translating...</span>}
               </div>
             </div>
 
             {/* Phonetic Pronunciation Guide */}
             {activeContent.phoneticGuide && (
-              <div className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200 space-y-1">
-                <p className="text-xs font-bold uppercase tracking-wider text-amber-900 flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-amber-600" /> Phonetic & Pronunciation Guide
+              <div className="p-4 rounded-2xl bg-amber-400/10 border border-amber-400/30 space-y-1">
+                <p className="text-xs font-bold uppercase tracking-wider text-amber-300 flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-amber-300" /> Phonetic & Pronunciation Guide
                 </p>
-                <p className="text-sm font-semibold text-amber-950">
+                <p className="text-sm font-semibold text-amber-100">
                   {activeContent.phoneticGuide}
                 </p>
               </div>
             )}
 
             {/* Main Text Content */}
-            <div className="p-6 rounded-3xl bg-slate-50/70 border border-slate-200/80">
-              <p className="text-lg sm:text-xl text-slate-800 leading-relaxed font-medium whitespace-pre-line">
+            <div className="p-6 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-md">
+              <p className="text-lg sm:text-xl text-slate-100 leading-relaxed font-medium whitespace-pre-line">
                 {getDisplayText()}
               </p>
             </div>
@@ -410,27 +410,27 @@ export const ContentLibrary = () => {
             {/* Vocabulary Flashcards */}
             {activeContent.vocabulary?.length > 0 && (
               <div className="space-y-3">
-                <h4 className="text-base font-bold text-slate-900 flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-emerald-600" />
+                <h4 className="text-base font-bold text-white flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 text-emerald-400" />
                   Key Vocabulary Words ({activeContent.vocabulary.length})
                 </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {activeContent.vocabulary.map((vocab, vIdx) => (
                     <div
                       key={vIdx}
-                      className="p-4 rounded-2xl bg-emerald-50/50 border border-emerald-200/80 space-y-1.5"
+                      className="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-1.5 backdrop-blur-md"
                     >
                       <div className="flex items-center justify-between">
-                        <span className="text-base font-black text-emerald-950">{vocab.word}</span>
+                        <span className="text-base font-black text-white">{vocab.word}</span>
                         {vocab.phonetics && (
-                          <span className="text-xs font-semibold text-emerald-700 bg-emerald-100/60 px-2 py-0.5 rounded-md">
+                          <span className="text-xs font-semibold text-emerald-300 bg-emerald-500/20 px-2 py-0.5 rounded-md border border-emerald-400/30">
                             {vocab.phonetics}
                           </span>
                         )}
                       </div>
-                      <p className="text-xs text-slate-700 font-medium">{vocab.meaning}</p>
+                      <p className="text-xs text-slate-200 font-medium">{vocab.meaning}</p>
                       {vocab.exampleSentence && (
-                        <p className="text-[11px] text-slate-500 italic">
+                        <p className="text-[11px] text-slate-400 italic">
                           "{vocab.exampleSentence}"
                         </p>
                       )}
@@ -442,36 +442,35 @@ export const ContentLibrary = () => {
 
             {/* Comprehension Checkpoint Quiz */}
             {activeContent.comprehensionQuestions?.length > 0 && (
-              <div className="space-y-4 pt-4 border-t border-slate-200">
-                <h4 className="text-base font-bold text-slate-900 flex items-center gap-2">
-                  <HelpCircle className="w-4 h-4 text-indigo-600" />
+              <div className="space-y-4 pt-4 border-t border-white/10">
+                <h4 className="text-base font-bold text-white flex items-center gap-2">
+                  <HelpCircle className="w-4 h-4 text-indigo-400" />
                   Comprehension Checkpoint
                 </h4>
 
                 <div className="space-y-4">
                   {activeContent.comprehensionQuestions.map((q, qIdx) => (
-                    <div key={qIdx} className="p-4 rounded-2xl bg-indigo-50/40 border border-indigo-100 space-y-3">
-                      <p className="text-sm font-bold text-slate-900">
+                    <div key={qIdx} className="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-3 backdrop-blur-md">
+                      <p className="text-sm font-bold text-white">
                         {qIdx + 1}. {q.question}
                       </p>
                       <div className="space-y-2">
                         {q.options.map((opt, oIdx) => {
                           const isSelected = quizAnswers[qIdx] === opt;
                           const isEvaluated = quizFeedback[qIdx] !== undefined;
-                          const isCorrectChoice = opt === q.correctAnswer;
 
-                          let btnStyle = 'border-slate-200 bg-white text-slate-800 hover:bg-slate-50';
+                          let btnStyle = 'border-white/15 bg-white/5 text-slate-200 hover:bg-white/10';
                           if (isEvaluated && isSelected) {
                             btnStyle = quizFeedback[qIdx]
-                              ? 'border-emerald-500 bg-emerald-100 text-emerald-950 font-bold'
-                              : 'border-rose-500 bg-rose-100 text-rose-950 font-bold';
+                              ? 'border-emerald-400 bg-emerald-600/40 text-white font-bold'
+                              : 'border-rose-400 bg-rose-600/40 text-white font-bold';
                           }
 
                           return (
                             <button
                               key={oIdx}
                               onClick={() => handleQuizOption(qIdx, opt, q.correctAnswer)}
-                              className={`w-full p-2.5 rounded-xl border text-xs font-semibold text-left transition-colors flex items-center justify-between ${btnStyle}`}
+                              className={`w-full p-2.5 rounded-xl border text-xs font-semibold text-left transition-colors flex items-center justify-between cursor-pointer ${btnStyle}`}
                             >
                               <span>{opt}</span>
                               {isEvaluated && isSelected && (
@@ -483,7 +482,7 @@ export const ContentLibrary = () => {
                       </div>
 
                       {quizFeedback[qIdx] !== undefined && q.explanation && (
-                        <p className="text-xs text-indigo-900 bg-indigo-100/50 p-2.5 rounded-xl">
+                        <p className="text-xs text-indigo-200 bg-indigo-500/20 border border-indigo-400/30 p-2.5 rounded-xl">
                           💡 {q.explanation}
                         </p>
                       )}
@@ -494,10 +493,10 @@ export const ContentLibrary = () => {
             )}
 
             {/* Reading Complete & Progress Action */}
-            <div className="pt-4 border-t border-slate-200 flex items-center justify-between gap-4">
+            <div className="pt-4 border-t border-white/10 flex items-center justify-between gap-4">
               <Button
                 variant={hasCompletedCurrentReading ? 'secondary' : 'primary'}
-                className="w-full bg-emerald-600 hover:bg-emerald-700 shadow-emerald-500/20"
+                className="w-full bg-emerald-600 hover:bg-emerald-700 shadow-emerald-500/20 font-bold"
                 onClick={handleMarkReadingComplete}
                 icon={hasCompletedCurrentReading ? CheckCircle2 : Zap}
               >

@@ -61,22 +61,22 @@ export const CurriculumList = () => {
   };
 
   return (
-    <div className="space-y-8 pb-12">
+    <div className="space-y-8 pb-12 text-white">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 flex items-center gap-2.5">
-            <GraduationCap className="w-8 h-8 text-brand-600" />
+          <h1 className="text-2xl sm:text-3xl font-black text-white flex items-center gap-2.5">
+            <GraduationCap className="w-8 h-8 text-brand-400" />
             Curriculum Framework
           </h1>
-          <p className="text-sm text-slate-500 mt-1">
+          <p className="text-sm text-slate-200 mt-1">
             Progressive literacy learning pathways organized into structured modules and lessons.
           </p>
         </div>
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/80 shadow-card flex flex-col md:flex-row gap-4 items-center justify-between">
+      <div className="bg-slate-900/65 rounded-3xl p-4 sm:p-5 border border-white/20 backdrop-blur-2xl shadow-2xl flex flex-col md:flex-row gap-4 items-center justify-between">
         <form onSubmit={handleSearchSubmit} className="relative w-full md:w-80">
           <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
@@ -84,7 +84,7 @@ export const CurriculumList = () => {
             value={searchQuery}
             onChange={e => setSearchQuery(e.target.value)}
             placeholder="Search curriculums..."
-            className="w-full pl-10 pr-4 py-2 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-brand-500 focus:outline-none"
+            className="w-full pl-10 pr-4 py-2 text-sm bg-slate-950/60 border border-white/20 text-white placeholder:text-slate-400 rounded-xl focus:border-brand-400 focus:outline-none"
           />
         </form>
 
@@ -93,11 +93,11 @@ export const CurriculumList = () => {
           <select
             value={selectedLanguage}
             onChange={e => setSelectedLanguage(e.target.value)}
-            className="p-2 text-xs font-bold bg-slate-50 border border-slate-200 rounded-xl focus:border-brand-500 focus:outline-none"
+            className="p-2 text-xs font-bold bg-slate-950/60 border border-white/20 text-white rounded-xl focus:border-brand-400 focus:outline-none"
           >
-            <option value="">All Languages</option>
+            <option value="" className="text-slate-900">All Languages</option>
             {SUPPORTED_LANGUAGES.map(l => (
-              <option key={l.code} value={l.code}>
+              <option key={l.code} value={l.code} className="text-slate-900">
                 {l.flag} {l.nativeName}
               </option>
             ))}
@@ -107,13 +107,13 @@ export const CurriculumList = () => {
           <select
             value={selectedLevel}
             onChange={e => setSelectedLevel(e.target.value)}
-            className="p-2 text-xs font-bold bg-slate-50 border border-slate-200 rounded-xl focus:border-brand-500 focus:outline-none"
+            className="p-2 text-xs font-bold bg-slate-950/60 border border-white/20 text-white rounded-xl focus:border-brand-400 focus:outline-none"
           >
-            <option value="">All Levels</option>
-            <option value="beginner">Level 1: Novice</option>
-            <option value="elementary">Level 2: Elementary</option>
-            <option value="intermediate">Level 3: Functional</option>
-            <option value="advanced">Level 4: Fluent</option>
+            <option value="" className="text-slate-900">All Levels</option>
+            <option value="beginner" className="text-slate-900">Level 1: Novice</option>
+            <option value="elementary" className="text-slate-900">Level 2: Elementary</option>
+            <option value="intermediate" className="text-slate-900">Level 3: Functional</option>
+            <option value="advanced" className="text-slate-900">Level 4: Fluent</option>
           </select>
 
           {(selectedLanguage || selectedLevel || searchQuery) && (
@@ -123,7 +123,7 @@ export const CurriculumList = () => {
                 setSelectedLevel('');
                 setSearchQuery('');
               }}
-              className="text-xs font-bold text-rose-600 hover:underline px-2 py-1"
+              className="text-xs font-bold text-amber-300 hover:underline px-2 py-1"
             >
               Clear Filters
             </button>
@@ -150,11 +150,11 @@ export const CurriculumList = () => {
             return (
               <Card
                 key={curriculum._id}
-                className="flex flex-col justify-between border-2 border-slate-200/80 hover:border-brand-500"
+                className="flex flex-col justify-between border border-white/20 hover:border-brand-400 bg-slate-900/65 backdrop-blur-2xl shadow-2xl rounded-3xl text-white transition-all"
               >
                 <div className="space-y-4">
                   <div className="flex items-center justify-between flex-wrap gap-2">
-                    <span className="inline-flex items-center gap-1 px-3 py-1 bg-slate-100 rounded-full text-xs font-bold text-slate-800">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/10 border border-white/15 rounded-full text-xs font-bold text-slate-200">
                       <span>{langMeta.flag}</span>
                       <span>{langMeta.nativeName}</span>
                     </span>
@@ -162,32 +162,32 @@ export const CurriculumList = () => {
                   </div>
 
                   <div>
-                    <span className="text-xs font-bold text-brand-600 uppercase tracking-wider">
+                    <span className="text-xs font-bold text-amber-300 uppercase tracking-wider">
                       {curriculum.category}
                     </span>
-                    <h3 className="text-xl font-bold text-slate-900 mt-1 leading-snug">
+                    <h3 className="text-xl font-bold text-white mt-1 leading-snug">
                       {curriculum.title}
                     </h3>
-                    <p className="text-sm text-slate-600 mt-2 line-clamp-2 leading-relaxed">
+                    <p className="text-sm text-slate-300 mt-2 line-clamp-2 leading-relaxed font-normal">
                       {curriculum.description}
                     </p>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-3 pt-3 border-t border-slate-100 text-xs font-semibold text-slate-600">
+                  <div className="grid grid-cols-2 gap-3 pt-3 border-t border-white/10 text-xs font-semibold text-slate-300">
                     <div className="flex items-center gap-1.5">
-                      <Layers className="w-4 h-4 text-purple-600" />
+                      <Layers className="w-4 h-4 text-purple-400" />
                       <span>{curriculum.modules?.length || 0} Modules</span>
                     </div>
                     <div className="flex items-center gap-1.5">
-                      <BookOpen className="w-4 h-4 text-emerald-600" />
+                      <BookOpen className="w-4 h-4 text-emerald-400" />
                       <span>{totalLessons} Guided Lessons</span>
                     </div>
                   </div>
                 </div>
 
-                <div className="pt-6 mt-4 border-t border-slate-100">
+                <div className="pt-6 mt-4 border-t border-white/10">
                   <Link to={`/curriculum/${curriculum._id}`} className="block">
-                    <Button variant="primary" className="w-full justify-between" icon={ArrowRight} iconPosition="right">
+                    <Button variant="primary" className="w-full justify-between font-bold" icon={ArrowRight} iconPosition="right">
                       View Learning Roadmap
                     </Button>
                   </Link>
@@ -197,10 +197,10 @@ export const CurriculumList = () => {
           })}
         </div>
       ) : (
-        <Card className="p-12 text-center space-y-4 border-dashed border-2 border-slate-300">
+        <Card className="p-12 text-center space-y-4 border-dashed border-2 border-white/20 bg-slate-900/65 backdrop-blur-2xl rounded-3xl text-white">
           <GraduationCap className="w-12 h-12 text-slate-400 mx-auto" />
-          <h3 className="text-lg font-bold text-slate-900">No Curricula Found</h3>
-          <p className="text-sm text-slate-500 max-w-sm mx-auto">
+          <h3 className="text-lg font-bold text-white">No Curricula Found</h3>
+          <p className="text-sm text-slate-300 max-w-sm mx-auto">
             Try adjusting your filters or search query to find relevant literacy curricula.
           </p>
         </Card>

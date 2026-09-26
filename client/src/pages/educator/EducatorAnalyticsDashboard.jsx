@@ -227,9 +227,9 @@ export const EducatorAnalyticsDashboard = () => {
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
+      <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4 text-white">
         <Loader size="lg" />
-        <p className="text-slate-600 font-semibold animate-pulse">
+        <p className="text-slate-200 font-semibold animate-pulse">
           Aggregating Cohort Metrics & Longitudinal Fluency Curves...
         </p>
       </div>
@@ -237,16 +237,16 @@ export const EducatorAnalyticsDashboard = () => {
   }
 
   return (
-    <div className="space-y-8 pb-12">
+    <div className="space-y-8 pb-12 text-white">
       {/* Top Banner */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-slate-900 via-indigo-950 to-purple-950 p-8 text-white shadow-xl">
+      <div className="relative overflow-hidden rounded-3xl bg-slate-900/65 border border-white/20 backdrop-blur-2xl p-8 text-white shadow-2xl">
         <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/30 border border-indigo-400/30 text-indigo-200 text-xs font-bold">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/20 border border-indigo-400/30 text-indigo-300 text-xs font-bold">
               <BarChart3 className="w-4 h-4 text-indigo-300" />
               <span>PHASE 4: EDUCATOR & LONGITUDINAL ANALYTICS</span>
             </div>
-            <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl text-white">
+            <h1 className="text-3xl font-black tracking-tight sm:text-4xl text-white">
               Cohort Literacy Intelligence
             </h1>
             <p className="text-slate-300 max-w-2xl text-xs sm:text-sm leading-relaxed">
@@ -258,7 +258,7 @@ export const EducatorAnalyticsDashboard = () => {
           <Button
             variant="outline"
             onClick={fetchDashboardData}
-            className="bg-white/10 text-white border-white/20 hover:bg-white/20"
+            className="bg-white/10 text-white border-white/20 hover:bg-white/20 backdrop-blur-md"
           >
             <RefreshCw className="w-4 h-4 mr-2" />
             Refresh Intelligence
@@ -268,32 +268,32 @@ export const EducatorAnalyticsDashboard = () => {
         {/* Cohort KPIs Ribbon */}
         {cohortSummary && (
           <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t border-white/10">
-            <div className="p-4 rounded-2xl bg-white/5 border border-white/10">
-              <p className="text-xs text-slate-400 font-medium">Total Cohort</p>
+            <div className="p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md">
+              <p className="text-xs text-slate-300 font-medium">Total Cohort</p>
               <p className="text-2xl font-black text-white mt-1">{cohortSummary.totalLearners}</p>
               <p className="text-[10px] text-emerald-400 mt-1 font-semibold flex items-center gap-0.5">
                 <ArrowUpRight className="w-3 h-3" /> {cohortSummary.activeLearners7d} active this week
               </p>
             </div>
 
-            <div className="p-4 rounded-2xl bg-white/5 border border-white/10">
-              <p className="text-xs text-slate-400 font-medium">Avg Fluency Score</p>
+            <div className="p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md">
+              <p className="text-xs text-slate-300 font-medium">Avg Fluency Score</p>
               <p className="text-2xl font-black text-white mt-1">{cohortSummary.averageFluencyScore}%</p>
               <p className="text-[10px] text-indigo-300 mt-1 font-semibold">
                 Across 8 Indian Languages
               </p>
             </div>
 
-            <div className="p-4 rounded-2xl bg-white/5 border border-white/10">
-              <p className="text-xs text-slate-400 font-medium">Reading Speed (WPM)</p>
+            <div className="p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md">
+              <p className="text-xs text-slate-300 font-medium">Reading Speed (WPM)</p>
               <p className="text-2xl font-black text-white mt-1">{cohortSummary.averageWpm} WPM</p>
               <p className="text-[10px] text-emerald-400 mt-1 font-semibold flex items-center gap-0.5">
                 <TrendingUp className="w-3 h-3" /> +12% vs last month
               </p>
             </div>
 
-            <div className="p-4 rounded-2xl bg-white/5 border border-white/10">
-              <p className="text-xs text-slate-400 font-medium">At-Risk Learners</p>
+            <div className="p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md">
+              <p className="text-xs text-slate-300 font-medium">At-Risk Learners</p>
               <p className="text-2xl font-black text-rose-400 mt-1">
                 {cohortSummary.atRiskLearnersCount} Students
               </p>
@@ -309,10 +309,10 @@ export const EducatorAnalyticsDashboard = () => {
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <AlertTriangle className="w-5 h-5 text-rose-600" />
-            <h2 className="text-xl font-bold text-slate-900">AI Early-Intervention Radar</h2>
+            <AlertTriangle className="w-5 h-5 text-rose-400" />
+            <h2 className="text-xl font-bold text-white">AI Early-Intervention Radar</h2>
           </div>
-          <span className="text-xs font-semibold text-rose-700 bg-rose-50 px-3 py-1 rounded-full border border-rose-200">
+          <span className="text-xs font-semibold text-rose-300 bg-rose-950/50 px-3.5 py-1 rounded-full border border-rose-500/30">
             {alerts.length} Actionable Triggers
           </span>
         </div>
@@ -321,16 +321,16 @@ export const EducatorAnalyticsDashboard = () => {
           {alerts.map(alert => (
             <Card
               key={alert.id}
-              className={`p-5 border-l-4 space-y-3 ${
+              className={`p-5 border-l-4 space-y-3 backdrop-blur-2xl shadow-xl rounded-2xl ${
                 alert.severity === 'HIGH'
-                  ? 'border-l-rose-600 bg-rose-50/30 border-rose-200'
+                  ? 'border-l-rose-500 bg-slate-900/70 border-white/15'
                   : alert.severity === 'MEDIUM'
-                  ? 'border-l-amber-500 bg-amber-50/30 border-amber-200'
-                  : 'border-l-sky-500 bg-sky-50/30 border-sky-200'
+                  ? 'border-l-amber-500 bg-slate-900/70 border-white/15'
+                  : 'border-l-sky-500 bg-slate-900/70 border-white/15'
               }`}
             >
               <div className="flex items-center justify-between">
-                <span className="font-bold text-slate-900 text-sm">{alert.studentName}</span>
+                <span className="font-bold text-white text-sm">{alert.studentName}</span>
                 <Badge
                   variant={
                     alert.severity === 'HIGH'
@@ -345,11 +345,11 @@ export const EducatorAnalyticsDashboard = () => {
                 </Badge>
               </div>
 
-              <p className="text-xs text-slate-600 leading-relaxed">{alert.message}</p>
+              <p className="text-xs text-slate-300 leading-relaxed">{alert.message}</p>
 
-              <div className="pt-2 border-t border-slate-100">
-                <p className="text-[11px] font-bold text-slate-800">
-                  ⚡ Action: <span className="font-normal text-slate-600">{alert.recommendedAction}</span>
+              <div className="pt-2 border-t border-white/10">
+                <p className="text-[11px] font-bold text-slate-200">
+                  ⚡ Action: <span className="font-normal text-slate-300">{alert.recommendedAction}</span>
                 </p>
               </div>
             </Card>
@@ -362,7 +362,7 @@ export const EducatorAnalyticsDashboard = () => {
         {/* Left 2 Cols: Interactive Learner Roster */}
         <div className="lg:col-span-2 space-y-4">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <h2 className="text-xl font-bold text-slate-900">Class Performance Matrix</h2>
+            <h2 className="text-xl font-bold text-white">Class Performance Matrix</h2>
 
             {/* Roster Filters */}
             <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
@@ -373,28 +373,28 @@ export const EducatorAnalyticsDashboard = () => {
                   placeholder="Search student..."
                   value={searchQuery}
                   onChange={e => setSearchQuery(e.target.value)}
-                  className="w-full text-xs pl-9 pr-3 py-2 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-brand-500"
+                  className="w-full text-xs pl-9 pr-3 py-2 rounded-xl border border-white/20 bg-slate-950/60 text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-400 backdrop-blur-md"
                 />
               </div>
 
               <select
                 value={riskFilter}
                 onChange={e => setRiskFilter(e.target.value)}
-                className="text-xs font-bold px-3 py-2 rounded-xl border border-slate-200 bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500"
+                className="text-xs font-bold px-3 py-2 rounded-xl border border-white/20 bg-slate-950/60 text-white focus:outline-none focus:ring-2 focus:ring-brand-400 backdrop-blur-md"
               >
-                <option value="ALL">All Risk Levels</option>
-                <option value="HIGH">High Risk</option>
-                <option value="MEDIUM">Medium Risk</option>
-                <option value="LOW">Low Risk</option>
+                <option value="ALL" className="text-slate-900">All Risk Levels</option>
+                <option value="HIGH" className="text-slate-900">High Risk</option>
+                <option value="MEDIUM" className="text-slate-900">Medium Risk</option>
+                <option value="LOW" className="text-slate-900">Low Risk</option>
               </select>
             </div>
           </div>
 
-          <div className="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm">
+          <div className="bg-slate-900/65 border border-white/20 rounded-3xl overflow-hidden shadow-2xl backdrop-blur-2xl">
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="bg-slate-50 border-b border-slate-200 text-[11px] font-bold uppercase tracking-wider text-slate-500">
+                  <tr className="bg-white/5 border-b border-white/10 text-[11px] font-bold uppercase tracking-wider text-slate-300">
                     <th className="py-3 px-4">Learner</th>
                     <th className="py-3 px-4">Language</th>
                     <th className="py-3 px-4">Level</th>
@@ -404,50 +404,50 @@ export const EducatorAnalyticsDashboard = () => {
                     <th className="py-3 px-4 text-right">Inspect</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100 text-xs font-medium text-slate-700">
+                <tbody className="divide-y divide-white/10 text-xs font-medium text-slate-200">
                   {filteredRoster.map(student => {
                     const isSelected = selectedStudent?.id === student.id || selectedStudent?.name === student.name;
                     return (
                       <tr
                         key={student.id || student.email}
                         onClick={() => handleSelectStudent(student)}
-                        className={`hover:bg-slate-50/80 cursor-pointer transition-colors ${
-                          isSelected ? 'bg-indigo-50/60 font-semibold' : ''
+                        className={`hover:bg-white/10 cursor-pointer transition-colors ${
+                          isSelected ? 'bg-brand-500/20 font-semibold' : ''
                         }`}
                       >
-                        <td className="py-3.5 px-4 font-bold text-slate-900 flex items-center gap-2">
-                          <div className="w-7 h-7 rounded-full bg-brand-100 text-brand-700 flex items-center justify-center text-xs font-bold">
+                        <td className="py-3.5 px-4 font-bold text-white flex items-center gap-2">
+                          <div className="w-7 h-7 rounded-full bg-brand-500/30 border border-brand-400/40 text-brand-200 flex items-center justify-center text-xs font-bold">
                             {student.name.charAt(0)}
                           </div>
                           <div>
-                            <p>{student.name}</p>
+                            <p className="text-white">{student.name}</p>
                             <p className="text-[10px] text-slate-400 font-normal">{student.email}</p>
                           </div>
                         </td>
-                        <td className="py-3.5 px-4">{student.language}</td>
+                        <td className="py-3.5 px-4 text-slate-300">{student.language}</td>
                         <td className="py-3.5 px-4">
-                          <span className="text-[10px] px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 font-bold">
+                          <span className="text-[10px] px-2 py-0.5 rounded-md bg-white/10 text-slate-200 font-bold border border-white/10">
                             {student.currentLevel}
                           </span>
                         </td>
-                        <td className="py-3.5 px-4 font-bold">
+                        <td className="py-3.5 px-4 font-bold text-white">
                           <div className="flex items-center gap-2">
                             <span>{student.overallAccuracy}%</span>
-                            <div className="w-12 bg-slate-100 h-1.5 rounded-full overflow-hidden">
+                            <div className="w-12 bg-white/10 h-1.5 rounded-full overflow-hidden">
                               <div
                                 className={`h-full rounded-full ${
                                   student.overallAccuracy >= 80
-                                    ? 'bg-emerald-500'
+                                    ? 'bg-emerald-400'
                                     : student.overallAccuracy >= 60
-                                    ? 'bg-amber-500'
-                                    : 'bg-rose-500'
+                                    ? 'bg-amber-400'
+                                    : 'bg-rose-400'
                                 }`}
                                 style={{ width: `${student.overallAccuracy}%` }}
                               />
                             </div>
                           </div>
                         </td>
-                        <td className="py-3.5 px-4">{student.wpm || 55} WPM</td>
+                        <td className="py-3.5 px-4 text-slate-300">{student.wpm || 55} WPM</td>
                         <td className="py-3.5 px-4">
                           <Badge
                             variant={
@@ -476,11 +476,11 @@ export const EducatorAnalyticsDashboard = () => {
 
         {/* Right Col: Longitudinal Trajectory & Phoneme Breakdown */}
         <div className="space-y-6">
-          <Card className="p-6 border-slate-200 shadow-sm space-y-6">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-4">
+          <Card className="p-6 bg-slate-900/65 border-white/20 backdrop-blur-2xl shadow-2xl space-y-6 rounded-3xl text-white">
+            <div className="flex items-center justify-between border-b border-white/10 pb-4">
               <div className="flex items-center gap-2">
-                <TrendingUp className="w-5 h-5 text-brand-600" />
-                <h3 className="font-bold text-slate-900">Longitudinal Trajectory</h3>
+                <TrendingUp className="w-5 h-5 text-brand-300" />
+                <h3 className="font-bold text-white">Longitudinal Trajectory</h3>
               </div>
               <Badge variant="primary">Individual</Badge>
             </div>
@@ -488,8 +488,8 @@ export const EducatorAnalyticsDashboard = () => {
             {selectedStudent ? (
               <div className="space-y-5">
                 <div>
-                  <h4 className="text-lg font-black text-slate-900">{selectedStudent.name}</h4>
-                  <p className="text-xs text-slate-500">
+                  <h4 className="text-lg font-black text-white">{selectedStudent.name}</h4>
+                  <p className="text-xs text-slate-300">
                     Language: {selectedStudent.language} • Level: {selectedStudent.currentLevel}
                   </p>
                 </div>
@@ -499,13 +499,13 @@ export const EducatorAnalyticsDashboard = () => {
                   <p className="text-xs font-bold uppercase tracking-wider text-slate-400">
                     Assessment Milestone Progress
                   </p>
-                  <div className="space-y-2 border-l-2 border-slate-200 pl-3 ml-2">
+                  <div className="space-y-2 border-l-2 border-white/20 pl-3 ml-2">
                     {studentTrajectory?.longitudinalMilestones?.map((m, idx) => (
                       <div key={idx} className="relative pb-2">
-                        <div className="absolute -left-[19px] top-1 w-2.5 h-2.5 rounded-full bg-brand-600 ring-4 ring-white" />
+                        <div className="absolute -left-[19px] top-1 w-2.5 h-2.5 rounded-full bg-brand-400 ring-4 ring-slate-900" />
                         <div className="flex items-center justify-between text-xs">
-                          <span className="font-semibold text-slate-800">{m.session}</span>
-                          <span className="font-bold text-brand-600">{m.score}%</span>
+                          <span className="font-semibold text-slate-200">{m.session}</span>
+                          <span className="font-bold text-brand-300">{m.score}%</span>
                         </div>
                         <span className="text-[10px] text-slate-400">{m.date}</span>
                       </div>
@@ -514,25 +514,25 @@ export const EducatorAnalyticsDashboard = () => {
                 </div>
 
                 {/* Phoneme Category Mastery Bars */}
-                <div className="space-y-3 pt-3 border-t border-slate-100">
+                <div className="space-y-3 pt-3 border-t border-white/10">
                   <p className="text-xs font-bold uppercase tracking-wider text-slate-400">
                     Phonetic Domain Breakdown
                   </p>
                   <div className="space-y-2.5">
                     {studentTrajectory?.phonemeMastery?.map((item, idx) => (
                       <div key={idx} className="space-y-1">
-                        <div className="flex justify-between text-xs font-medium text-slate-700">
+                        <div className="flex justify-between text-xs font-medium text-slate-200">
                           <span>{item.category}</span>
-                          <span className="font-bold">{item.mastery}%</span>
+                          <span className="font-bold text-white">{item.mastery}%</span>
                         </div>
-                        <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                        <div className="w-full bg-white/10 h-2 rounded-full overflow-hidden">
                           <div
                             className={`h-full rounded-full transition-all duration-500 ${
                               item.mastery >= 80
-                                ? 'bg-emerald-500'
+                                ? 'bg-emerald-400'
                                 : item.mastery >= 60
-                                ? 'bg-amber-500'
-                                : 'bg-rose-500'
+                                ? 'bg-amber-400'
+                                : 'bg-rose-400'
                             }`}
                             style={{ width: `${item.mastery}%` }}
                           />
@@ -543,7 +543,7 @@ export const EducatorAnalyticsDashboard = () => {
                 </div>
               </div>
             ) : (
-              <p className="text-xs text-slate-500">Select a student from the roster to view trajectory.</p>
+              <p className="text-xs text-slate-300">Select a student from the roster to view trajectory.</p>
             )}
           </Card>
         </div>

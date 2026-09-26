@@ -160,9 +160,9 @@ export const AdaptiveLearningPath = () => {
   };
 
   return (
-    <div className="space-y-8 pb-12">
+    <div className="space-y-8 pb-12 text-white">
       {/* Hero Header */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-indigo-900 via-brand-900 to-purple-900 p-8 text-white shadow-xl">
+      <div className="relative overflow-hidden rounded-3xl bg-slate-900/70 border border-white/20 p-8 text-white shadow-2xl backdrop-blur-2xl">
         <div className="absolute top-0 right-0 -mt-8 -mr-8 w-64 h-64 bg-brand-500/20 rounded-full blur-3xl pointer-events-none" />
         <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="space-y-2">
@@ -173,7 +173,7 @@ export const AdaptiveLearningPath = () => {
             <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl text-white">
               Personalized Knowledge Graph
             </h1>
-            <p className="text-slate-300 max-w-2xl text-sm sm:text-base leading-relaxed">
+            <p className="text-slate-200 max-w-2xl text-sm sm:text-base leading-relaxed">
               Real-time dynamic difficulty adjustment (DDA) sequences your curriculum based on
               individual phonetic retention curves and cognitive load factors.
             </p>
@@ -181,7 +181,7 @@ export const AdaptiveLearningPath = () => {
 
           <div className="flex flex-wrap items-center gap-3">
             <Link to="/spaced-repetition">
-              <Button variant="primary" className="shadow-lg hover:shadow-brand-500/25">
+              <Button variant="primary" className="shadow-lg hover:shadow-brand-500/25 font-bold">
                 <Sparkles className="w-4 h-4 mr-2" />
                 Spaced Repetition Lab
               </Button>
@@ -198,42 +198,42 @@ export const AdaptiveLearningPath = () => {
 
         {/* Real-time DDA Metric Ribbon */}
         <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t border-white/10">
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-2xl bg-brand-500/20 text-brand-300">
+          <div className="flex items-center gap-3 p-3 rounded-2xl bg-white/5 border border-white/10">
+            <div className="p-2.5 rounded-2xl bg-brand-500/20 border border-brand-400/30 text-brand-300">
               <Target className="w-5 h-5" />
             </div>
             <div>
-              <p className="text-xs text-slate-400 font-medium">Difficulty Tier</p>
+              <p className="text-xs text-slate-300 font-medium">Difficulty Tier</p>
               <p className="text-base font-bold text-white">{dda.currentTier}</p>
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-2xl bg-amber-500/20 text-amber-300">
+          <div className="flex items-center gap-3 p-3 rounded-2xl bg-white/5 border border-white/10">
+            <div className="p-2.5 rounded-2xl bg-amber-500/20 border border-amber-400/30 text-amber-300">
               <Flame className="w-5 h-5" />
             </div>
             <div>
-              <p className="text-xs text-slate-400 font-medium">Accuracy Streak</p>
+              <p className="text-xs text-slate-300 font-medium">Accuracy Streak</p>
               <p className="text-base font-bold text-white">{dda.currentStreak} Concepts</p>
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-2xl bg-emerald-500/20 text-emerald-300">
+          <div className="flex items-center gap-3 p-3 rounded-2xl bg-white/5 border border-white/10">
+            <div className="p-2.5 rounded-2xl bg-emerald-500/20 border border-emerald-400/30 text-emerald-300">
               <TrendingUp className="w-5 h-5" />
             </div>
             <div>
-              <p className="text-xs text-slate-400 font-medium">Mastery Retention</p>
+              <p className="text-xs text-slate-300 font-medium">Mastery Retention</p>
               <p className="text-base font-bold text-white">{dda.accuracyScore}%</p>
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-2xl bg-purple-500/20 text-purple-300">
+          <div className="flex items-center gap-3 p-3 rounded-2xl bg-white/5 border border-white/10">
+            <div className="p-2.5 rounded-2xl bg-purple-500/20 border border-purple-400/30 text-purple-300">
               <Zap className="w-5 h-5" />
             </div>
             <div>
-              <p className="text-xs text-slate-400 font-medium">Adaptivity Factor</p>
+              <p className="text-xs text-slate-300 font-medium">Adaptivity Factor</p>
               <p className="text-base font-bold text-white">SM-2 ({dda.stabilityFactor}x)</p>
             </div>
           </div>
@@ -246,10 +246,10 @@ export const AdaptiveLearningPath = () => {
         <div className="lg:col-span-2 space-y-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <GitBranch className="w-5 h-5 text-brand-600" />
-              <h2 className="text-xl font-bold text-slate-900">Concept Prerequisite Pathway</h2>
+              <GitBranch className="w-5 h-5 text-brand-400" />
+              <h2 className="text-xl font-bold text-white">Concept Prerequisite Pathway</h2>
             </div>
-            <span className="text-xs font-semibold text-slate-500 bg-slate-100 px-3 py-1 rounded-full">
+            <span className="text-xs font-semibold text-slate-200 bg-white/10 border border-white/15 px-3 py-1 rounded-full">
               Ordered by Cognitive Dependency
             </span>
           </div>
@@ -264,27 +264,27 @@ export const AdaptiveLearningPath = () => {
                 <div
                   key={node.id}
                   onClick={() => !isLocked && setSelectedConcept(node)}
-                  className={`group relative p-5 rounded-2xl border-2 transition-all duration-300 cursor-pointer ${
+                  className={`group relative p-5 rounded-2xl border transition-all duration-300 cursor-pointer backdrop-blur-2xl shadow-xl ${
                     isSelected
-                      ? 'bg-brand-50/50 border-brand-500 shadow-md ring-4 ring-brand-50'
+                      ? 'bg-brand-600/30 border-brand-400 ring-2 ring-brand-400/50'
                       : isLocked
-                      ? 'bg-slate-50 border-slate-200 opacity-60 cursor-not-allowed'
-                      : 'bg-white border-slate-200 hover:border-brand-300 hover:shadow-sm'
+                      ? 'bg-white/5 border-white/10 opacity-50 cursor-not-allowed'
+                      : 'bg-slate-900/65 border-white/20 hover:border-brand-400 hover:bg-slate-900/80'
                   }`}
                 >
                   {/* Step Connector Line */}
                   {index < kg.length - 1 && (
-                    <div className="absolute left-8 top-16 bottom-0 w-0.5 bg-slate-200 group-hover:bg-brand-300 transition-colors z-0" />
+                    <div className="absolute left-8 top-16 bottom-0 w-0.5 bg-white/10 group-hover:bg-brand-400 transition-colors z-0" />
                   )}
 
                   <div className="relative z-10 flex items-start justify-between gap-4">
                     <div className="flex items-start gap-4">
                       <div
-                        className={`w-10 h-10 rounded-2xl flex items-center justify-center font-bold text-sm shadow-xs transition-colors ${
+                        className={`w-10 h-10 rounded-2xl flex items-center justify-center font-bold text-sm shadow-md transition-colors ${
                           isMastered
                             ? 'bg-emerald-500 text-white'
                             : isLocked
-                            ? 'bg-slate-200 text-slate-500'
+                            ? 'bg-slate-800 text-slate-400'
                             : 'bg-brand-600 text-white'
                         }`}
                       >
@@ -299,7 +299,7 @@ export const AdaptiveLearningPath = () => {
 
                       <div className="space-y-1">
                         <div className="flex items-center gap-2 flex-wrap">
-                          <h3 className="font-bold text-slate-900 text-base">{node.name}</h3>
+                          <h3 className="font-bold text-white text-base">{node.name}</h3>
                           <Badge
                             variant={
                               isMastered
@@ -314,26 +314,26 @@ export const AdaptiveLearningPath = () => {
                           >
                             {node.status}
                           </Badge>
-                          <span className="text-[11px] font-medium text-slate-400 bg-slate-100 px-2 py-0.5 rounded-md">
+                          <span className="text-[11px] font-medium text-slate-300 bg-white/10 px-2 py-0.5 rounded-md border border-white/10">
                             {node.category}
                           </span>
                         </div>
-                        <p className="text-xs text-slate-600 max-w-xl">{node.description}</p>
+                        <p className="text-xs text-slate-300 max-w-xl">{node.description}</p>
                       </div>
                     </div>
 
                     <div className="text-right flex flex-col items-end gap-1">
-                      <div className="flex items-center gap-1.5 font-bold text-sm text-slate-800">
+                      <div className="flex items-center gap-1.5 font-bold text-sm text-white">
                         <span>{node.mastery}%</span>
                       </div>
-                      <div className="w-20 bg-slate-100 h-2 rounded-full overflow-hidden">
+                      <div className="w-20 bg-slate-950/60 h-2 rounded-full overflow-hidden border border-white/10">
                         <div
                           className={`h-full rounded-full ${
                             node.mastery >= 80
-                              ? 'bg-emerald-500'
+                              ? 'bg-emerald-400'
                               : node.mastery >= 50
-                              ? 'bg-brand-500'
-                              : 'bg-amber-500'
+                              ? 'bg-brand-400'
+                              : 'bg-amber-400'
                           }`}
                           style={{ width: `${node.mastery}%` }}
                         />
@@ -349,11 +349,11 @@ export const AdaptiveLearningPath = () => {
         {/* Right Col: Concept Detail & AI Smart Hint Generator */}
         <div className="space-y-6">
           {/* Selected Concept Card */}
-          <Card className="p-6 border-slate-200 shadow-sm space-y-5">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-4">
+          <Card className="p-6 border border-white/20 shadow-2xl space-y-5 bg-slate-900/65 backdrop-blur-2xl rounded-3xl text-white">
+            <div className="flex items-center justify-between border-b border-white/10 pb-4">
               <div className="flex items-center gap-2">
-                <Lightbulb className="w-5 h-5 text-brand-600" />
-                <h3 className="font-bold text-slate-900">Concept Deep-Dive</h3>
+                <Lightbulb className="w-5 h-5 text-amber-300" />
+                <h3 className="font-bold text-white">Concept Deep-Dive</h3>
               </div>
               <Badge variant="primary">Adaptive AI</Badge>
             </div>
@@ -362,18 +362,18 @@ export const AdaptiveLearningPath = () => {
               <div className="space-y-4">
                 <div>
                   <p className="text-xs font-bold uppercase tracking-wider text-slate-400">Target Focus</p>
-                  <h4 className="text-lg font-bold text-slate-900 mt-1">{selectedConcept.name}</h4>
-                  <p className="text-xs text-slate-600 mt-1 leading-relaxed">{selectedConcept.description}</p>
+                  <h4 className="text-lg font-bold text-white mt-1">{selectedConcept.name}</h4>
+                  <p className="text-xs text-slate-300 mt-1 leading-relaxed">{selectedConcept.description}</p>
                 </div>
 
-                <div className="p-3.5 bg-slate-50 rounded-2xl border border-slate-100 space-y-2">
-                  <div className="flex justify-between text-xs font-semibold text-slate-600">
+                <div className="p-3.5 bg-white/5 rounded-2xl border border-white/10 space-y-2">
+                  <div className="flex justify-between text-xs font-semibold text-slate-200">
                     <span>Acoustic Mastery</span>
-                    <span className="text-brand-600 font-bold">{selectedConcept.mastery}%</span>
+                    <span className="text-amber-300 font-bold">{selectedConcept.mastery}%</span>
                   </div>
-                  <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+                  <div className="w-full bg-slate-950/60 h-2 rounded-full overflow-hidden border border-white/10">
                     <div
-                      className="bg-brand-600 h-full rounded-full transition-all duration-500"
+                      className="bg-gradient-to-r from-emerald-400 to-teal-400 h-full rounded-full transition-all duration-500"
                       style={{ width: `${selectedConcept.mastery}%` }}
                     />
                   </div>
@@ -381,64 +381,64 @@ export const AdaptiveLearningPath = () => {
 
                 <div className="flex items-center gap-2 pt-2">
                   <Link to="/content" className="flex-1">
-                    <Button variant="primary" className="w-full text-xs">
+                    <Button variant="primary" className="w-full text-xs font-bold">
                       Practice Drills
                       <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
                     </Button>
                   </Link>
                   <Link to="/voice-practice" className="flex-1">
-                    <Button variant="outline" className="w-full text-xs">
+                    <Button variant="outline" className="w-full text-xs bg-white/10 text-white border-white/20 hover:bg-white/20">
                       Voice Lab
                     </Button>
                   </Link>
                 </div>
               </div>
             ) : (
-              <p className="text-xs text-slate-500">Select any node on the graph to view AI metrics.</p>
+              <p className="text-xs text-slate-300">Select any node on the graph to view AI metrics.</p>
             )}
           </Card>
 
           {/* AI Smart Hint & Diagnostic Assistant */}
-          <Card className="p-6 border-slate-200 shadow-sm space-y-4 bg-gradient-to-b from-white to-slate-50/50">
-            <div className="flex items-center gap-2 text-purple-700">
-              <Sparkles className="w-5 h-5" />
-              <h3 className="font-bold text-slate-900">AI Contextual Hint Engine</h3>
+          <Card className="p-6 border border-white/20 shadow-2xl space-y-4 bg-slate-900/65 backdrop-blur-2xl rounded-3xl text-white">
+            <div className="flex items-center gap-2 text-purple-300">
+              <Sparkles className="w-5 h-5 text-amber-300" />
+              <h3 className="font-bold text-white">AI Contextual Hint Engine</h3>
             </div>
-            <p className="text-xs text-slate-600 leading-relaxed">
+            <p className="text-xs text-slate-300 leading-relaxed">
               Test how the AI dynamically formulates scaffolded pedagogical hints based on language
               and error classification.
             </p>
 
             <div className="space-y-3">
               <div>
-                <label className="block text-xs font-bold text-slate-600 mb-1">Target Language</label>
+                <label className="block text-xs font-bold text-slate-300 mb-1">Target Language</label>
                 <select
                   value={hintLanguage}
                   onChange={e => setHintLanguage(e.target.value)}
-                  className="w-full text-xs font-semibold px-3 py-2 rounded-xl border border-slate-200 bg-white text-slate-800 focus:ring-2 focus:ring-brand-500 focus:outline-none"
+                  className="w-full text-xs font-semibold px-3 py-2 rounded-xl border border-white/20 bg-slate-950/80 text-white focus:ring-2 focus:ring-brand-400 focus:outline-none cursor-pointer"
                 >
-                  <option value="te">Telugu (తెలుగు)</option>
-                  <option value="ta">Tamil (தமிழ்)</option>
-                  <option value="kn">Kannada (ಕನ್ನಡ)</option>
-                  <option value="ml">Malayalam (മലയാളം)</option>
-                  <option value="hi">Hindi (हिन्दी)</option>
-                  <option value="en">English</option>
-                  <option value="bn">Bengali (বাংলা)</option>
-                  <option value="mr">Marathi (मराठी)</option>
+                  <option value="te" className="text-slate-900">Telugu (తెలుగు)</option>
+                  <option value="ta" className="text-slate-900">Tamil (தமிழ்)</option>
+                  <option value="kn" className="text-slate-900">Kannada (ಕನ್ನಡ)</option>
+                  <option value="ml" className="text-slate-900">Malayalam (മലയാളം)</option>
+                  <option value="hi" className="text-slate-900">Hindi (हिन्दी)</option>
+                  <option value="en" className="text-slate-900">English</option>
+                  <option value="bn" className="text-slate-900">Bengali (বাংলা)</option>
+                  <option value="mr" className="text-slate-900">Marathi (मराठी)</option>
                 </select>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-600 mb-1">Simulated Error Type</label>
+                <label className="block text-xs font-bold text-slate-300 mb-1">Simulated Error Type</label>
                 <select
                   value={hintErrorType}
                   onChange={e => setHintErrorType(e.target.value)}
-                  className="w-full text-xs font-semibold px-3 py-2 rounded-xl border border-slate-200 bg-white text-slate-800 focus:ring-2 focus:ring-brand-500 focus:outline-none"
+                  className="w-full text-xs font-semibold px-3 py-2 rounded-xl border border-white/20 bg-slate-950/80 text-white focus:ring-2 focus:ring-brand-400 focus:outline-none cursor-pointer"
                 >
-                  <option value="phoneme_mispronunciation">Acoustic Mispronunciation</option>
-                  <option value="glyph_confusion">Similar Glyph Confusion</option>
-                  <option value="syllable_omission">Syllable Omission</option>
-                  <option value="vowel_length_error">Short vs Long Vowel Lengthening</option>
+                  <option value="phoneme_mispronunciation" className="text-slate-900">Acoustic Mispronunciation</option>
+                  <option value="glyph_confusion" className="text-slate-900">Similar Glyph Confusion</option>
+                  <option value="syllable_omission" className="text-slate-900">Syllable Omission</option>
+                  <option value="vowel_length_error" className="text-slate-900">Short vs Long Vowel Lengthening</option>
                 </select>
               </div>
 
@@ -446,21 +446,21 @@ export const AdaptiveLearningPath = () => {
                 variant="primary"
                 onClick={handleGenerateSmartHint}
                 loading={generatingHint}
-                className="w-full text-xs bg-purple-600 hover:bg-purple-700"
+                className="w-full text-xs bg-purple-600 hover:bg-purple-700 font-bold"
               >
                 <HelpCircle className="w-3.5 h-3.5 mr-1.5" />
                 Generate Adaptive Smart Hint
               </Button>
 
               {generatedHint && (
-                <div className="p-4 rounded-2xl bg-purple-50 border border-purple-200 text-purple-900 space-y-2 animate-fadeIn">
+                <div className="p-4 rounded-2xl bg-purple-950/50 border border-purple-500/40 text-white space-y-2 animate-fadeIn">
                   <div className="flex items-center justify-between">
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-purple-700">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-purple-300">
                       Scaffolded Guidance
                     </span>
                     <button
                       onClick={() => speakText(generatedHint.hintText)}
-                      className="p-1 text-purple-700 hover:text-purple-900"
+                      className="p-1 text-purple-300 hover:text-white cursor-pointer"
                       title="Listen to hint"
                     >
                       <Volume2 className="w-4 h-4" />
@@ -468,7 +468,7 @@ export const AdaptiveLearningPath = () => {
                   </div>
                   <p className="text-xs font-medium leading-relaxed">{generatedHint.hintText}</p>
                   {generatedHint.mnemonic && (
-                    <div className="p-2 rounded-xl bg-white/80 border border-purple-100 text-[11px] text-purple-800 font-semibold">
+                    <div className="p-2 rounded-xl bg-white/10 border border-white/10 text-[11px] text-amber-200 font-semibold">
                       💡 Mnemonic: {generatedHint.mnemonic}
                     </div>
                   )}

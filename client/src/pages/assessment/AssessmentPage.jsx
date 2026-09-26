@@ -143,15 +143,15 @@ export const AssessmentPage = () => {
   // ----------------------------------------------------
   if (id) {
     if (loading) {
-      return <Spinner size="lg" message="Loading assessment questions..." className="min-h-[50vh]" />;
+      return <Spinner size="lg" message="Loading assessment questions..." className="min-h-[50vh] text-white" />;
     }
 
     if (!assessment) {
       return (
-        <Card className="p-8 text-center space-y-4 max-w-lg mx-auto">
-          <h3 className="text-xl font-bold text-rose-600">Assessment Not Found</h3>
+        <Card className="p-8 text-center space-y-4 max-w-lg mx-auto bg-slate-900/65 border-white/20 backdrop-blur-2xl rounded-3xl text-white shadow-2xl">
+          <h3 className="text-xl font-bold text-rose-400">Assessment Not Found</h3>
           <Link to="/assessment">
-            <Button variant="outline" icon={ArrowLeft}>
+            <Button variant="outline" icon={ArrowLeft} className="bg-white/10 text-white border-white/20 hover:bg-white/20">
               Back to Assessments
             </Button>
           </Link>
@@ -165,23 +165,23 @@ export const AssessmentPage = () => {
     const answeredCount = Object.keys(answers).length;
 
     return (
-      <div className="max-w-3xl mx-auto space-y-6 pb-12">
+      <div className="max-w-3xl mx-auto space-y-6 pb-12 text-white">
         {/* Runner Header */}
-        <div className="flex items-center justify-between flex-wrap gap-4 pb-4 border-b border-slate-200">
+        <div className="flex items-center justify-between flex-wrap gap-4 pb-4 border-b border-white/15">
           <Link
             to="/assessment"
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-500 hover:text-slate-800"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-300 hover:text-white transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             Exit Test
           </Link>
 
           <div className="flex items-center gap-4">
-            <div className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 rounded-xl text-xs font-bold text-slate-700">
-              <Clock className="w-4 h-4 text-amber-500" />
+            <div className="flex items-center gap-1.5 px-3.5 py-1.5 bg-slate-950/60 border border-white/15 rounded-xl text-xs font-bold text-slate-200 backdrop-blur-md">
+              <Clock className="w-4 h-4 text-amber-400" />
               <span>Time: {formatTime(timeSpentSeconds)}</span>
             </div>
-            <div className="flex items-center gap-1.5 px-3 py-1.5 bg-brand-50 border border-brand-200 rounded-xl text-xs font-bold text-brand-700">
+            <div className="flex items-center gap-1.5 px-3.5 py-1.5 bg-brand-500/20 border border-brand-400/30 rounded-xl text-xs font-bold text-brand-300 backdrop-blur-md">
               <CheckCircle className="w-4 h-4" />
               <span>
                 Answered {answeredCount}/{totalQuestions}
@@ -191,16 +191,16 @@ export const AssessmentPage = () => {
         </div>
 
         {/* Progress Bar */}
-        <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+        <div className="w-full bg-slate-950/60 border border-white/15 h-2.5 rounded-full overflow-hidden p-0.5">
           <div
-            className="bg-brand-600 h-full transition-all duration-300"
+            className="bg-gradient-to-r from-brand-400 to-emerald-400 h-full rounded-full transition-all duration-300"
             style={{ width: `${((currentQuestionIdx + 1) / totalQuestions) * 100}%` }}
           />
         </div>
 
         {/* Question Card */}
         {currentQuestion && (
-          <Card className="p-6 sm:p-10 border-2 border-slate-200/90 shadow-md">
+          <Card className="p-6 sm:p-10 border border-white/20 bg-slate-900/65 backdrop-blur-2xl shadow-2xl rounded-3xl text-white">
             <QuestionRenderer
               question={currentQuestion}
               index={currentQuestionIdx}
@@ -211,12 +211,13 @@ export const AssessmentPage = () => {
             />
 
             {/* Navigation Controls */}
-            <div className="flex items-center justify-between pt-8 mt-8 border-t border-slate-100">
+            <div className="flex items-center justify-between pt-8 mt-8 border-t border-white/10">
               <Button
                 variant="outline"
                 onClick={handlePrev}
                 disabled={currentQuestionIdx === 0}
                 icon={ArrowLeft}
+                className="bg-white/10 text-white border-white/20 hover:bg-white/20"
               >
                 Previous
               </Button>
@@ -224,7 +225,7 @@ export const AssessmentPage = () => {
               {isLastQuestion ? (
                 <Button
                   variant="primary"
-                  className="bg-emerald-600 hover:bg-emerald-700 shadow-emerald-500/25"
+                  className="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black shadow-lg shadow-emerald-500/30"
                   onClick={handleSubmit}
                   isLoading={isSubmitting}
                   icon={CheckCircle}
@@ -253,31 +254,31 @@ export const AssessmentPage = () => {
   // RENDER ASSESSMENT LIST
   // ----------------------------------------------------
   return (
-    <div className="space-y-8 pb-12">
+    <div className="space-y-8 pb-12 text-white">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 flex items-center gap-2.5">
-            <Award className="w-8 h-8 text-amber-600" />
+          <h1 className="text-2xl sm:text-3xl font-black text-white flex items-center gap-2.5">
+            <Award className="w-8 h-8 text-amber-400" />
             Literacy Assessments & Benchmarks
           </h1>
-          <p className="text-sm text-slate-500 mt-1">
+          <p className="text-sm text-slate-300 mt-1">
             Test reading, writing mechanics, and context comprehension to benchmark your literacy tier.
           </p>
         </div>
       </div>
 
       {/* Featured Adaptive Initial Diagnostic Launcher */}
-      <div className="p-6 sm:p-7 rounded-3xl bg-gradient-to-r from-brand-600 via-indigo-600 to-purple-700 text-white flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-xl">
+      <div className="p-6 sm:p-7 rounded-3xl bg-slate-900/65 border border-white/20 backdrop-blur-2xl text-white flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-2xl">
         <div className="space-y-1.5">
-          <span className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-white/20 text-amber-300 text-xs font-black uppercase tracking-wider">
+          <span className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/30 text-xs font-black uppercase tracking-wider">
             <Sparkles className="w-3.5 h-3.5" />
             <span>AI Diagnostic Engine</span>
           </span>
           <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight">
             Take Your Personalized Literacy Benchmark
           </h2>
-          <p className="text-xs sm:text-sm text-slate-200 max-w-xl leading-relaxed">
+          <p className="text-xs sm:text-sm text-slate-300 max-w-xl leading-relaxed">
             Adaptive test dynamically calibrated for your language and age cohort to generate a personalized learning roadmap.
           </p>
         </div>
@@ -290,16 +291,16 @@ export const AssessmentPage = () => {
       </div>
 
       {/* Filter Bar */}
-      <div className="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-card flex flex-wrap gap-4 items-center justify-between">
+      <div className="bg-slate-900/65 rounded-2xl p-4 border border-white/20 backdrop-blur-2xl shadow-2xl flex flex-wrap gap-4 items-center justify-between">
         <div className="flex flex-wrap items-center gap-3">
           <select
             value={selectedLanguage}
             onChange={e => setSelectedLanguage(e.target.value)}
-            className="p-2 text-xs font-bold bg-slate-50 border border-slate-200 rounded-xl focus:border-amber-500 focus:outline-none"
+            className="p-2.5 text-xs font-bold bg-slate-950/60 border border-white/20 text-white rounded-xl focus:border-brand-400 focus:outline-none backdrop-blur-md"
           >
-            <option value="">All Languages</option>
+            <option value="" className="text-slate-900">All Languages</option>
             {SUPPORTED_LANGUAGES.map(l => (
-              <option key={l.code} value={l.code}>
+              <option key={l.code} value={l.code} className="text-slate-900">
                 {l.flag} {l.nativeName}
               </option>
             ))}
@@ -308,12 +309,12 @@ export const AssessmentPage = () => {
           <select
             value={selectedType}
             onChange={e => setSelectedType(e.target.value)}
-            className="p-2 text-xs font-bold bg-slate-50 border border-slate-200 rounded-xl focus:border-amber-500 focus:outline-none"
+            className="p-2.5 text-xs font-bold bg-slate-950/60 border border-white/20 text-white rounded-xl focus:border-brand-400 focus:outline-none backdrop-blur-md"
           >
-            <option value="">All Assessment Types</option>
-            <option value="benchmark">Diagnostic Benchmark</option>
-            <option value="reading">Reading Comprehension</option>
-            <option value="writing">Writing & Spelling</option>
+            <option value="" className="text-slate-900">All Assessment Types</option>
+            <option value="benchmark" className="text-slate-900">Diagnostic Benchmark</option>
+            <option value="reading" className="text-slate-900">Reading Comprehension</option>
+            <option value="writing" className="text-slate-900">Writing & Spelling</option>
           </select>
         </div>
       </div>
@@ -328,10 +329,10 @@ export const AssessmentPage = () => {
           ))}
         </div>
       ) : (
-        <Card className="p-12 text-center space-y-4 border-dashed border-2 border-slate-300">
+        <Card className="p-12 text-center space-y-4 border-dashed border-2 border-white/20 bg-slate-900/65 backdrop-blur-2xl rounded-3xl text-white shadow-2xl">
           <HelpCircle className="w-12 h-12 text-slate-400 mx-auto" />
-          <h3 className="text-lg font-bold text-slate-900">No Assessments Available</h3>
-          <p className="text-sm text-slate-500 max-w-sm mx-auto">
+          <h3 className="text-lg font-bold text-white">No Assessments Available</h3>
+          <p className="text-sm text-slate-300 max-w-sm mx-auto">
             Try choosing a different language or filter option.
           </p>
         </Card>

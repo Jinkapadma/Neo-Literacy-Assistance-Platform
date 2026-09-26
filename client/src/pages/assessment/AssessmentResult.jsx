@@ -33,16 +33,16 @@ export const AssessmentResult = () => {
   }, [submissionId]);
 
   if (loading) {
-    return <Spinner size="lg" message="Compiling proficiency benchmarks..." className="min-h-[50vh]" />;
+    return <Spinner size="lg" message="Compiling proficiency benchmarks..." className="min-h-[50vh] text-white" />;
   }
 
   if (error || !submission) {
     return (
-      <Card className="p-8 text-center space-y-4 max-w-lg mx-auto">
-        <h3 className="text-xl font-bold text-rose-600">Results Not Available</h3>
-        <p className="text-sm text-slate-600">{error || 'Submission not found'}</p>
+      <Card className="p-8 text-center space-y-4 max-w-lg mx-auto bg-slate-900/65 border-white/20 backdrop-blur-2xl rounded-3xl text-white shadow-2xl">
+        <h3 className="text-xl font-bold text-rose-400">Results Not Available</h3>
+        <p className="text-sm text-slate-300">{error || 'Submission not found'}</p>
         <Link to="/assessment">
-          <Button variant="outline">Back to Assessments</Button>
+          <Button variant="outline" className="bg-white/10 text-white border-white/20 hover:bg-white/20">Back to Assessments</Button>
         </Link>
       </Card>
     );
@@ -52,19 +52,19 @@ export const AssessmentResult = () => {
     submission;
 
   return (
-    <div className="max-w-4xl mx-auto space-y-8 pb-12">
+    <div className="max-w-4xl mx-auto space-y-8 pb-12 text-white">
       {/* Header Banner */}
       <div className="text-center space-y-2">
-        <div className="w-16 h-16 rounded-3xl bg-amber-100 text-amber-600 flex items-center justify-center mx-auto shadow-md">
+        <div className="w-16 h-16 rounded-3xl bg-amber-400/20 border border-amber-400/30 text-amber-300 flex items-center justify-center mx-auto shadow-xl backdrop-blur-md">
           <Award className="w-9 h-9" />
         </div>
-        <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
+        <span className="text-xs font-bold uppercase tracking-wider text-slate-300">
           Assessment Evaluation Complete
         </span>
-        <h1 className="text-2xl sm:text-4xl font-black text-slate-900">
+        <h1 className="text-2xl sm:text-4xl font-black text-white">
           Your Literacy Proficiency Scorecard
         </h1>
-        <p className="text-sm text-slate-500 max-w-lg mx-auto">
+        <p className="text-sm text-slate-300 max-w-lg mx-auto">
           {assessmentId?.title || 'Comprehensive Diagnostic Benchmark'}
         </p>
       </div>
@@ -81,15 +81,15 @@ export const AssessmentResult = () => {
       {/* Pedagogical Feedback & Diagnostic Insights */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Strengths */}
-        <Card className="p-6 sm:p-8 border-2 border-emerald-200 bg-emerald-50/30 space-y-3">
-          <h3 className="text-lg font-bold text-emerald-950 flex items-center gap-2">
-            <CheckCircle2 className="w-5 h-5 text-emerald-600" />
+        <Card className="p-6 sm:p-8 border border-emerald-500/30 bg-emerald-950/40 backdrop-blur-2xl rounded-3xl space-y-3 text-white shadow-xl">
+          <h3 className="text-lg font-bold text-emerald-300 flex items-center gap-2">
+            <CheckCircle2 className="w-5 h-5 text-emerald-400" />
             Demonstrated Strengths
           </h3>
           <ul className="space-y-2">
             {strengths?.map((str, idx) => (
-              <li key={idx} className="text-sm font-medium text-emerald-900 flex items-start gap-2">
-                <span className="text-emerald-500 font-bold">•</span>
+              <li key={idx} className="text-sm font-medium text-emerald-200 flex items-start gap-2">
+                <span className="text-emerald-400 font-bold">•</span>
                 <span>{str}</span>
               </li>
             ))}
@@ -97,15 +97,15 @@ export const AssessmentResult = () => {
         </Card>
 
         {/* Growth Focus Areas */}
-        <Card className="p-6 sm:p-8 border-2 border-indigo-200 bg-indigo-50/30 space-y-3">
-          <h3 className="text-lg font-bold text-indigo-950 flex items-center gap-2">
-            <TrendingUp className="w-5 h-5 text-indigo-600" />
+        <Card className="p-6 sm:p-8 border border-indigo-500/30 bg-indigo-950/40 backdrop-blur-2xl rounded-3xl space-y-3 text-white shadow-xl">
+          <h3 className="text-lg font-bold text-indigo-300 flex items-center gap-2">
+            <TrendingUp className="w-5 h-5 text-indigo-400" />
             Recommended Focus Areas
           </h3>
           <ul className="space-y-2">
             {areasForImprovement?.map((area, idx) => (
-              <li key={idx} className="text-sm font-medium text-indigo-900 flex items-start gap-2">
-                <span className="text-indigo-500 font-bold">•</span>
+              <li key={idx} className="text-sm font-medium text-indigo-200 flex items-start gap-2">
+                <span className="text-indigo-400 font-bold">•</span>
                 <span>{area}</span>
               </li>
             ))}
@@ -115,38 +115,38 @@ export const AssessmentResult = () => {
 
       {/* Feedback Note */}
       {feedback && (
-        <div className="p-6 rounded-3xl bg-slate-100 border border-slate-200 text-slate-800 text-sm sm:text-base leading-relaxed font-medium">
-          <span className="font-bold text-slate-900">Summary Diagnostic: </span>
+        <div className="p-6 rounded-3xl bg-slate-900/65 border border-white/20 backdrop-blur-2xl text-slate-200 text-sm sm:text-base leading-relaxed font-medium shadow-2xl">
+          <span className="font-bold text-white">Summary Diagnostic: </span>
           {feedback}
         </div>
       )}
 
       {/* Detailed Question Review */}
       {answers?.length > 0 && (
-        <section className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 space-y-4">
-          <h3 className="text-lg font-bold text-slate-900">Question Item Review</h3>
-          <div className="divide-y divide-slate-100">
+        <section className="bg-slate-900/65 rounded-3xl border border-white/20 backdrop-blur-2xl p-6 sm:p-8 space-y-4 shadow-2xl">
+          <h3 className="text-lg font-bold text-white">Question Item Review</h3>
+          <div className="divide-y divide-white/10">
             {answers.map((ans, idx) => (
               <div key={idx} className="py-4 flex items-center justify-between flex-wrap gap-3">
                 <div className="flex items-center gap-3">
                   {ans.isCorrect ? (
-                    <CheckCircle2 className="w-5 h-5 text-emerald-600 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-emerald-400 flex-shrink-0" />
                   ) : (
-                    <XCircle className="w-5 h-5 text-rose-600 flex-shrink-0" />
+                    <XCircle className="w-5 h-5 text-rose-400 flex-shrink-0" />
                   )}
                   <div>
                     <span className="text-xs font-bold text-slate-400">Question {idx + 1}</span>
-                    <p className="text-sm font-semibold text-slate-800">
-                      Your Answer: <span className={ans.isCorrect ? 'text-emerald-700 font-bold' : 'text-rose-700 font-bold'}>{ans.selectedAnswer}</span>
+                    <p className="text-sm font-semibold text-slate-200">
+                      Your Answer: <span className={ans.isCorrect ? 'text-emerald-300 font-bold' : 'text-rose-300 font-bold'}>{ans.selectedAnswer}</span>
                     </p>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-3">
-                  <span className="text-xs font-bold px-2.5 py-1 bg-slate-100 text-slate-700 rounded-lg capitalize">
+                  <span className="text-xs font-bold px-2.5 py-1 bg-white/10 text-slate-200 rounded-lg capitalize border border-white/10">
                     {ans.skillCategory}
                   </span>
-                  <span className="text-xs font-black text-slate-900">
+                  <span className="text-xs font-black text-amber-300">
                     +{ans.pointsEarned} pts
                   </span>
                 </div>
@@ -164,12 +164,12 @@ export const AssessmentResult = () => {
           </Button>
         </Link>
         <Link to="/profile" className="w-full sm:w-auto">
-          <Button variant="outline" size="lg" className="w-full sm:w-auto" icon={User}>
+          <Button variant="outline" size="lg" className="w-full sm:w-auto bg-white/10 text-white border-white/20 hover:bg-white/20" icon={User}>
             View Learner Profile
           </Button>
         </Link>
         <Link to="/assessment" className="w-full sm:w-auto">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto" icon={RotateCcw}>
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto text-slate-300 hover:text-white" icon={RotateCcw}>
             Retake Assessment
           </Button>
         </Link>
