@@ -37,7 +37,12 @@ export const LandingPage = () => {
 
   const navLinks = [
     { label: 'Features', href: '#features' },
-    { label: 'How It Works', href: '#how-it-works' },
+    { label: 'Curriculums', to: '/curriculum' },
+    { label: 'Library', to: '/content' },
+    { label: 'Assessments', to: '/assessment' },
+    { label: 'Games', to: '/games' },
+    { label: 'Voice Lab', to: '/voice-practice' },
+    { label: 'Analytics', to: '/analytics' },
   ];
 
   const handleScrollToSection = (e, href) => {
@@ -82,7 +87,7 @@ export const LandingPage = () => {
           </Link>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-200">
+          <nav className="hidden lg:flex items-center gap-6 text-sm font-semibold text-slate-200">
             {navLinks.map(link =>
               link.href ? (
                 <a
@@ -108,13 +113,19 @@ export const LandingPage = () => {
           {/* Dual Language & Auth Action Buttons */}
           <div className="hidden md:flex items-center gap-3">
             <DualLanguageSwitcher />
-            <SparkleButton to="/onboarding">
+            <Link
+              to="/login"
+              className="px-4 py-2 text-sm font-bold text-slate-100 hover:text-white rounded-xl hover:bg-white/10 transition-colors"
+            >
               Log In
+            </Link>
+            <SparkleButton to="/onboarding">
+              Get Started
             </SparkleButton>
           </div>
 
           {/* Mobile Hamburger Button */}
-          <div className="flex items-center gap-2 md:hidden">
+          <div className="flex items-center gap-2 lg:hidden">
             <DualLanguageSwitcher />
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -128,7 +139,7 @@ export const LandingPage = () => {
 
         {/* Mobile Slide-in Drawer */}
         {mobileMenuOpen && (
-          <div className="md:hidden bg-[#407c93]/95 border-b border-white/20 px-6 py-6 space-y-4 animate-fadeIn backdrop-blur-2xl">
+          <div className="lg:hidden bg-[#407c93]/95 border-b border-white/20 px-6 py-6 space-y-4 animate-fadeIn backdrop-blur-2xl">
             <nav className="flex flex-col space-y-3 text-base font-semibold text-slate-100">
               {navLinks.map(link =>
                 link.href ? (
@@ -153,9 +164,16 @@ export const LandingPage = () => {
               )}
             </nav>
 
-            <div className="pt-4 border-t border-slate-800/80 flex flex-col gap-3">
-              <SparkleButton to="/onboarding" className="w-full justify-center">
+            <div className="pt-4 border-t border-white/15 flex flex-col gap-3">
+              <Link
+                to="/login"
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-full text-center py-2.5 rounded-xl text-sm font-bold text-slate-100 bg-white/10 hover:bg-white/20 border border-white/20"
+              >
                 Log In
+              </Link>
+              <SparkleButton to="/onboarding" className="w-full justify-center">
+                Get Started
               </SparkleButton>
             </div>
           </div>

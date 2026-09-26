@@ -15,6 +15,7 @@ export const FeaturesSection = () => {
       color: 'from-brand-500/30 to-indigo-500/30',
       borderHover: 'hover:border-brand-400/50',
       iconColor: 'text-brand-300',
+      to: '/ai-path',
     },
     {
       icon: Volume2,
@@ -25,6 +26,7 @@ export const FeaturesSection = () => {
       color: 'from-purple-500/30 to-pink-500/30',
       borderHover: 'hover:border-purple-400/50',
       iconColor: 'text-purple-300',
+      to: '/voice-practice',
     },
     {
       icon: Globe2,
@@ -35,6 +37,7 @@ export const FeaturesSection = () => {
       color: 'from-sky-500/30 to-cyan-500/30',
       borderHover: 'hover:border-sky-400/50',
       iconColor: 'text-sky-300',
+      to: '/content',
     },
     {
       icon: TrendingUp,
@@ -45,6 +48,7 @@ export const FeaturesSection = () => {
       color: 'from-emerald-500/30 to-teal-500/30',
       borderHover: 'hover:border-emerald-400/50',
       iconColor: 'text-emerald-300',
+      to: '/assessment',
     },
   ];
 
@@ -84,8 +88,9 @@ export const FeaturesSection = () => {
             const Icon = item.icon;
             return (
               <ScrollRevealWrapper key={item.title} delay={index * 0.1}>
-                <div
-                  className={`relative h-full p-8 rounded-3xl bg-slate-900/60 border border-white/20 backdrop-blur-2xl ${item.borderHover} transition-all duration-300 transform hover:-translate-y-2 hover:scale-[1.02] shadow-2xl hover:shadow-[0_20px_40px_rgba(0,0,0,0.35)] flex flex-col justify-between group overflow-hidden`}
+                <Link
+                  to={item.to}
+                  className={`relative h-full p-8 rounded-3xl bg-slate-900/60 border border-white/20 backdrop-blur-2xl ${item.borderHover} transition-all duration-300 transform hover:-translate-y-2 hover:scale-[1.02] shadow-2xl hover:shadow-[0_20px_40px_rgba(0,0,0,0.35)] flex flex-col justify-between group overflow-hidden block`}
                 >
                   {/* Ambient Card Glow */}
                   <div
@@ -110,7 +115,12 @@ export const FeaturesSection = () => {
 
                     <p className="text-slate-300 text-sm leading-relaxed font-normal">{item.description}</p>
                   </div>
-                </div>
+
+                  <div className="relative z-10 pt-4 flex items-center gap-1.5 text-xs font-bold text-brand-300 group-hover:text-white transition-colors">
+                    <span>Explore Module</span>
+                    <ArrowRight className="w-3.5 h-3.5 transform group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </Link>
               </ScrollRevealWrapper>
             );
           })}
